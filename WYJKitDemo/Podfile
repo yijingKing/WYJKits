@@ -1,0 +1,16 @@
+# Uncomment the next line to define a global platform for your project
+# platform:ios, '9.0'
+
+target 'WYJKitDemo' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+#pod 'QYKit'
+#  pod 'QYKit',:path => './QYKit'
+#pod 'PKHUD',:inhibit_warnings => true
+pod 'MJRefresh',:inhibit_warnings => true
+pod 'DZNEmptyDataSet',:inhibit_warnings => true
+pod 'SnapKit',:inhibit_warnings => true
+pod 'MBProgressHUD',:inhibit_warnings => true
+pod 'Alamofire',:inhibit_warnings => true
+
+end
