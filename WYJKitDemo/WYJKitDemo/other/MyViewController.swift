@@ -1,6 +1,6 @@
 //
 //  MyViewController.swift
-//  QYKitDemo
+//  WYJKitsDemo
 //
 //  Created by 祎 on 2020/8/28.
 //  Copyright © 2020 祎. All rights reserved.
@@ -8,23 +8,21 @@
 
 import UIKit
 
-class MyViewController: QYBaseViewController {
+class MyViewController: WYJBaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        yi_barStyle = .lightContent
+        barStyle = .lightContent
         // Do any additional setup after loading the view.
-        view.backgroundColor = .yi_random()
-//        yi_addTableView()
-//        mainTableView?.yi_cellForRowAtIndexPath({ (tab, inde) -> UITableViewCell in
+//        addTableView()
+//        mainTableView?.cellForRowAtIndexPath({ (tab, inde) -> UITableViewCell in
 //            return UITableViewCell()
-//            }).yi_numberRows(100)
-//        mainTableView?.yi_heightRows(50)
-        
+//            }).numberRows(100)
+//        mainTableView?.heightRows(50)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        QYHUD.yi_loading("oooolplpl")
+        WYJHUD.loading("oooolplpl")
     }
     /*
     // MARK: - Navigation

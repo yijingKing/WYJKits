@@ -1,0 +1,6 @@
+framework module Pods_WYJKitDemo {
+  umbrella header "Pods-WYJKitDemo-umbrella.h"
+
+  export *
+  module * { export * }
+}

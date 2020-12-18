@@ -4,13 +4,13 @@
 target 'WYJKitDemo' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-#pod 'QYKit'
-#  pod 'QYKit',:path => './QYKit'
+#pod 'WYJKits'
+#  pod 'WYJKits',:path => './WYJKits'
 #pod 'PKHUD',:inhibit_warnings => true
 pod 'MJRefresh',:inhibit_warnings => true
 pod 'DZNEmptyDataSet',:inhibit_warnings => true
 pod 'SnapKit',:inhibit_warnings => true
 pod 'MBProgressHUD',:inhibit_warnings => true
 pod 'Alamofire',:inhibit_warnings => true
-
+#pod 'CaamDau', :git => 'https://gitee.com/CaamDau/CaamDau.git'
 end

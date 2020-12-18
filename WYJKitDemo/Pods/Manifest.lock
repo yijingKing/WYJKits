@@ -1,0 +1,32 @@
+PODS:
+  - Alamofire (5.4.0)
+  - DZNEmptyDataSet (1.8.1)
+  - MBProgressHUD (1.2.0)
+  - MJRefresh (3.5.0)
+  - SnapKit (5.0.1)
+
+DEPENDENCIES:
+  - Alamofire
+  - DZNEmptyDataSet
+  - MBProgressHUD
+  - MJRefresh
+  - SnapKit
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - DZNEmptyDataSet
+    - MBProgressHUD
+    - MJRefresh
+    - SnapKit
+
+SPEC CHECKSUMS:
+  Alamofire: 3b6a534a3df22db367e4dedeeca73d1ddfcf0e2f
+  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
+  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
+  MJRefresh: 6afc955813966afb08305477dd7a0d9ad5e79a16
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+
+PODFILE CHECKSUM: 4257e31eec1611a734c9cd187971991242bd5e30
+
+COCOAPODS: 1.10.0
