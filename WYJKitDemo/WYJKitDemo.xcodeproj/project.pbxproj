@@ -67,6 +67,7 @@
 		6324405B2589E2100065688B /* address-code.json in Resources */ = {isa = PBXBuildFile; fileRef = 6324402A2589E2100065688B /* address-code.json */; };
 		6324405C2589E2100065688B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6324402B2589E2100065688B /* Images.xcassets */; };
 		632440732589E3D10065688B /* WYJProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632440722589E3D10065688B /* WYJProtocol.swift */; };
+		63327F9E2591A0C8008C99B5 /* WYJKits.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 63327F9D2591A0C8008C99B5 /* WYJKits.podspec */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -159,6 +160,7 @@
 		6324402A2589E2100065688B /* address-code.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "address-code.json"; sourceTree = "<group>"; };
 		6324402B2589E2100065688B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		632440722589E3D10065688B /* WYJProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJProtocol.swift; sourceTree = "<group>"; };
+		63327F9D2591A0C8008C99B5 /* WYJKits.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = WYJKits.podspec; path = ../../WYJKits.podspec; sourceTree = "<group>"; };
 		78398B3861ED16B1DF9D9A4E /* Pods-IYXKitDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IYXKitDemo.release.xcconfig"; path = "Target Support Files/Pods-IYXKitDemo/Pods-IYXKitDemo.release.xcconfig"; sourceTree = "<group>"; };
 		7ACAC79A9D010EFE705542C6 /* Pods-WYJKitDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WYJKitDemo.debug.xcconfig"; path = "Target Support Files/Pods-WYJKitDemo/Pods-WYJKitDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		AA48D6AEB9A67077249D2F96 /* Pods-QYKitDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QYKitDemo.debug.xcconfig"; path = "Target Support Files/Pods-QYKitDemo/Pods-QYKitDemo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 		63243FAC2589E20A0065688B /* WYJKitDemo */ = {
 			isa = PBXGroup;
 			children = (
+				63327F9D2591A0C8008C99B5 /* WYJKits.podspec */,
 				63243FCC2589E2100065688B /* WYJKits */,
 				63243FAD2589E20A0065688B /* RSA */,
 				63243FB02589E20A0065688B /* other */,
@@ -804,6 +807,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63327F9E2591A0C8008C99B5 /* WYJKits.podspec in Resources */,
 				63243FC62589E20A0065688B /* WeChat66467de1e87eb0c1de1a8add1099df0b.png in Resources */,
 				6324405C2589E2100065688B /* Images.xcassets in Resources */,
 				6324405B2589E2100065688B /* address-code.json in Resources */,

@@ -17,10 +17,10 @@ public enum WYJUploadFileWay {
     case path
 }
 
-public typealias ErrorBlock = ((QYJSON)->())?
+public typealias ErrorBlock = ((WYJJSON)->())?
 ///网络请求
 
-open class WYJAlamofire {
+open class WYJAlamofire: NSObject {
     private var isNet = false
     ///是否数据处理,默认false
     public var isDataManage: Bool = false
@@ -64,7 +64,7 @@ open class WYJAlamofire {
 public extension WYJAlamofire {
     //MARK: --- get
     ///get
-    final func get(_ api: String,_ parameters: [String: Any]? = nil,success: ((QYJSON)->())?,error: ErrorBlock) {
+    final func get(_ api: String,_ parameters: [String: Any]? = nil,success: ((WYJJSON)->())?,error: ErrorBlock) {
         
         configureRequestParameters()
         var headers: HTTPHeaders?
@@ -74,7 +74,7 @@ public extension WYJAlamofire {
         getNerworkingReachability {
             if $0 {
                 self.request(api, method: .get, parameters: parameters, encoding: self.encoding, headers: headers, interceptor: self.interceptor) { (result) in
-                    let json = QYJSON.init(result)
+                    let json = WYJJSON.init(result)
                     
                     success?(json)
                 } error: { (afError,data) in
@@ -97,7 +97,7 @@ public extension WYJAlamofire {
         getNerworkingReachability {
             if $0 {
                 self.request(api, method: .get, parameters: parameters, encoding: self.encoding, headers: headers, interceptor: self.interceptor) { (result) in
-                    let json = QYJSON.init(result)
+                    let json = WYJJSON.init(result)
                     if let model = try? T(from: json[self.data].dictionaryObject) {
                         success?(model)
                     } else {
@@ -115,7 +115,7 @@ public extension WYJAlamofire {
     
     //MARK: --- post
     ///post
-    final func post(_ api: String,_ parameters: [String: Any]? = nil,success: ((QYJSON)->())?,error: ErrorBlock) {
+    final func post(_ api: String,_ parameters: [String: Any]? = nil,success: ((WYJJSON)->())?,error: ErrorBlock) {
         configureRequestParameters()
         var headers: HTTPHeaders?
         if let h = header {
@@ -124,7 +124,7 @@ public extension WYJAlamofire {
         getNerworkingReachability {
             if $0 {
                 self.request(api, method: .post, parameters: parameters, encoding: self.encoding, headers: headers, interceptor: self.interceptor) { (result) in
-                    let json = QYJSON.init(result)
+                    let json = WYJJSON.init(result)
                     success?(json)
                 } error: { (afError,data) in
                     self.errorMethod(afError, error,data)
@@ -145,14 +145,14 @@ public extension WYJAlamofire {
         getNerworkingReachability {
             if $0 {
                 self.request(api, method: .post, parameters: parameters, encoding: self.encoding, headers: headers, interceptor: self.interceptor) { (result) in
-                    let json = QYJSON.init(result)
+                    let json = WYJJSON.init(result)
                     if let model = try? T(from: json[self.data].dictionaryObject) {
                         success?(model)
                     } else {
                         var dic = [String: Any]()
                         dic["code"] = -77777
                         dic[self.msg] = "model转换失败"
-                        error?(QYJSON.init(dic))
+                        error?(WYJJSON.init(dic))
                     }
                 } error: { (afError,data) in
                     self.errorMethod(afError, error,data)
@@ -175,7 +175,7 @@ public extension WYJAlamofire {
     final func uploadImage(_ api: String,_ parameters: [String: Any]? = nil,
                            fileParam: String,files: [Any],
                            progressHandler: ((Progress) -> ())? = nil,
-                           success: ((QYJSON)->())?,error: ErrorBlock) {
+                           success: ((WYJJSON)->())?,error: ErrorBlock) {
         
         var headers: HTTPHeaders?
         if let h = header {
@@ -219,7 +219,7 @@ public extension WYJAlamofire {
                 }.responseJSON { (response) in
                     switch response.result {
                         case .success(let result):
-                            let json = QYJSON.init(result)
+                            let json = WYJJSON.init(result)
                             success?(json)
                         case .failure(let err):
                             self.errorMethod(err, error,response.data)
@@ -239,7 +239,7 @@ public extension WYJAlamofire {
     final func uploadImage(_ api: String,
                            multipartFormData:@escaping ((MultipartFormData)->()),
                            progressHandler: ((Progress) -> ())? = nil,
-                           success: ((QYJSON)->())?,error: ErrorBlock) {
+                           success: ((WYJJSON)->())?,error: ErrorBlock) {
         
         var headers: HTTPHeaders?
         if let h = header {
@@ -258,7 +258,7 @@ public extension WYJAlamofire {
                 }.responseJSON { (response) in
                     switch response.result {
                         case .success(let result):
-                            let json = QYJSON.init(result)
+                            let json = WYJJSON.init(result)
                             success?(json)
                         case .failure(let err):
                             self.errorMethod(err, error,response.data)
@@ -318,14 +318,14 @@ public extension WYJAlamofire {
         var dic = [String: Any]()
         dic["code"] = afError._code
         dic[self.msg] = dec
-        errorB?(QYJSON.init(dic))
+        errorB?(WYJJSON.init(dic))
     }
     ///网络错误处理
     func nerworkingError(_ errorB: ErrorBlock) {
         var dic = [String: Any]()
         dic["code"] = -99999
         dic[self.msg] = "网络异常,请检查网络后重试"
-        errorB?(QYJSON.init(dic))
+        errorB?(WYJJSON.init(dic))
     }
 }
 

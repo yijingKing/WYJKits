@@ -134,7 +134,7 @@ extension AssociatedWrapper where Base: NSObject {
 //MARK: --- 时间选择器
 public extension NSObject {
     ///时间选择器
-    var datePicker: WYJDatePickerViewController {
+    var datePickerViewController: WYJDatePickerViewController {
         return WYJDatePickerViewController()
     }
 }

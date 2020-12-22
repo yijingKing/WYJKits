@@ -296,6 +296,7 @@ public extension UIView {
 public extension WYJProtocol where T: UIView {
     @discardableResult
     func cornerRadii(_ radii: CGFloat) -> WYJProtocol {
+        obj.layoutIfNeeded()
         obj.cornerRadii = .init(radii)
         return self
     }

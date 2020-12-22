@@ -40,4 +40,3 @@ extension Set: WYJCompatible {}
 extension Data: WYJCompatible {}
 extension Date: WYJCompatible {}
 extension DateComponents: WYJCompatible {}
-extension WYJAlamofire: WYJCompatible {}

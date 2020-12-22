@@ -44,22 +44,29 @@ open class WYJHUD {
             manager.hud = MBProgressHUD.showAdded(to: onView, animated: manager.animated)
             manager.defaultConfiguration(manager.hud)
             manager.hud?.completionBlock = completion
-            let tv = HUDTextView()
-            tv.text = text
-            tv.textColor = .white
-            tv.font = WYJFont(15)
-            tv.isEditable = false
-            tv.showsVerticalScrollIndicator = false
-            tv.showsHorizontalScrollIndicator = false
-            tv.backgroundColor = UIColor.black.withAlphaComponent(0)
-            manager.hud?.customView = tv
-            manager.hud?.mode = .customView
-            
+            var height = text.yi.getHeight(fixedWidth: WYJRatio(350))
+            height = height > WYJRatio(350) ? WYJRatio(350) : height
+            if height > WYJRatio(350) {
+                let tv = HUDTextView()
+                tv.text = text
+                tv.textColor = .white
+                tv.font = WYJFont(14)
+                tv.isEditable = false
+                tv.showsVerticalScrollIndicator = false
+                tv.showsHorizontalScrollIndicator = false
+                tv.backgroundColor = UIColor.black.withAlphaComponent(0)
+                manager.hud?.customView = tv
+                manager.hud?.mode = .customView
+            } else {
+                manager.hud?.label.font = WYJFont(14)
+                manager.hud?.label.text = text
+                manager.hud?.mode = .text
+            }
             if let time = manager.delayTime {
                 manager.hud?.minShowTime = time
             } else {
                 if text.count / 7 < 1 {
-                    manager.hud?.minShowTime = 1.75
+                    manager.hud?.minShowTime = 1.7
                 } else {
                     var time = Double(text.count) / 7 + 1
                     time = time > 6 ? 5 : time
@@ -76,7 +83,8 @@ open class WYJHUD {
         DispatchQueue.getMainAsync {
             WYJHUD.hideHUD()
             manager.hud = MBProgressHUD.showAdded(to: onView, animated: manager.animated)
-            manager.hud?.label.text = text
+            manager.hud?.detailsLabel.text = text
+            manager.hud?.detailsLabel.font = WYJFont(13)
             manager.hud?.mode = .indeterminate
             manager.defaultConfiguration(manager.hud)
         }
@@ -94,6 +102,7 @@ open class WYJHUD {
     private func defaultConfiguration(_ hud: MBProgressHUD?) {
         ///多行
         hud?.label.numberOfLines = 0
+        hud?.detailsLabel.numberOfLines = 0
         hud?.bezelView.style = .solidColor
         hud?.contentColor = textColor
         hud?.bezelView.backgroundColor = backgroundColor

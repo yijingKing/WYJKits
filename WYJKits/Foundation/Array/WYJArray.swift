@@ -36,8 +36,8 @@ public extension WYJProtocol where T == Array<Any> {
         return JSONString as String? ?? nil
     }
     
-    func toJSON(_ options: JSONSerialization.WritingOptions = []) -> QYJSON {
-        return QYJSON.init(toJSONString(options) ?? "")
+    func toJSON(_ options: JSONSerialization.WritingOptions = []) -> WYJJSON {
+        return WYJJSON.init(toJSONString(options) ?? "")
     }
 }
 //MARK: --- 类型转换

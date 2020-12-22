@@ -10,7 +10,7 @@
 import Foundation
 
 // MARK: - Error
-public enum QYJSONError: Int, Swift.Error {
+public enum WYJJSONError: Int, Swift.Error {
     case unsupportedType = 999
     case indexOutOfBounds = 900
     case elementTooDeep = 902
@@ -19,9 +19,9 @@ public enum QYJSONError: Int, Swift.Error {
     case invalidJSON = 490
 }
 
-extension QYJSONError: CustomNSError {
+extension WYJJSONError: CustomNSError {
     /// 错误的域名
-    public static var errorDomain: String { return "com.QYKit.QYJSON" }
+    public static var errorDomain: String { return "com.WYJKit.WYJJSON" }
 
     /// 错误代码
     public var errorCode: Int { return self.rawValue }
@@ -46,7 +46,7 @@ extension QYJSONError: CustomNSError {
 }
 
 // MARK: - JSON Type
-public enum QYType: Int {
+public enum WYJType: Int {
     case number
     case string
     case bool
@@ -57,19 +57,19 @@ public enum QYType: Int {
 }
 
 // MARK: - JSON Base
-public struct QYJSON {
+public struct WYJJSON {
     fileprivate var rawArray: [Any] = []
     fileprivate var rawDictionary: [String: Any] = [:]
     fileprivate var rawString: String = ""
     fileprivate var rawNumber: NSNumber = 0
     fileprivate var rawNull: NSNull = NSNull()
     fileprivate var rawBool: Bool = false
-    public fileprivate(set) var type: QYType = .null
-    public fileprivate(set) var error: QYJSONError?
+    public fileprivate(set) var type: WYJType = .null
+    public fileprivate(set) var error: WYJJSONError?
     /// The static null JSON
     @available(*, unavailable, renamed:"null")
-    public static var nullJSON: QYJSON { return null }
-    public static var null: QYJSON { return QYJSON(NSNull()) }
+    public static var nullJSON: WYJJSON { return null }
+    public static var null: WYJJSON { return WYJJSON(NSNull()) }
     
     /// Creates a JSON using the data.
     public init(data: Data, options opt: JSONSerialization.ReadingOptions = []) throws {
@@ -142,25 +142,25 @@ public struct QYJSON {
                 rawDictionary = dictionary
             default:
                 type = .unknown
-                error = QYJSONError.unsupportedType
+                error = WYJJSONError.unsupportedType
             }
         }
     }
 
     /// 合并
-    public mutating func merge(with other: QYJSON) throws {
+    public mutating func merge(with other: WYJJSON) throws {
         try self.merge(with: other, typecheck: true)
     }
 
     /// 合并
-    public func merged(with other: QYJSON) throws -> QYJSON {
+    public func merged(with other: WYJJSON) throws -> WYJJSON {
         var merged = self
         try merged.merge(with: other, typecheck: true)
         return merged
     }
 
     /// 合并
-    fileprivate mutating func merge(with other: QYJSON, typecheck: Bool) throws {
+    fileprivate mutating func merge(with other: WYJJSON, typecheck: Bool) throws {
         if type == other.type {
             switch type {
             case .dictionary:
@@ -168,13 +168,13 @@ public struct QYJSON {
                     try self[key].merge(with: other[key], typecheck: false)
                 }
             case .array:
-                self = QYJSON(arrayValue + other.arrayValue)
+                self = WYJJSON(arrayValue + other.arrayValue)
             default:
                 self = other
             }
         } else {
             if typecheck {
-                throw QYJSONError.wrongType
+                throw WYJJSONError.wrongType
             } else {
                 self = other
             }
@@ -185,7 +185,7 @@ public struct QYJSON {
 /// 私有方法来递归地释放对象
 private func unwrap(_ object: Any) -> Any {
     switch object {
-    case let json as QYJSON:
+    case let json as WYJJSON:
         return unwrap(json.object)
     case let array as [Any]:
         return array.map(unwrap)
@@ -223,12 +223,12 @@ public enum Index<T: Any>: Comparable {
     }
 }
 
-public typealias QYJSONIndex = Index<QYJSON>
-public typealias QYJSONRawIndex = Index<Any>
+public typealias WYJJSONIndex = Index<WYJJSON>
+public typealias WYJJSONRawIndex = Index<Any>
 
-extension QYJSON: Swift.Collection {
+extension WYJJSON: Swift.Collection {
 
-    public typealias Index = QYJSONRawIndex
+    public typealias Index = WYJJSONRawIndex
 
     public var startIndex: Index {
         switch type {
@@ -254,50 +254,50 @@ extension QYJSON: Swift.Collection {
         }
     }
 
-    public subscript (position: Index) -> (String, QYJSON) {
+    public subscript (position: Index) -> (String, WYJJSON) {
         switch position {
-        case .array(let idx):      return (String(idx), QYJSON(rawArray[idx]))
-        case .dictionary(let idx): return (rawDictionary[idx].key, QYJSON(rawDictionary[idx].value))
-        default:                   return ("", QYJSON.null)
+        case .array(let idx):      return (String(idx), WYJJSON(rawArray[idx]))
+        case .dictionary(let idx): return (rawDictionary[idx].key, WYJJSON(rawDictionary[idx].value))
+        default:                   return ("", WYJJSON.null)
         }
     }
 }
 
 // MARK: - Subscript
 /// 可以在下标中同时标记字符串和Int。
-public enum QYJSONKey {
+public enum WYJJSONKey {
     case index(Int)
     case key(String)
 }
 
-public protocol QYJSONSubscriptType {
-    var jsonKey: QYJSONKey { get }
+public protocol WYJJSONSubscriptType {
+    var jsonKey: WYJJSONKey { get }
 }
 
-extension Int: QYJSONSubscriptType {
-    public var jsonKey: QYJSONKey {
-        return QYJSONKey.index(self)
+extension Int: WYJJSONSubscriptType {
+    public var jsonKey: WYJJSONKey {
+        return WYJJSONKey.index(self)
     }
 }
 
-extension String: QYJSONSubscriptType {
-    public var jsonKey: QYJSONKey {
-        return QYJSONKey.key(self)
+extension String: WYJJSONSubscriptType {
+    public var jsonKey: WYJJSONKey {
+        return WYJJSONKey.key(self)
     }
 }
 
-extension QYJSON {
-    fileprivate subscript(_ index: Int) -> QYJSON {
+extension WYJJSON {
+    fileprivate subscript(_ index: Int) -> WYJJSON {
         get {
             if type != .array {
-                var r = QYJSON.null
-                r.error = self.error ?? QYJSONError.wrongType
+                var r = WYJJSON.null
+                r.error = self.error ?? WYJJSONError.wrongType
                 return r
             } else if rawArray.indices.contains(index) {
-                return QYJSON(rawArray[index])
+                return WYJJSON(rawArray[index])
             } else {
-                var r = QYJSON.null
-                r.error = QYJSONError.indexOutOfBounds
+                var r = WYJJSON.null
+                r.error = WYJJSONError.indexOutOfBounds
                 return r
             }
         }
@@ -310,17 +310,17 @@ extension QYJSON {
         }
     }
 
-    fileprivate subscript(_ key: String) -> QYJSON {
+    fileprivate subscript(_ key: String) -> WYJJSON {
         get {
-            var r = QYJSON.null
+            var r = WYJJSON.null
             if type == .dictionary {
                 if let o = rawDictionary[key] {
-                    r = QYJSON(o)
+                    r = WYJJSON(o)
                 } else {
-                    r.error = QYJSONError.notExist
+                    r.error = WYJJSONError.notExist
                 }
             } else {
-                r.error = self.error ?? QYJSONError.wrongType
+                r.error = self.error ?? WYJJSONError.wrongType
             }
             return r
         }
@@ -331,7 +331,7 @@ extension QYJSON {
         }
     }
 
-    fileprivate subscript(sub sub: QYJSONSubscriptType) -> QYJSON {
+    fileprivate subscript(sub sub: WYJJSONSubscriptType) -> WYJJSON {
         get {
             switch sub.jsonKey {
             case .index(let index): return self[index]
@@ -346,7 +346,7 @@ extension QYJSON {
         }
     }
 
-    public subscript(path: [QYJSONSubscriptType]) -> QYJSON {
+    public subscript(path: [WYJJSONSubscriptType]) -> WYJJSON {
         get {
             return path.reduce(self) { $0[sub: $1] }
         }
@@ -364,7 +364,7 @@ extension QYJSON {
         }
     }
 
-    public subscript(path: QYJSONSubscriptType...) -> QYJSON {
+    public subscript(path: WYJJSONSubscriptType...) -> WYJJSON {
         get {
             return self[path]
         }
@@ -375,7 +375,7 @@ extension QYJSON {
 }
 
 // MARK: - LiteralConvertible
-extension QYJSON: Swift.ExpressibleByStringLiteral {
+extension WYJJSON: Swift.ExpressibleByStringLiteral {
 
     public init(stringLiteral value: StringLiteralType) {
         self.init(value)
@@ -390,35 +390,35 @@ extension QYJSON: Swift.ExpressibleByStringLiteral {
     }
 }
 
-extension QYJSON: Swift.ExpressibleByIntegerLiteral {
+extension WYJJSON: Swift.ExpressibleByIntegerLiteral {
 
     public init(integerLiteral value: IntegerLiteralType) {
         self.init(value)
     }
 }
 
-extension QYJSON: Swift.ExpressibleByBooleanLiteral {
+extension WYJJSON: Swift.ExpressibleByBooleanLiteral {
 
     public init(booleanLiteral value: BooleanLiteralType) {
         self.init(value)
     }
 }
 
-extension QYJSON: Swift.ExpressibleByFloatLiteral {
+extension WYJJSON: Swift.ExpressibleByFloatLiteral {
 
     public init(floatLiteral value: FloatLiteralType) {
         self.init(value)
     }
 }
 
-extension QYJSON: Swift.ExpressibleByDictionaryLiteral {
+extension WYJJSON: Swift.ExpressibleByDictionaryLiteral {
     public init(dictionaryLiteral elements: (String, Any)...) {
         let dictionary = elements.reduce(into: [String: Any](), { $0[$1.0] = $1.1})
         self.init(dictionary)
     }
 }
 
-extension QYJSON: Swift.ExpressibleByArrayLiteral {
+extension WYJJSON: Swift.ExpressibleByArrayLiteral {
 
     public init(arrayLiteral elements: Any...) {
         self.init(elements)
@@ -426,10 +426,10 @@ extension QYJSON: Swift.ExpressibleByArrayLiteral {
 }
 
 // MARK: - Raw
-extension QYJSON: Swift.RawRepresentable {
+extension WYJJSON: Swift.RawRepresentable {
 
     public init?(rawValue: Any) {
-        if QYJSON(rawValue).type == .unknown {
+        if WYJJSON(rawValue).type == .unknown {
             return nil
         } else {
             self.init(rawValue)
@@ -442,7 +442,7 @@ extension QYJSON: Swift.RawRepresentable {
 
     public func rawData(options opt: JSONSerialization.WritingOptions = JSONSerialization.WritingOptions(rawValue: 0)) throws -> Data {
         guard JSONSerialization.isValidJSONObject(object) else {
-            throw QYJSONError.invalidJSON
+            throw WYJJSONError.invalidJSON
         }
 
         return try JSONSerialization.data(withJSONObject: object, options: opt)
@@ -469,7 +469,7 @@ extension QYJSON: Swift.RawRepresentable {
     }
 
     fileprivate func _rawString(_ encoding: String.Encoding = .utf8, options: [writingOptionsKeys: Any], maxObjectDepth: Int = 10) throws -> String? {
-        guard maxObjectDepth > 0 else { throw QYJSONError.invalidJSON }
+        guard maxObjectDepth > 0 else { throw WYJJSONError.invalidJSON }
         switch type {
         case .dictionary:
             do {
@@ -490,9 +490,9 @@ extension QYJSON: Swift.RawRepresentable {
                         return "\"\(key)\": null"
                     }
 
-                    let nestedValue = QYJSON(unwrappedValue)
+                    let nestedValue = WYJJSON(unwrappedValue)
                     guard let nestedString = try nestedValue._rawString(encoding, options: options, maxObjectDepth: maxObjectDepth - 1) else {
-                        throw QYJSONError.elementTooDeep
+                        throw WYJJSONError.elementTooDeep
                     }
                     if nestedValue.type == .string {
                         return "\"\(key)\": \"\(nestedString.replacingOccurrences(of: "\\", with: "\\\\").replacingOccurrences(of: "\"", with: "\\\""))\""
@@ -521,9 +521,9 @@ extension QYJSON: Swift.RawRepresentable {
                         return "null"
                     }
 
-                    let nestedValue = QYJSON(unwrappedValue)
+                    let nestedValue = WYJJSON(unwrappedValue)
                     guard let nestedString = try nestedValue._rawString(encoding, options: options, maxObjectDepth: maxObjectDepth - 1) else {
-                        throw QYJSONError.invalidJSON
+                        throw WYJJSONError.invalidJSON
                     }
                     if nestedValue.type == .string {
                         return "\"\(nestedString.replacingOccurrences(of: "\\", with: "\\\\").replacingOccurrences(of: "\"", with: "\\\""))\""
@@ -546,7 +546,7 @@ extension QYJSON: Swift.RawRepresentable {
 }
 
 // MARK: - Printable, DebugPrintable
-extension QYJSON: Swift.CustomStringConvertible, Swift.CustomDebugStringConvertible {
+extension WYJJSON: Swift.CustomStringConvertible, Swift.CustomDebugStringConvertible {
 
     public var description: String {
         return rawString(options: .prettyPrinted) ?? "unknown"
@@ -559,15 +559,15 @@ extension QYJSON: Swift.CustomStringConvertible, Swift.CustomDebugStringConverti
 
 // MARK: - Array
 
-extension QYJSON {
+extension WYJJSON {
 
     //Optional [JSON]
-    public var array: [QYJSON]? {
-        return type == .array ? rawArray.map { QYJSON($0) } : nil
+    public var array: [WYJJSON]? {
+        return type == .array ? rawArray.map { WYJJSON($0) } : nil
     }
 
     //Non-optional [JSON]
-    public var arrayValue: [QYJSON] {
+    public var arrayValue: [WYJJSON] {
         return self.array ?? []
     }
 
@@ -586,14 +586,14 @@ extension QYJSON {
 }
 
 // MARK: - Dictionary
-extension QYJSON {
+extension WYJJSON {
 
     //Optional [String : JSON]
-    public var dictionary: [String: QYJSON]? {
+    public var dictionary: [String: WYJJSON]? {
         if type == .dictionary {
-            var d = [String: QYJSON](minimumCapacity: rawDictionary.count)
+            var d = [String: WYJJSON](minimumCapacity: rawDictionary.count)
             rawDictionary.forEach { pair in
-                d[pair.key] = QYJSON(pair.value)
+                d[pair.key] = WYJJSON(pair.value)
             }
             return d
         } else {
@@ -602,7 +602,7 @@ extension QYJSON {
     }
 
     //Non-optional [String : JSON]
-    public var dictionaryValue: [String: QYJSON] {
+    public var dictionaryValue: [String: WYJJSON] {
         return dictionary ?? [:]
     }
 
@@ -621,7 +621,7 @@ extension QYJSON {
 }
 
 // MARK: - Bool
-extension QYJSON {
+extension WYJJSON {
 
     //Optional bool
     public var bool: Bool? {
@@ -653,7 +653,7 @@ extension QYJSON {
 }
 
 // MARK: - String
-extension QYJSON {
+extension WYJJSON {
 
     //Optional string
     public var string: String? {
@@ -685,7 +685,7 @@ extension QYJSON {
 }
 
 // MARK: - Number
-extension QYJSON {
+extension WYJJSON {
 
     //Optional number
     public var number: NSNumber? {
@@ -720,7 +720,7 @@ extension QYJSON {
 }
 
 // MARK: - Null
-extension QYJSON {
+extension WYJJSON {
 
     public var null: NSNull? {
         set {
@@ -742,7 +742,7 @@ extension QYJSON {
 }
 
 // MARK: - URL
-extension QYJSON {
+extension WYJJSON {
 
     //Optional URL
     public var url: URL? {
@@ -769,7 +769,7 @@ extension QYJSON {
 }
 
 // MARK: - Int, Double, Float, Int8, Int16, Int32, Int64
-extension QYJSON {
+extension WYJJSON {
 
     public var double: Double? {
         get {
@@ -1037,9 +1037,9 @@ extension QYJSON {
 }
 
 // MARK: - Comparable
-extension QYJSON: Swift.Comparable {}
+extension WYJJSON: Swift.Comparable {}
 
-public func == (lhs: QYJSON, rhs: QYJSON) -> Bool {
+public func == (lhs: WYJJSON, rhs: WYJJSON) -> Bool {
 
     switch (lhs.type, rhs.type) {
     case (.number, .number): return lhs.rawNumber == rhs.rawNumber
@@ -1052,7 +1052,7 @@ public func == (lhs: QYJSON, rhs: QYJSON) -> Bool {
     }
 }
 
-public func <= (lhs: QYJSON, rhs: QYJSON) -> Bool {
+public func <= (lhs: WYJJSON, rhs: WYJJSON) -> Bool {
 
     switch (lhs.type, rhs.type) {
     case (.number, .number): return lhs.rawNumber <= rhs.rawNumber
@@ -1065,7 +1065,7 @@ public func <= (lhs: QYJSON, rhs: QYJSON) -> Bool {
     }
 }
 
-public func >= (lhs: QYJSON, rhs: QYJSON) -> Bool {
+public func >= (lhs: WYJJSON, rhs: WYJJSON) -> Bool {
 
     switch (lhs.type, rhs.type) {
     case (.number, .number): return lhs.rawNumber >= rhs.rawNumber
@@ -1078,7 +1078,7 @@ public func >= (lhs: QYJSON, rhs: QYJSON) -> Bool {
     }
 }
 
-public func > (lhs: QYJSON, rhs: QYJSON) -> Bool {
+public func > (lhs: WYJJSON, rhs: WYJJSON) -> Bool {
 
     switch (lhs.type, rhs.type) {
     case (.number, .number): return lhs.rawNumber > rhs.rawNumber
@@ -1087,7 +1087,7 @@ public func > (lhs: QYJSON, rhs: QYJSON) -> Bool {
     }
 }
 
-public func < (lhs: QYJSON, rhs: QYJSON) -> Bool {
+public func < (lhs: WYJJSON, rhs: WYJJSON) -> Bool {
 
     switch (lhs.type, rhs.type) {
     case (.number, .number): return lhs.rawNumber < rhs.rawNumber
@@ -1169,7 +1169,7 @@ public enum writingOptionsKeys {
 }
 
 // MARK: - JSON: Codable
-extension QYJSON: Codable {
+extension WYJJSON: Codable {
     private static var codableTypes: [Codable.Type] {
         return [
             Bool.self,
@@ -1185,15 +1185,15 @@ extension QYJSON: Codable {
             UInt64.self,
             Double.self,
             String.self,
-            [QYJSON].self,
-            [String: QYJSON].self
+            [WYJJSON].self,
+            [String: WYJJSON].self
         ]
     }
     public init(from decoder: Decoder) throws {
         var object: Any?
 
         if let container = try? decoder.singleValueContainer(), !container.decodeNil() {
-            for type in QYJSON.codableTypes {
+            for type in WYJJSON.codableTypes {
                 if object != nil {
                     break
                 }
@@ -1223,9 +1223,9 @@ extension QYJSON: Codable {
                     object = try? container.decode(doubleType)
                 case let stringType as String.Type:
                     object = try? container.decode(stringType)
-                case let jsonValueArrayType as [QYJSON].Type:
+                case let jsonValueArrayType as [WYJJSON].Type:
                     object = try? container.decode(jsonValueArrayType)
-                case let jsonValueDictType as [String: QYJSON].Type:
+                case let jsonValueDictType as [String: WYJJSON].Type:
                     object = try? container.decode(jsonValueDictType)
                 default:
                     break
