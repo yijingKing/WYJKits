@@ -16,6 +16,9 @@ public extension WYJProtocol where T: UITextField {
         obj.key = key
         return self
     }
+    func key() -> String {
+        return obj.key
+    }
     ///最大字数
     @discardableResult
     func maxCount(_ count: Int) -> WYJProtocol {

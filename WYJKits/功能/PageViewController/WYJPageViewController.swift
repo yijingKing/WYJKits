@@ -58,7 +58,7 @@ open class WYJPageViewController: WYJBaseViewController {
     fileprivate lazy var pageViewController: UIPageViewController = {
         let page = UIPageViewController.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: [UIPageViewController.OptionsKey.interPageSpacing:0])
         return page.yi.then({
-            $0.view.frame = CGRect(x: 0, y: WYJStatusAndNavHeight + WYJRatio(41), width: view.frame.width, height: view.frame.height - WYJRatio(41))
+            $0.view.frame = CGRect(x: 0, y: WYJStatusAndNavHeight + WYJRatio(41), width: view.frame.width, height: view.frame.height - WYJRatio(41) - WYJStatusAndNavHeight)
             $0.delegate = self
             $0.dataSource = self
             view.addSubview($0.view)

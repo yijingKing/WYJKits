@@ -97,7 +97,7 @@ public extension WYJProtocol where T: UIViewController {
                               _ font: UIFont? = nil,
                               _ color: UIColor? = nil,
                               _ navBlk: @escaping()->()) -> WYJProtocol {
-        let item = obj._customBarButtonItem(title, color ?? UIColor.black, font ?? UIFont.systemFont(ofSize: 14), nil, #selector(obj.navLeftItemClick))
+        let item = obj._customBarButtonItem(title, color ?? UIColor.black, font ?? UIFont.systemFont(ofSize: 14), nil, obj, #selector(obj.navLeftItemClick))
         obj.navigationItem.leftBarButtonItem = item
         obj.leftNavBlock = navBlk
         return self
@@ -107,7 +107,7 @@ public extension WYJProtocol where T: UIViewController {
     @discardableResult
     func navLeftImageItem (_ image: UIImage?,
                               _ navBlk: @escaping()->()) -> WYJProtocol {
-        let leftItem = UIBarButtonItem(image: image?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(obj.navLeftItemClick))
+        let leftItem = UIBarButtonItem(image: image?.withRenderingMode(.alwaysOriginal), style: .plain, target: obj, action: #selector(obj.navLeftItemClick))
         obj.navigationItem.leftBarButtonItem = leftItem
         obj.leftNavBlock = navBlk
         return self
@@ -120,7 +120,7 @@ public extension WYJProtocol where T: UIViewController {
                                       _ font: UIFont? = nil,
                                       _ image: UIImage? = nil,
                                       _ navBlk: @escaping()->()) -> WYJProtocol {
-        let item = obj._customBarButtonItem(title, color ?? UIColor.black, font ?? UIFont.systemFont(ofSize: 17), image, #selector(obj.navLeftItemClick))
+        let item = obj._customBarButtonItem(title, color ?? UIColor.black, font ?? UIFont.systemFont(ofSize: 17), image, obj, #selector(obj.navLeftItemClick))
         obj.navigationItem.leftBarButtonItem = item
         obj.leftNavBlock = navBlk
         return self
@@ -132,7 +132,7 @@ public extension WYJProtocol where T: UIViewController {
                                _ font: UIFont? = nil,
                                _ color: UIColor? = nil,
                                _ navBlk: @escaping()->()) -> WYJProtocol {
-        let item = obj._customBarButtonItem(title, color ?? UIColor.black, font ?? UIFont.systemFont(ofSize: 14), nil, #selector(obj.navRightItemClick))
+        let item = obj._customBarButtonItem(title, color ?? UIColor.black, font ?? UIFont.systemFont(ofSize: 14), nil, obj, #selector(obj.navRightItemClick))
         obj.navigationItem.rightBarButtonItem = item
         obj.rightNavBlock = navBlk
         return self
@@ -141,7 +141,7 @@ public extension WYJProtocol where T: UIViewController {
     ///右图片按钮
     @discardableResult
     func navRightImageItem (_ image: UIImage,_ navBlk: @escaping()->()) -> WYJProtocol {
-        let rightItem = UIBarButtonItem(image: image.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(obj.navRightItemClick))
+        let rightItem = UIBarButtonItem(image: image.withRenderingMode(.alwaysOriginal), style: .plain, target: obj, action: #selector(obj.navRightItemClick))
         obj.navigationItem.rightBarButtonItem = rightItem
         obj.rightNavBlock = navBlk
         return self
@@ -153,7 +153,7 @@ public extension WYJProtocol where T: UIViewController {
                                        _ color: UIColor? = nil,
                                        _ font: UIFont? = nil,
                                        _ image: UIImage? = nil,_ navBlk: @escaping()->()) -> WYJProtocol {
-        let item = obj._customBarButtonItem(title, color ?? UIColor.black, font ?? UIFont.systemFont(ofSize: 17), image, #selector(obj.navRightItemClick))
+        let item = obj._customBarButtonItem(title, color ?? UIColor.black, font ?? UIFont.systemFont(ofSize: 17), image, obj, #selector(obj.navRightItemClick))
         obj.navigationItem.rightBarButtonItem = item
         obj.rightNavBlock = navBlk
         return self
@@ -290,13 +290,14 @@ fileprivate extension UIViewController {
                                        _ color: UIColor? = nil,
                                        _ font: UIFont? = nil,
                                        _ image: UIImage? = nil,
+                                       _ target: Any?,
                                        _ block: Selector) -> UIBarButtonItem {
         let button = UIButton().yi.then {
             $0.setTitle(title, for: .normal)
             $0.setTitleColor(color ?? UIColor.black, for: .normal)
             $0.setBackgroundImage(image, for: .normal)
             $0.titleLabel?.font = font ?? UIFont.systemFont(ofSize: 17)
-            $0.addTarget(self, action: block, for: .touchUpInside)
+            $0.addTarget(target, action: block, for: .touchUpInside)
         }
         return UIBarButtonItem.init(customView: button)
     }

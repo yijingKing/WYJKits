@@ -86,18 +86,28 @@ extension WYJBaseViewController {
         }
     }
     ///注册表视图cell
-    public func registerCell(cells: [AnyClass]) {
+    public func registerCell(_ cells: [AnyClass]) {
         for index in 0..<cells.count {
             mainTableView?.register(cells[index], forCellReuseIdentifier: "\(cells[index].self)")
         }
     }
     ///注册表视图cell
-    public func registerCell(cells: AnyClass) {
+    public func registerCell(_ cells: AnyClass) {
         mainTableView?.register(cells, forCellReuseIdentifier: "\(cells.self)")
     }
     ///注册表视图cell
     public func registerCell(cell: AnyClass,cellName: String) {
         mainTableView?.register(cell, forCellReuseIdentifier: cellName)
+    }
+    ///注册表视图nib cell
+    public func registerCell(_ cellNib: String) {
+        mainTableView?.register(UINib.init(nibName: cellNib, bundle: nil), forCellReuseIdentifier: cellNib)
+    }
+    ///注册表视图nib cell
+    public func registerCell(_ cellNibs:[String]) {
+        for index in 0 ..< cellNibs.count {
+            mainTableView?.register(UINib.init(nibName: cellNibs[index], bundle: nil), forCellReuseIdentifier: cellNibs[index])
+        }
     }
     ///注册表视图nib cell
     public func registerCell(cellNib: String,cellNameNib: String) {
@@ -109,6 +119,7 @@ extension WYJBaseViewController {
             mainTableView?.register(UINib.init(nibName: cellNibs[index], bundle: nil), forCellReuseIdentifier: cellNibName[index])
         }
     }
+    
     //MARK:-注册CollectionView cell
     ///注册CollectionView cell
     public func registerCollectionCell(cell:AnyClass,cellName:String) {
@@ -261,3 +272,4 @@ extension WYJBaseViewController {
         }
     }
 }
+

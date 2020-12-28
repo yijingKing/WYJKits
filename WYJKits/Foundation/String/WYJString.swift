@@ -128,7 +128,7 @@ public extension WYJProtocol where T == String {
         
         let string = obj
         let index = string.index(string.startIndex, offsetBy: i)
-        return String(string[index])
+        return String(string[string.startIndex..<index])
     }
     
     ///从i到结束
@@ -230,6 +230,46 @@ public extension WYJProtocol where T == String {
         var resultString = string.trimmingCharacters(in: CharacterSet.whitespaces)
         resultString = resultString.trimmingCharacters(in: CharacterSet.newlines)
         return resultString
+    }
+    
+    /// 替换
+    /// - Parameters:
+    ///   - before: 保留前几位
+    ///   - after: 保留后几位
+    ///   - text:  替换的文本
+    /// - Returns: 替换后的字符串
+    func replac(beforeFew before: Int,afterFew after: Int, _ text: String? = nil) -> String? {
+        let phone = obj
+        var tempStr = ""
+        let replacText = text ?? "*"
+        while tempStr.count < phone.count - before - after {
+            tempStr = tempStr + replacText
+        }
+        return phone.yi.index(to: before) + tempStr + phone.yi.index(after: phone.count - after)
+    }
+    
+    /// 银行卡替换
+    /// - Parameters:
+    ///   - before: 保留前几位
+    ///   - after: 保留后几位
+    ///   - text:  替换的文本
+    /// - Returns: 替换后的字符串
+    func replacCard(beforeFew before: Int,afterFew after: Int, _ text: String? = nil) -> String? {
+        var idCardNumber = obj
+        var tempStr = ""
+        let replacText = text ?? "*"
+        while tempStr.count < idCardNumber.count - before - after {
+            tempStr = tempStr + replacText
+        }
+        idCardNumber = idCardNumber.yi.index(to: before) + tempStr + idCardNumber.yi.index(after: idCardNumber.count - after)
+        let nu = idCardNumber.count / 4
+        var i = 1
+        while i <= nu {
+            idCardNumber = idCardNumber.yi.insert(" ", index: 4 * i + i - 1)
+            i += 1
+        }
+        
+        return idCardNumber
     }
 }
 

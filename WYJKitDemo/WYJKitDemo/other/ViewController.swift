@@ -59,7 +59,7 @@ class ViewController: WYJBaseViewController {
         WYJLog(model?.ss?.double ?? 0.0000000)
         
         WYJLog("1234567890".yi.index(after: 3))
-        
+        WYJLog("1234567890987654321".yi.replacIDCard(beforeFew: 3, afterFew: 3))
         ceshi3()
         
     }
