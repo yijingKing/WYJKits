@@ -1,13 +1,13 @@
 Pod::Spec.new do |s|
   s.name             = 'WYJKits'
-  s.version          = '1.0.2'
+  s.version          = '1.0.3'
   s.summary          = 'WYJKits 类扩展,功能集合'
   s.description      = <<-DESC
                             ...
                        DESC
 
   s.homepage         = 'https://github.com/MemoryKing/WYJKits.git'
-  #s.license          = { :type => 'MIT', :file => 'LICENSE' }
+  #s.license         = { :type => 'MIT', :file => 'LICENSE' }
   s.license          = 'MIT'
   s.author           = { '╰莪呮想好好宠Nǐつ ' => '1091676312@qq.com' }
   s.source           = { :git => 'https://github.com/MemoryKing/WYJKits.git', :tag => s.version.to_s }

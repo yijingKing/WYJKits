@@ -48,7 +48,7 @@ public extension UIColor {
         var green: CGFloat = 0.0
         var blue:  CGFloat = 0.0
         var alpha: CGFloat = alpha
-        var hex:   String = hex
+        var hex:   String  = hex
         if hex.hasPrefix("#") {
             let index = hex.index(hex.startIndex, offsetBy: 1)
             hex = String(hex[index...])

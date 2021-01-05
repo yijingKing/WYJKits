@@ -38,39 +38,34 @@ open class WYJPermissionsDetection {
 
     // MARK: - 检测是否开启摄像头
     /// 检测是否开启摄像头 (可用)
-    public class func isOpenCaptureDeviceService() -> Bool {
-        var isOpen = true
+    public class func isOpenCaptureDeviceService(_ action :@escaping ((Bool)->())) {
         let authStatus = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
         if authStatus == AVAuthorizationStatus.notDetermined {
             AVCaptureDevice.requestAccess(for: AVMediaType.video) { (granted) in
-                isOpen = granted
+                action(granted)
             }
         } else if authStatus == AVAuthorizationStatus.restricted || authStatus == AVAuthorizationStatus.denied {
-            isOpen = false
+            action(false)
         }
-        return isOpen
     }
     
     // MARK: - 检测是否开启相册
     /// 检测是否开启相册
-    public class func isOpenAlbumService() -> Bool {
-        var isOpen = true
+    public class func isOpenAlbumService(_ action :@escaping ((Bool)->())) {
         let authStatus = PHPhotoLibrary.authorizationStatus()
         if authStatus == .notDetermined {
             PHPhotoLibrary.requestAuthorization({ (status) in
                 if status == .authorized {
-                    isOpen = true
+                    action(true)
                 } else if status == .denied || status == .restricted {
-                    isOpen = false
+                    action(false)
                 } else {
-                    isOpen = false
+                    action(false)
                 }
             })
         } else if authStatus == PHAuthorizationStatus.restricted || authStatus == PHAuthorizationStatus.denied {
-            isOpen = false
+            action(false)
         }
-        
-        return isOpen
     }
     
     // MARK: - 跳转系统设置界面

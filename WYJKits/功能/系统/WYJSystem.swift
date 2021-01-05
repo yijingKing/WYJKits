@@ -36,40 +36,45 @@ open class WYJSystem: NSObject {
     
     ///打开相册
     public func invokeSystemPhoto() -> Void {
-        guard WYJPermissionsDetection.isOpenAlbumService() else {
-            WYJPermissionsDetection.OpenPermissionsSetting()
-            WYJLog("无权限打开相册")
-            return
+        WYJPermissionsDetection.isOpenAlbumService { [weak self](b) in
+            if b {
+                let imagePickerController = UIImagePickerController()
+                imagePickerController.sourceType = .photoLibrary
+                imagePickerController.delegate = self
+                if let isEdi = self?.allowsEditing {
+                    imagePickerController.allowsEditing = isEdi
+                }
+                if #available(iOS 11.0, *) {
+                    UIScrollView.appearance().contentInsetAdjustmentBehavior = .automatic
+                }
+                UIApplication.shared.keyWindow?.rootViewController?.present(imagePickerController, animated: true, completion: nil)
+            } else {
+                WYJPermissionsDetection.OpenPermissionsSetting()
+                WYJLog("无权限打开相册")
+            }
         }
-        let imagePickerController = UIImagePickerController()
-        imagePickerController.sourceType = .photoLibrary
-        imagePickerController.delegate = self
-        if let isEdi = allowsEditing {
-            imagePickerController.allowsEditing = isEdi
-        }
-        if #available(iOS 11.0, *) {
-            UIScrollView.appearance().contentInsetAdjustmentBehavior = .automatic
-        }
-        UIApplication.shared.keyWindow?.rootViewController?.present(imagePickerController, animated: true, completion: nil)
+        
     }
     ///打开相机
     public func invokeSystemCamera() -> Void {
-        guard WYJPermissionsDetection.isOpenCaptureDeviceService() else {
-            WYJPermissionsDetection.OpenPermissionsSetting()
-            WYJLog("无权限打开相机")
-            return
+        WYJPermissionsDetection.isOpenCaptureDeviceService { [weak self](b) in
+            if b {
+                let imagePickerController = UIImagePickerController()
+                imagePickerController.sourceType = .camera
+                imagePickerController.delegate = self
+                imagePickerController.allowsEditing = false
+                imagePickerController.cameraCaptureMode = .photo
+                imagePickerController.mediaTypes = ["public.image"]
+                
+                if #available(iOS 11.0, *) {
+                    UIScrollView.appearance().contentInsetAdjustmentBehavior = .automatic
+                }
+                UIApplication.shared.keyWindow?.rootViewController?.present(imagePickerController, animated: true, completion: nil)
+            } else {
+                WYJPermissionsDetection.OpenPermissionsSetting()
+                WYJLog("无权限打开相机")
+            }
         }
-        let imagePickerController = UIImagePickerController()
-        imagePickerController.sourceType = .camera
-        imagePickerController.delegate = self
-        imagePickerController.allowsEditing = false
-        imagePickerController.cameraCaptureMode = .photo
-        imagePickerController.mediaTypes = ["public.image"]
-        
-        if #available(iOS 11.0, *) {
-            UIScrollView.appearance().contentInsetAdjustmentBehavior = .automatic
-        }
-        UIApplication.shared.keyWindow?.rootViewController?.present(imagePickerController, animated: true, completion: nil)
     }
 }
 //MARK: ------- 打开相机相册

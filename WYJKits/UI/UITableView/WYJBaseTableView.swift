@@ -108,7 +108,7 @@ public extension WYJProtocol where T: WYJBaseTableView {
     }
     @discardableResult
     func isScrollEnabled(_ b: Bool) -> WYJProtocol {
-        obj.isScrollEnabled = b
+        obj.isscrollEnabled = b
         return self
     }
     

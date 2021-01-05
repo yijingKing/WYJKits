@@ -18,11 +18,13 @@ public extension WYJProtocol where T: UIImage {
     ///保存到相册
     @discardableResult
     func savedPhotosAlbum(_ result: ((Bool)->())?) -> WYJProtocol {
-        if WYJPermissionsDetection.isOpenAlbumService() {
-            obj.savedPhotosAlbum(result)
-        } else {
-            result?(false)
-        }
+        WYJPermissionsDetection.isOpenAlbumService({
+            if $0 {
+                obj.savedPhotosAlbum(result)
+            } else {
+                result?(false)
+            }
+        })
         return self
     }
 }
@@ -385,7 +387,7 @@ public extension WYJProtocol where T: UIImage {
      func croping(_ rect: CGRect) -> UIImage {
         guard rect.size.height < obj.size.height && rect.size.height < obj.size.height else { return obj }
         guard let image: CGImage = obj.cgImage?.cropping(to: rect) else { return obj }
-         return UIImage(cgImage: image)
+        return UIImage(cgImage: image)
      }
     
      /// 旋转指定角度

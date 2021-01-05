@@ -294,10 +294,20 @@ public extension UIView {
 
 //MARK: --- layer
 public extension WYJProtocol where T: UIView {
+    //MARK: --- 切圆角
+    ///切圆角
     @discardableResult
     func cornerRadii(_ radii: CGFloat) -> WYJProtocol {
         obj.layoutIfNeeded()
         obj.cornerRadii = .init(radii)
+        return self
+    }
+    //MARK: --- 切圆角
+    ///切圆角
+    @discardableResult
+    func cornerRadii(_ topLeft: CGFloat,_ topRight: CGFloat,_ bottomLeft: CGFloat,_ bottomRight: CGFloat) -> WYJProtocol {
+        obj.layoutIfNeeded()
+        obj.cornerRadii = .init(topLeft: topLeft, topRight: topRight, bottomLeft: bottomLeft, bottomRight: bottomRight)
         return self
     }
     //MARK: --- 连框

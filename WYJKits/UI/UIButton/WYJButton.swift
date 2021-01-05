@@ -36,6 +36,11 @@ public extension WYJProtocol where T: UIButton {
         return self
     }
     @discardableResult
+    func backgroundColor(_ color: UIColor?) -> WYJProtocol {
+        obj.backgroundColor = color
+        return self
+    }
+    @discardableResult
     func selectedColor(_ color: UIColor?) -> WYJProtocol {
         obj.setTitleColor(color, for: .selected)
         obj.setTitleColor(color?.withAlphaComponent(0.5), for: .disabled)
