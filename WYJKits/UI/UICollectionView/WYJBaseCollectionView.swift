@@ -11,7 +11,6 @@ import UIKit
 import MJRefresh
 import DZNEmptyDataSet
 
-
 public extension WYJProtocol where T: WYJBaseCollectionView {
     @discardableResult
     func empty_title(_ title: String) -> WYJProtocol {
@@ -87,69 +86,18 @@ public extension WYJProtocol where T: WYJBaseCollectionView {
         obj.empty_backgroundColor = color
         return self
     }
-    ///分页页数
-    @discardableResult
-    func page(_ i: Int) -> WYJProtocol {
-        obj.page = i
-        return self
-    }
-    ///分页每页个数
-    @discardableResult
-    func pageNumber(_ i: Int) -> WYJProtocol {
-        obj.pageNumber = i
-        return self
-    }
-    ///数据个数
-    @discardableResult
-    func dataCount(_ i: Int) -> WYJProtocol {
-        obj.dataCount = i
-        return self
-    }
+    
     @discardableResult
     func isScrollEnabled(_ b: Bool) -> WYJProtocol {
         obj.isScrollEnabled = b
         return self
     }
     
-    ///下拉
-    @discardableResult
-    func refreshNormakHeader (_ refreshingBlock: @escaping() -> Void) -> WYJProtocol {
-        obj.refreshNormakHeader(refreshingBlock)
-        return self
-    }
-    
-    ///动画下拉
-    @discardableResult
-    func refreshGifHeader (_ refreshingBlock: @escaping() -> Void) -> WYJProtocol {
-        obj.refreshGifHeader(refreshingBlock)
-        return self
-    }
-    
-    ///上拉
-    @discardableResult
-    func refreshFooter (_ refreshingBlock: @escaping() -> Void) -> WYJProtocol {
-        obj.refreshFooter(refreshingBlock)
-        return self
-    }
-    
-    ///提示没有更多的数据
-    @discardableResult
-    func endRefreshingWithNoMoreData() -> WYJProtocol {
-        obj.endRefreshingWithNoMoreData()
-        return self
-    }
-    ///结束刷新状态
-    @discardableResult
-    func endRefreshing() -> WYJProtocol {
-        obj.endRefreshing()
-        return self
-    }
     @discardableResult
     func empty_button(_ title:String, _ bl: (() -> Void)?) -> WYJProtocol {
         obj.empty_button(title: title, bl)
         return self
     }
-    
 }
 
 open class WYJBaseCollectionView: UICollectionView {
@@ -191,12 +139,6 @@ open class WYJBaseCollectionView: UICollectionView {
     ///偏移
     public var empty_verticalOffset          : CGFloat   = 0
     public var empty_backgroundColor         : UIColor   = WYJF5Color
-    ///分页页数
-    public var page: Int = 1
-    ///分页每页个数
-    public var pageNumber: Int = 10
-    ///数据个数
-    public var dataCount: Int = 0
     public var isscrollEnabled         : Bool = true
     public override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
@@ -211,7 +153,12 @@ open class WYJBaseCollectionView: UICollectionView {
         emptyDataSetSource = self
         emptyDataSetDelegate = self
     }
-    
+    open override func reloadData() {
+        super.reloadData()
+        isScrollEnabled = isscrollEnabled
+        
+        endRefreshing()
+    }
     open override func reloadEmptyDataSet() {
         super.reloadEmptyDataSet()
     }
@@ -223,51 +170,6 @@ open class WYJBaseCollectionView: UICollectionView {
     public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    open override func reloadData() {
-        super.reloadData()
-        isScrollEnabled = isscrollEnabled
-        
-        endRefreshing()
-        if let _ = mj_footer {
-            if page * pageNumber > dataCount {
-                endRefreshingWithNoMoreData()
-            }
-            page += 1
-        }
-    }
-    
-}
-
-//MARK: --- MJRefresh 刷新与加载
-public extension WYJBaseCollectionView {
-    ///下拉
-    func refreshNormakHeader (_ refreshingBlock: @escaping() -> Void) {
-        let header = MJRefreshNormalHeader.init(refreshingBlock: refreshingBlock)
-        mj_header = header
-    }
-    
-    ///动画下拉
-    func refreshGifHeader (_ refreshingBlock: @escaping() -> Void) {
-        let header = MJRefreshGifHeader.init(refreshingBlock: refreshingBlock)
-        mj_header = header
-    }
-    
-    ///上拉
-    func refreshFooter (_ refreshingBlock: @escaping() -> Void) {
-        let footer = MJRefreshBackNormalFooter.init(refreshingBlock: refreshingBlock)
-        mj_footer = footer
-    }
-    
-    ///提示没有更多的数据
-    func endRefreshingWithNoMoreData(){
-        mj_footer?.endRefreshingWithNoMoreData()
-    }
-    
-    ///结束刷新状态
-    func endRefreshing() {
-        mj_header?.endRefreshing()
-        mj_footer?.endRefreshing()
-    }
     
     func empty_button(title:String , _ bl: (() -> Void)?) {
         empty_title = nil
@@ -275,7 +177,6 @@ public extension WYJBaseCollectionView {
         emptyClickBlock = bl
         reloadCollectionView()
     }
-    
 }
 
 //MARK: --- DZNEmptyDataSet  空界面

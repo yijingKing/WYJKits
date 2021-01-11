@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'WYJKits'
-  s.version          = '1.0.3'
+  s.version          = '1.0.4'
   s.summary          = 'WYJKits 类扩展,功能集合'
   s.description      = <<-DESC
                             ...
@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   s.dependency 'SnapKit'
   s.dependency 'MBProgressHUD'
   s.dependency 'Alamofire'
-    
+  
   s.resource_bundles = { 'WYJResources' => 'WYJKits/**/*.xcassets' }
   
   s.source_files = 'WYJKits/**/*.swift'

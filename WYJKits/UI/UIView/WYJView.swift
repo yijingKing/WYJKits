@@ -94,36 +94,7 @@ public extension WYJProtocol where T: UIView {
         return self
     }
 }
-public extension UIView {
-    /// 渐变色方向
-    enum GradientDirection {
-        ///垂直
-        case vertical
-        ///水平
-        case level
-        ///左上到右下
-        case leftTop
-        ///左下到右上
-        case leftBottom
-    }
-    enum ViewSide {
-        case top
-        case right
-        case bottom
-        case left
-    }
-    fileprivate func _getOneSidedBorder(frame: CGRect, color: UIColor) -> CALayer {
-        let border:CALayer = CALayer()
-        border.frame = frame
-        border.backgroundColor = color.cgColor
-        return border
-    }
-    fileprivate func _getViewBackedOneSidedBorder(frame: CGRect, color: UIColor) -> UIView {
-        let border:UIView = UIView.init(frame: frame)
-        border.backgroundColor = color
-        return border
-    }
-}
+
 //MARK: --- 跳转
 public extension WYJProtocol where T: UIView {
     @discardableResult
@@ -196,101 +167,6 @@ public extension WYJProtocol where T: UIView {
         return nil
     }
 }
-
-//MARK: --- frame
-public extension UIView {
-    var x: CGFloat {
-        get {
-            return frame.origin.x
-        } set(value) {
-            frame = CGRect(x: value, y: y, width: width, height: height)
-        }
-    }
-    var y: CGFloat {
-        get {
-            return frame.origin.y
-        } set(value) {
-            frame = CGRect(x: x, y: value, width: width, height: height)
-        }
-    }
-    var width: CGFloat {
-        get {
-            return frame.size.width
-        } set(value) {
-            frame = CGRect(x: x, y: y, width: value, height: height)
-        }
-    }
-    var height: CGFloat {
-        get {
-            return frame.size.height
-        } set(value) {
-            frame = CGRect(x: x, y: y, width: width, height: value)
-        }
-    }
-    var left: CGFloat {
-        get {
-            return x
-        } set(value) {
-            x = value
-        }
-    }
-    var right: CGFloat {
-        get {
-            return x + width
-        } set(value) {
-            x = value - width
-        }
-    }
-    var top: CGFloat {
-        get {
-            return y
-        } set(value) {
-            y = value
-        }
-    }
-    var bottom: CGFloat {
-        get {
-            return y + height
-        } set(value) {
-            y = value - height
-        }
-    }
-    var origin: CGPoint {
-        get {
-            return frame.origin
-        } set(value) {
-            frame = CGRect(origin: value, size: frame.size)
-        }
-    }
-    var centerX: CGFloat {
-        get {
-            return center.x
-        } set(value) {
-            center.x = value
-        }
-    }
-    var centerY: CGFloat {
-        get {
-            return center.y
-        } set(value) {
-            center.y = value
-        }
-    }
-    var size: CGSize {
-        get {
-            return frame.size
-        } set(value) {
-            frame = CGRect(origin: frame.origin, size: value)
-        }
-    }
-    fileprivate func _addBorderUtility(x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat, color: UIColor) {
-        let border = CALayer()
-        border.backgroundColor = color.cgColor
-        border.frame = CGRect(x: x, y: y, width: width, height: height)
-        layer.addSublayer(border)
-    }
-}
-
 
 //MARK: --- layer
 public extension WYJProtocol where T: UIView {
@@ -447,6 +323,131 @@ public extension WYJProtocol where T: UIView {
         }
     }
     
+}
+
+public extension UIView {
+    /// 渐变色方向
+    enum GradientDirection {
+        ///垂直
+        case vertical
+        ///水平
+        case level
+        ///左上到右下
+        case leftTop
+        ///左下到右上
+        case leftBottom
+    }
+    enum ViewSide {
+        case top
+        case right
+        case bottom
+        case left
+    }
+    fileprivate func _getOneSidedBorder(frame: CGRect, color: UIColor) -> CALayer {
+        let border:CALayer = CALayer()
+        border.frame = frame
+        border.backgroundColor = color.cgColor
+        return border
+    }
+    fileprivate func _getViewBackedOneSidedBorder(frame: CGRect, color: UIColor) -> UIView {
+        let border:UIView = UIView.init(frame: frame)
+        border.backgroundColor = color
+        return border
+    }
+}
+
+//MARK: --- frame
+public extension UIView {
+    var x: CGFloat {
+        get {
+            return frame.origin.x
+        } set(value) {
+            frame = CGRect(x: value, y: y, width: width, height: height)
+        }
+    }
+    var y: CGFloat {
+        get {
+            return frame.origin.y
+        } set(value) {
+            frame = CGRect(x: x, y: value, width: width, height: height)
+        }
+    }
+    var width: CGFloat {
+        get {
+            return frame.size.width
+        } set(value) {
+            frame = CGRect(x: x, y: y, width: value, height: height)
+        }
+    }
+    var height: CGFloat {
+        get {
+            return frame.size.height
+        } set(value) {
+            frame = CGRect(x: x, y: y, width: width, height: value)
+        }
+    }
+    var left: CGFloat {
+        get {
+            return x
+        } set(value) {
+            x = value
+        }
+    }
+    var right: CGFloat {
+        get {
+            return x + width
+        } set(value) {
+            x = value - width
+        }
+    }
+    var top: CGFloat {
+        get {
+            return y
+        } set(value) {
+            y = value
+        }
+    }
+    var bottom: CGFloat {
+        get {
+            return y + height
+        } set(value) {
+            y = value - height
+        }
+    }
+    var origin: CGPoint {
+        get {
+            return frame.origin
+        } set(value) {
+            frame = CGRect(origin: value, size: frame.size)
+        }
+    }
+    var centerX: CGFloat {
+        get {
+            return center.x
+        } set(value) {
+            center.x = value
+        }
+    }
+    var centerY: CGFloat {
+        get {
+            return center.y
+        } set(value) {
+            center.y = value
+        }
+    }
+    var size: CGSize {
+        get {
+            return frame.size
+        } set(value) {
+            frame = CGRect(origin: frame.origin, size: value)
+        }
+    }
+    fileprivate func _addBorderUtility(x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat, color: UIColor) {
+        let border = CALayer()
+        border.backgroundColor = color.cgColor
+        border.frame = CGRect(x: x, y: y, width: width, height: height)
+        layer.addSublayer(border)
+    }
 }
 
 //MARK: --- 手势

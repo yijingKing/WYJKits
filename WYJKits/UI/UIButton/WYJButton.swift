@@ -15,16 +15,19 @@ public extension WYJProtocol where T: UIButton {
         obj.setTitle(string, for: .normal)
         return self
     }
+    
     @discardableResult
     func titleFont(_ font: UIFont?) -> WYJProtocol {
         obj.titleLabel?.font = font
         return self
     }
+    
     @discardableResult
     func attributedTitle(_ attributed: NSAttributedString?) -> WYJProtocol {
         obj.setAttributedTitle(attributed, for: .normal)
         return self
     }
+    
     @discardableResult
     func titleColor(_ color: UIColor?) -> WYJProtocol {
         obj.setTitleColor(color, for: .normal)
@@ -35,11 +38,13 @@ public extension WYJProtocol where T: UIButton {
         }
         return self
     }
+    
     @discardableResult
     func backgroundColor(_ color: UIColor?) -> WYJProtocol {
         obj.backgroundColor = color
         return self
     }
+    
     @discardableResult
     func selectedColor(_ color: UIColor?) -> WYJProtocol {
         obj.setTitleColor(color, for: .selected)
@@ -50,6 +55,7 @@ public extension WYJProtocol where T: UIButton {
         }
         return self
     }
+    
     @discardableResult
     func titleShadowColor(_ color: UIColor?) -> WYJProtocol {
         obj.setTitleShadowColor(color, for: .normal)
@@ -57,32 +63,38 @@ public extension WYJProtocol where T: UIButton {
         obj.setTitleShadowColor(color, for: .selected)
         return self
     }
+    
     @discardableResult
     func image(_ image: UIImage?) -> WYJProtocol {
         obj.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
         return self
     }
+    
     @discardableResult
     func selectedImage(_ image: UIImage?) -> WYJProtocol {
         obj.setImage(image?.withRenderingMode(.alwaysOriginal), for: .selected)
         return self
     }
+    
     @discardableResult
     func backgroundImage(_ image: UIImage?) -> WYJProtocol {
         let img = image?.withRenderingMode(.alwaysOriginal)
         obj.setBackgroundImage(img, for: .normal)
         return self
     }
+    
     @discardableResult
     func selectedBackgroundImage(_ image: UIImage?) -> WYJProtocol {
         obj.setBackgroundImage(image?.withRenderingMode(.alwaysOriginal), for: .selected)
         return self
     }
+    
     @discardableResult
     func disabledBackgroundImage(_ image: UIImage?) -> WYJProtocol {
         obj.setBackgroundImage(image?.withRenderingMode(.alwaysOriginal), for: .disabled)
         return self
     }
+    
     ///点击
     @discardableResult
     func clickAction(_ block:(()->())?) -> WYJProtocol {

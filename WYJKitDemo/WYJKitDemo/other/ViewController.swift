@@ -70,10 +70,6 @@ class ViewController: WYJBaseViewController {
         })
         brn.yi.clickAction {
 
-            #imageLiteral(resourceName: "矩形 490").yi.savedPhotosAlbum { (b) in
-                
-            }
-            
             let img = UIImage.init(gradient: CGSize.init(width: 10, height: 10), direction: .leftBottom, colors: [.red,.blue])
             let image = UIImageView.init(image: img)
             image.frame = self.view.bounds
