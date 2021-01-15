@@ -101,7 +101,7 @@ open class WYJAlert: UIView {
     
     ///打开相机相册
     public class func invokeCameraPhotoAlbum (_ blc: ((UIImage)->())?) {
-        let system = WYJSystem.shared
+        let system = WYJSystem()
         system.photoBlock = blc
         let alertVC = UIAlertController.init(title: "", message: "请选择图片", preferredStyle: .actionSheet)
         let cameraAction = UIAlertAction.init(title: "相机", style: .default) { (action) in

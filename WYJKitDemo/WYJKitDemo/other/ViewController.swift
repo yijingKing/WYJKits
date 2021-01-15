@@ -54,13 +54,12 @@ class ViewController: WYJBaseViewController {
         let str = "{\"ss\":\"0.003880\",\"name\":null}"
         model = try? Presonewe.init(from: str.yi.toDictionary())
         
-        WYJLog(model?.name?.string ?? "123")
-        WYJLog(model?.ss?.string ?? "0.0000000")
-        WYJLog(model?.ss?.double ?? 0.0000000)
-        
-        WYJLog("1234567890".yi.index(after: 3))
+//        WYJLog(model?.name?.string ?? "123")
+//        WYJLog(model?.ss?.string ?? "0.0000000")
+//        WYJLog(model?.ss?.double ?? 0.0000000)
+//
+//        WYJLog("1234567890".yi.index(after: 3))
         ceshi3()
-        
     }
     func ceshi3() {
         let brn = UIButton.init().yi.then({
@@ -69,7 +68,14 @@ class ViewController: WYJBaseViewController {
             view.addSubview($0)
         })
         brn.yi.clickAction {
+            WYJLocation.shared.startPositioning() { (pl) in
+                WYJLog(pl)
+            } error: { (err) in
+                
+            }
 
+            return
+            
             let img = UIImage.init(gradient: CGSize.init(width: 10, height: 10), direction: .leftBottom, colors: [.red,.blue])
             let image = UIImageView.init(image: img)
             image.frame = self.view.bounds
@@ -84,6 +90,8 @@ class ViewController: WYJBaseViewController {
             WYJRequest().post(HomeAPI.login, para) { (model: MyInfo_Data) in
 
                 WYJLog(model.id)
+                let dic = model.toDictionary() as NSDictionary
+                
                 WYJHUD.show(model.id) {
                     self.yi.push(MyViewController())
                 }

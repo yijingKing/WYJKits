@@ -19,7 +19,7 @@ open class WYJPermissionsDetection {
 //    private var bluetoohTools: WYJCheckBluetooth?
     
     /// 检测是否开启联网
-    public class func openEventServiceWithBolck(_ action :@escaping ((Bool)->())) {
+    public class func isOpenEventServiceWithBolck(_ action :@escaping ((Bool)->())) {
         let cellularData = CTCellularData()
         cellularData.cellularDataRestrictionDidUpdateNotifier = { (state) in
             if state == CTCellularDataRestrictedState.restrictedStateUnknown ||  state == CTCellularDataRestrictedState.notRestricted {
@@ -71,14 +71,13 @@ open class WYJPermissionsDetection {
     // MARK: - 跳转系统设置界面
     ///跳转系统设置界面
     public class func OpenPermissionsSetting() {
-        let url = URL(string: UIApplication.openSettingsURLString)
         let alertController = UIAlertController(title: "访问受限",
                                                 message: "点击“设置”，允许访问权限",
                                                 preferredStyle: .alert)
         let cancelAction = UIAlertAction(title:"取消", style: .cancel, handler:nil)
         let settingsAction = UIAlertAction(title:"设置", style: .default, handler: {
             (action) -> Void in
-            if let openURL = url {
+            if let openURL = URL(string: UIApplication.openSettingsURLString) {
                 if  UIApplication.shared.canOpenURL(openURL) {
                     if #available(iOS 10, *) {
                         UIApplication.shared.open(openURL, options: [:],completionHandler: {(success) in})

@@ -39,7 +39,7 @@ public extension WYJCodable {
 public extension WYJCodable {
     
     ///模型转字典
-    func toDic() -> [String:Any] {
+    func toDictionary() -> [String:Any] {
         let mirro = Mirror(reflecting: self)
         var dict = [String:Any]()
         for case let (key?, value) in mirro.children {

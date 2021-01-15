@@ -1,10 +1,10 @@
 /*******************************************************************************
-Copyright (K), 2020 - ~, ╰莪呮想好好宠Nǐつ
-
-Author:        ╰莪呮想好好宠Nǐつ 
-E-mail:        1091676312@qq.com
-GitHub:        https://github.com/MemoryKing
-********************************************************************************/
+ Copyright (K), 2020 - ~, ╰莪呮想好好宠Nǐつ
+ 
+ Author:        ╰莪呮想好好宠Nǐつ
+ E-mail:        1091676312@qq.com
+ GitHub:        https://github.com/MemoryKing
+ ********************************************************************************/
 
 
 import Foundation
@@ -177,7 +177,7 @@ public extension UIImage {
     // MARK: Image with Text
     /**
      创建一个文本标签图像。
-
+     
      - Parameter text: The text to use in the label.
      - Parameter font: The font (default: System font of size 18)
      - Parameter color: The text color (default: White)
@@ -218,7 +218,7 @@ public extension UIImage {
         self.init(cgImage:(UIGraphicsGetImageFromCurrentImageContext()?.cgImage!)!)
         UIGraphicsEndImageContext()
     }
-
+    
     /**
      创建一个径向梯度。
      
@@ -265,7 +265,7 @@ public extension UIImage {
         saveBlock = result
         UIImageWriteToSavedPhotosAlbum(self, self, #selector(saveImage(image:didFinishSavingWithError:contextInfo:)), nil)
     }
-       
+    
     @objc private func saveImage(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
         if let _ = error {
             print("保存失败")
@@ -309,22 +309,22 @@ public extension UIImage {
         var start = CGPoint()
         var end = CGPoint()
         switch direction {
-        case .vertical:
-            start = CGPoint.init(x: 0, y: 0)
-            end = CGPoint.init(x: 0, y: size.height)
-            break
-        case .level:
-            start = CGPoint.init(x: 0, y: 0)
-            end = CGPoint.init(x: size.width, y: 0)
-            break
-        case .leftTop:
-            start = CGPoint.init(x: 0, y: 0)
-            end = CGPoint.init(x: size.width, y: size.height)
-            break
-        case .leftBottom:
-            start = CGPoint.init(x: size.width, y: 0)
-            end = CGPoint.init(x: 0, y: size.height)
-            break
+            case .vertical:
+                start = CGPoint.init(x: 0, y: 0)
+                end = CGPoint.init(x: 0, y: size.height)
+                break
+            case .level:
+                start = CGPoint.init(x: 0, y: 0)
+                end = CGPoint.init(x: size.width, y: 0)
+                break
+            case .leftTop:
+                start = CGPoint.init(x: 0, y: 0)
+                end = CGPoint.init(x: size.width, y: size.height)
+                break
+            case .leftBottom:
+                start = CGPoint.init(x: size.width, y: 0)
+                end = CGPoint.init(x: 0, y: size.height)
+                break
         }
         
         context.drawLinearGradient(gradient, start: start, end: end, options: .drawsBeforeStartLocation)
@@ -383,35 +383,35 @@ public extension WYJProtocol where T: UIImage {
         guard let imageData = obj.jpegData(compressionQuality: quality) else { return nil }
         return UIImage.init(data: imageData)
     }
-     /// 截取指定Image的rect
-     func croping(_ rect: CGRect) -> UIImage {
+    /// 截取指定Image的rect
+    func croping(_ rect: CGRect) -> UIImage {
         guard rect.size.height < obj.size.height && rect.size.height < obj.size.height else { return obj }
         guard let image: CGImage = obj.cgImage?.cropping(to: rect) else { return obj }
         return UIImage(cgImage: image)
-     }
+    }
     
-     /// 旋转指定角度
-     func rotate(_ radians: Float) -> UIImage {
-         let rotatedViewBox: UIView = UIView(frame: CGRect(x: 0, y: 0, width: obj.size.width, height: obj.size.height))
-         let transformation: CGAffineTransform = CGAffineTransform(rotationAngle: CGFloat(radians))
-         rotatedViewBox.transform = transformation
-         let rotatedSize: CGSize = CGSize(width: Int(rotatedViewBox.frame.size.width), height: Int(rotatedViewBox.frame.size.height))
-         UIGraphicsBeginImageContextWithOptions(rotatedSize, false, 0)
-         guard let context: CGContext = UIGraphicsGetCurrentContext() else {
-             UIGraphicsEndImageContext()
-             return obj
-         }
-         context.translateBy(x: rotatedSize.width / 2, y: rotatedSize.height / 2)
-         context.rotate(by: CGFloat(radians))
-         context.scaleBy(x: 1.0, y: -1.0)
-         context.draw(obj.cgImage!, in: CGRect(x: -obj.size.width / 2, y: -obj.size.height / 2, width: obj.size.width, height: obj.size.height))
-         guard let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext() else {
-             UIGraphicsEndImageContext()
-             return obj
-         }
-         UIGraphicsEndImageContext()
-         return newImage
-     }
+    /// 旋转指定角度
+    func rotate(_ radians: Float) -> UIImage {
+        let rotatedViewBox: UIView = UIView(frame: CGRect(x: 0, y: 0, width: obj.size.width, height: obj.size.height))
+        let transformation: CGAffineTransform = CGAffineTransform(rotationAngle: CGFloat(radians))
+        rotatedViewBox.transform = transformation
+        let rotatedSize: CGSize = CGSize(width: Int(rotatedViewBox.frame.size.width), height: Int(rotatedViewBox.frame.size.height))
+        UIGraphicsBeginImageContextWithOptions(rotatedSize, false, 0)
+        guard let context: CGContext = UIGraphicsGetCurrentContext() else {
+            UIGraphicsEndImageContext()
+            return obj
+        }
+        context.translateBy(x: rotatedSize.width / 2, y: rotatedSize.height / 2)
+        context.rotate(by: CGFloat(radians))
+        context.scaleBy(x: 1.0, y: -1.0)
+        context.draw(obj.cgImage!, in: CGRect(x: -obj.size.width / 2, y: -obj.size.height / 2, width: obj.size.width, height: obj.size.height))
+        guard let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext() else {
+            UIGraphicsEndImageContext()
+            return obj
+        }
+        UIGraphicsEndImageContext()
+        return newImage
+    }
     
     ///图片压缩
     func reset(_ maxSizeKB : CGFloat,_ maxWidth : CGFloat? = nil) -> UIImage? {
@@ -458,6 +458,26 @@ public extension WYJProtocol where T: UIImage {
         UIGraphicsEndImageContext()
         return newImage
     }
+    /**
+     *  重设图片大小
+     */
+    func resetSizeImage(_ reSize:CGSize) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(reSize,false,UIScreen.main.scale)
+        obj.draw(in: CGRect.init(x: 0, y: 0, width: reSize.width, height: reSize.height))
+        guard let reSizeImage = UIGraphicsGetImageFromCurrentImageContext() else { return nil }
+        
+        UIGraphicsEndImageContext()
+        return reSizeImage
+    }
+    
+    /**
+     *  等比率缩放
+     */
+    func scaleImage(scaleSize:CGFloat) -> UIImage? {
+        let reSize = CGSize(width: obj.size.width * scaleSize, height: obj.size.height * scaleSize)
+        
+        return resetSizeImage(reSize)
+    }
 }
 
 public enum UIImageContentMode {
@@ -475,7 +495,7 @@ public extension UIImage {
         
         return StaticSharedCache.shared!
     }
-
+    
     // MARK: Alpha
     /**
      Returns true if the image has an alpha layer.
@@ -483,10 +503,10 @@ public extension UIImage {
     var hasAlpha: Bool {
         let alpha: CGImageAlphaInfo = self.cgImage!.alphaInfo
         switch alpha {
-        case .first, .last, .premultipliedFirst, .premultipliedLast:
-            return true
-        default:
-            return false
+            case .first, .last, .premultipliedFirst, .premultipliedLast:
+                return true
+            default:
+                return false
         }
     }
     
@@ -615,12 +635,12 @@ public extension UIImage {
         var ratio: CGFloat!
         
         switch contentMode {
-        case .scaleToFill:
-            ratio = 1
-        case .scaleAspectFill:
-            ratio = max(horizontalRatio, verticalRatio)
-        case .scaleAspectFit:
-            ratio = min(horizontalRatio, verticalRatio)
+            case .scaleToFill:
+                ratio = 1
+            case .scaleAspectFill:
+                ratio = max(horizontalRatio, verticalRatio)
+            case .scaleAspectFit:
+                ratio = min(horizontalRatio, verticalRatio)
         }
         
         let rect = CGRect(x: 0, y: 0, width: size.width * ratio, height: size.height * ratio)

@@ -196,7 +196,6 @@ public extension WYJAlamofire {
                             default:
                                 break
                         }
-                        
                     }
                     if let params = parameters {
                         for key in params.keys {
@@ -227,46 +226,6 @@ public extension WYJAlamofire {
                 self.nerworkingError(error)
             }
         }
-    }
-    
-    /// 上传图片文件
-    /// - Parameters:
-    ///   - api: 地址
-    ///   - multipartFormData: 设置参数
-    ///   - progressHandler: 进度
-    final func uploadImage(_ api: String,
-                           multipartFormData:@escaping ((MultipartFormData)->()),
-                           progressHandler: ((Progress) -> ())? = nil,
-                           success: ((WYJJSON)->())?,error: ErrorBlock) {
-        
-        var headers: HTTPHeaders?
-        if let h = header {
-            headers = HTTPHeaders(h)
-        }
-        
-        getNerworkingReachability({
-            if $0 {
-                self.dataRequest = AF.upload(multipartFormData: multipartFormData, to: api, usingThreshold: UInt64.init(), method: .post, headers: headers, interceptor: self.interceptor, fileManager: FileManager()) { (URLRequest) in
-                    ///超时时间
-                    URLRequest.timeoutInterval = self.timeOut
-                }.uploadProgress { (progress) in
-                    if let b = progressHandler {
-                        b(progress)
-                    }
-                }
-                self.dataRequest?.responseJSON { (response) in
-                    switch response.result {
-                        case .success(let result):
-                            let json = WYJJSON.init(result)
-                            success?(json)
-                        case .failure(let err):
-                            self.errorMethod(err, error,response.data)
-                    }
-                }
-            } else {
-                self.nerworkingError(error)
-            }
-        })
     }
     
     /// 通用请求
@@ -321,6 +280,7 @@ public extension WYJAlamofire {
         dic[self.msg] = dec
         errorB?(WYJJSON.init(dic))
     }
+    
     ///网络错误处理
     func nerworkingError(_ errorB: ErrorBlock) {
         var dic = [String: Any]()

@@ -16,11 +16,21 @@ public extension WYJProtocol where T == Dictionary<String, Any> {
             WYJLog("dic转json失败")
             return nil
         }
-        guard let newData : Data = try? JSONSerialization.data(withJSONObject: obj, options: options) else {
-            WYJLog("dic转json失败")
-            return nil
+        var newData : Data
+        if #available(iOS 11.0, *) {
+            guard let nData = try? JSONSerialization.data(withJSONObject: obj, options: .sortedKeys) else {
+                WYJLog("dic转json失败")
+                return nil
+            }
+            newData = nData
+        } else {
+            guard let neData : Data = try? JSONSerialization.data(withJSONObject: obj, options: options) else {
+                WYJLog("dic转json失败")
+                return nil
+            }
+            newData = neData
         }
-        guard let JSONString = NSString(data:newData as Data,encoding: String.Encoding.utf8.rawValue) else {
+        guard let JSONString = NSString(data:newData, encoding: String.Encoding.utf8.rawValue) else {
             WYJLog("dic转json失败")
             return nil
         }

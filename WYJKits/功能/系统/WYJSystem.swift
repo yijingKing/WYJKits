@@ -11,7 +11,6 @@ import Foundation
 import UIKit
 
 open class WYJSystem: NSObject {
-    static let shared = WYJSystem()
     ///是否编辑,默认false
     public var allowsEditing: Bool?
     
@@ -29,8 +28,14 @@ open class WYJSystem: NSObject {
     //MARK: --- 打开设置
     ///打开设置
     public class func openSettings(_ completion: ((Bool) -> Void)? = nil) {
-        if let url = URL.init(string: UIApplication.openSettingsURLString),UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [:], completionHandler: completion)
+        if let openURL = URL(string: UIApplication.openSettingsURLString) {
+            if  UIApplication.shared.canOpenURL(openURL) {
+                if #available(iOS 10, *) {
+                    UIApplication.shared.open(openURL, options: [:],completionHandler: {(success) in})
+                } else {
+                    UIApplication.shared.openURL(openURL)
+                }
+            }
         }
     }
     
@@ -58,6 +63,7 @@ open class WYJSystem: NSObject {
     ///打开相机
     public func invokeSystemCamera() -> Void {
         WYJPermissionsDetection.isOpenCaptureDeviceService { [weak self](b) in
+            
             if b {
                 let imagePickerController = UIImagePickerController()
                 imagePickerController.sourceType = .camera
@@ -86,14 +92,14 @@ extension WYJSystem: UIImagePickerControllerDelegate , UINavigationControllerDel
             UIScrollView.appearance().contentInsetAdjustmentBehavior = .never
         }
         ///原图
-        let orignalImg = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+        guard let orignalImg = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         ///编辑后的图片
         let editedImg = info[UIImagePickerController.InfoKey.editedImage] as? UIImage
         if picker.sourceType == .camera {
             UIImageWriteToSavedPhotosAlbum(orignalImg, self, nil, nil)
         }
-        picker.dismiss(animated: true) {[weak self] in
-            if let block = self?.photoBlock {
+        picker.dismiss(animated: true) {
+            if let block = self.photoBlock {
                 if let img = editedImg {
                     block(img)
                 } else {
