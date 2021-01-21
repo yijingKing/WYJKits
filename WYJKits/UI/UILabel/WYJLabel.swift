@@ -10,7 +10,15 @@ import Foundation
 import UIKit
 // MARK:--- 基本的扩展
 public extension WYJProtocol where T: UILabel {
-    
+    ///开启长按复制
+    @discardableResult
+    func isOpenCopy(_ isCopy: Bool) -> WYJProtocol {
+        obj.isUserInteractionEnabled = true
+        let LongPress = UILongPressGestureRecognizer(target: obj, action: #selector(obj.longPressCopyEvent))
+        obj.addGestureRecognizer(LongPress)
+        return self
+    }
+
     /// 改变字间距
     ///
     /// - Parameter space: space
@@ -40,7 +48,6 @@ public extension WYJProtocol where T: UILabel {
         return self
     }
     
-    
     /// 改变行间距和字间距
     ///
     /// - Parameters:
@@ -62,6 +69,7 @@ public extension WYJProtocol where T: UILabel {
 
 //MARK: --- 初始化
 public extension UILabel {
+    
     ///渐变色本文
     static func initGradient(_ frame: CGRect) -> WYJGradientLabel {
         let label = WYJGradientLabel.shared
@@ -79,5 +87,26 @@ public extension UILabel {
             label.font = fo
         }
         return label
+    }
+    
+    @objc func longPressCopyEvent(){
+        // 让其成为响应者
+        becomeFirstResponder()
+        // 拿出菜单控制器单例
+        let menu = UIMenuController.shared
+        // 创建一个复制的item
+        let copy = UIMenuItem(title: "copy", action: #selector(copyText))
+        // 将复制的item交给菜单控制器（菜单控制器其实可以接受多个操作）
+        menu.menuItems = [copy]
+        // 设置菜单控制器的点击区域为这个控件的bounds
+        menu.setTargetRect(bounds, in: self)
+        // 显示菜单控制器，默认是不可见状态
+        menu.setMenuVisible(true, animated: true)
+    }
+    
+    @objc func copyText() {
+        if self.text != nil {
+            UIPasteboard.general.string = self.text
+        }
     }
 }

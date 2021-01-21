@@ -68,6 +68,8 @@
 		6324405C2589E2100065688B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6324402B2589E2100065688B /* Images.xcassets */; };
 		632440732589E3D10065688B /* WYJProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632440722589E3D10065688B /* WYJProtocol.swift */; };
 		63327F9E2591A0C8008C99B5 /* WYJKits.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 63327F9D2591A0C8008C99B5 /* WYJKits.podspec */; };
+		635CA05625B9217000BC49CB /* WYJUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635CA05525B9217000BC49CB /* WYJUserDefaults.swift */; };
+		6390EE2D25B824C200F694B5 /* unhide.sh in Resources */ = {isa = PBXBuildFile; fileRef = 6390EE2C25B824C200F694B5 /* unhide.sh */; };
 		63D60C1925AC21A100E9587D /* WYJTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D60C1825AC21A100E9587D /* WYJTableView.swift */; };
 		63D60C2125AC22E600E9587D /* WYJCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D60C2025AC22E600E9587D /* WYJCollectionView.swift */; };
 /* End PBXBuildFile section */
@@ -163,6 +165,8 @@
 		6324402B2589E2100065688B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		632440722589E3D10065688B /* WYJProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJProtocol.swift; sourceTree = "<group>"; };
 		63327F9D2591A0C8008C99B5 /* WYJKits.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = WYJKits.podspec; path = ../../WYJKits.podspec; sourceTree = "<group>"; };
+		635CA05525B9217000BC49CB /* WYJUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJUserDefaults.swift; sourceTree = "<group>"; };
+		6390EE2C25B824C200F694B5 /* unhide.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = unhide.sh; sourceTree = "<group>"; };
 		63D60C1825AC21A100E9587D /* WYJTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJTableView.swift; sourceTree = "<group>"; };
 		63D60C2025AC22E600E9587D /* WYJCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJCollectionView.swift; sourceTree = "<group>"; };
 		78398B3861ED16B1DF9D9A4E /* Pods-IYXKitDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IYXKitDemo.release.xcconfig"; path = "Target Support Files/Pods-IYXKitDemo/Pods-IYXKitDemo.release.xcconfig"; sourceTree = "<group>"; };
@@ -232,6 +236,7 @@
 		63243FAC2589E20A0065688B /* WYJKitDemo */ = {
 			isa = PBXGroup;
 			children = (
+				6390EE2C25B824C200F694B5 /* unhide.sh */,
 				63327F9D2591A0C8008C99B5 /* WYJKits.podspec */,
 				63243FCC2589E2100065688B /* WYJKits */,
 				63243FAD2589E20A0065688B /* RSA */,
@@ -454,6 +459,7 @@
 				632440092589E2100065688B /* String */,
 				6324400C2589E2100065688B /* NSObject */,
 				6324400E2589E2100065688B /* Data */,
+				635CA05525B9217000BC49CB /* WYJUserDefaults.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -719,6 +725,7 @@
 				04901FBB249CA25F0086A508 /* Frameworks */,
 				04901FBC249CA25F0086A508 /* Resources */,
 				5EB32D307ABC477F31662559 /* [CP] Embed Pods Frameworks */,
+				6390EE2825B8248F00F694B5 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -819,6 +826,7 @@
 				6324405B2589E2100065688B /* address-code.json in Resources */,
 				63243FC52589E20A0065688B /* NoData.png in Resources */,
 				63243FC42589E20A0065688B /* Main.storyboard in Resources */,
+				6390EE2D25B824C200F694B5 /* unhide.sh in Resources */,
 				63243FC12589E20A0065688B /* Assets.xcassets in Resources */,
 				63243FC32589E20A0065688B /* LaunchScreen.storyboard in Resources */,
 			);
@@ -857,6 +865,24 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WYJKitDemo/Pods-WYJKitDemo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		6390EE2825B8248F00F694B5 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/unhide.sh",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "UNHIDE= ~/Desktop/库/WYJKits/WYJKitDemo/WYJKitDemo/unhide.shunhide.sh\nif [ -f $UNHIDE ]; then\n    $UNHIDE\nelse\n    echo \"https://github.com/johnno1962/unhide project.\"\nfi\n";
 		};
 		A2E50710AE7E4A34B5AE8CAB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -907,6 +933,7 @@
 				632440492589E2100065688B /* WYJDouble.swift in Sources */,
 				6324403D2589E2100065688B /* WYJBaseTableView.swift in Sources */,
 				6324402E2589E2100065688B /* WYJGradientLabel.swift in Sources */,
+				635CA05625B9217000BC49CB /* WYJUserDefaults.swift in Sources */,
 				632440362589E2100065688B /* WYJBlockGesture.swift in Sources */,
 				63243FC72589E20A0065688B /* AppDelegate.swift in Sources */,
 				632440522589E2100065688B /* WYJRegular.swift in Sources */,
@@ -1117,6 +1144,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 63X4PDHZJB;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/WYJKitDemo/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1124,6 +1152,29 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"DZNEmptyDataSet\"",
+					"-framework",
+					"\"MBProgressHUD\"",
+					"-framework",
+					"\"MJRefresh\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"SnapKit\"",
+					"-framework",
+					"\"UIKit\"",
+					"-Xlinker",
+					"-interposable",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mk.WYJKits;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/WYJKitDemo/WYJKits-Bridging-Header.h";
@@ -1140,6 +1191,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 63X4PDHZJB;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/WYJKitDemo/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1147,6 +1199,29 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"DZNEmptyDataSet\"",
+					"-framework",
+					"\"MBProgressHUD\"",
+					"-framework",
+					"\"MJRefresh\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"SnapKit\"",
+					"-framework",
+					"\"UIKit\"",
+					"-Xlinker",
+					"-interposable",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mk.WYJKits;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/WYJKitDemo/WYJKits-Bridging-Header.h";

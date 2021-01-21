@@ -11,18 +11,22 @@ import Foundation
 import UIKit
 
 public struct WYJProtocol<T> {
-    public let obj: T
-    public init(_ obj: T) {
+    let obj: T
+    init(_ obj: T) {
         self.obj = obj
     }
+    
 }
 
 public protocol WYJCompatible {
     associatedtype CompatibleType
     var yi: CompatibleType { get }
 }
-
 public extension WYJCompatible {
+    static var yi: WYJProtocol<Self>.Type {
+        get { WYJProtocol<Self>.self }
+        set {}
+    }
     var yi: WYJProtocol<Self> {
         return WYJProtocol(self)
     }

@@ -15,6 +15,8 @@ typealias PositioningClosureError = (String) ->()
 ///定位
 public class WYJLocation: NSObject {
     static let shared = WYJLocation()
+    private var isFirst: Bool = true
+    private var isCycle: Bool = false
     private var clousre: PositioningClosure?
     private var errors: PositioningClosureError?
     var locationManager: CLLocationManager?
@@ -25,24 +27,60 @@ public class WYJLocation: NSObject {
         errors  = error
         requestLocationServicesAuthorization()
     }
-    
+    private override init() {
+        super.init()
+    }
+    @objc func injected() {
+        requestLocationServicesAuthorization()
+    }
     //MARK: --- 初始化定位
     ///初始化定位
     private func requestLocationServicesAuthorization() {
-        let status = CLLocationManager.authorizationStatus()
-        
-        switch status {
+        if locationManager == nil {
+            locationManager = CLLocationManager()
+            locationManager?.delegate = self
+        }
+        locationManager?.requestWhenInUseAuthorization()
+        locationManager?.startUpdatingLocation()
+        switch CLLocationManager.authorizationStatus() {
+            case .denied:
+                alterSetting()
+                break
+            case .notDetermined:
+                locationManager?.requestWhenInUseAuthorization()
+                break
             case .authorizedAlways,.authorizedWhenInUse:
-                locationManager = CLLocationManager()
-                locationManager?.delegate = self
-                locationManager?.distanceFilter = 10.0
+                locationManager?.desiredAccuracy = kCLLocationAccuracyBest
+                let distance: CLLocationDistance = 10.0
+                locationManager?.distanceFilter = distance
                 locationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
                 locationManager?.startUpdatingLocation()
+                WYJLog("223qedssdaaaaqw")
+                break
             default:
-                reportLocationServicesAuthorizationStatus(status: status)
+                reportLocationServicesAuthorizationStatus(status: CLLocationManager.authorizationStatus())
         }
         
     }
+//    if (self.locationManager == nil) {
+//        self.locationManager = CLLocationManager()
+//        self.locationManager?.delegate = self
+//    }
+//
+//    self.locationManager?.requestWhenInUseAuthorization()
+//    self.locationManager?.startUpdatingLocation()
+//
+//    if (CLLocationManager.authorizationStatus() == CLAuthorizationStatus.notDetermined) {
+//        locationManager?.requestWhenInUseAuthorization()
+//    }
+//
+//    if (CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse) {
+//        locationManager?.desiredAccuracy = kCLLocationAccuracyBest
+//        let distance: CLLocationDistance = 10.0
+//        locationManager?.distanceFilter = distance
+//        locationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+//        locationManager?.startUpdatingLocation()
+//    }
     
     //MARK: --- 获取定位代理返回状态进行处理
     private func reportLocationServicesAuthorizationStatus(status:CLAuthorizationStatus) {

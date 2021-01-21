@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 //import PKHUD
 //import WYJKits
 
@@ -17,7 +18,7 @@ struct Presonewe: WYJCodable {
     var ss: WYJStrDble?
 }
 struct HomeAPI {
-    static let login = "http://192.168.16.98:8011/jjf-api/login"
+    static let login = "https://beifuqi.sandpay.com.cn/jjf-api/login"
     static let img = "http://192.168.16.98:8011/jjf-api/api/common/uploadHeadImage"
 }
 
@@ -44,7 +45,7 @@ class ViewController: WYJBaseViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .red
 //        var ss = "123133wqer"
 //        let aa = ss.deleteLast()
         
@@ -61,20 +62,20 @@ class ViewController: WYJBaseViewController {
 //        WYJLog("1234567890".yi.index(after: 3))
         ceshi3()
     }
+    @objc func injected() {
+        viewDidLoad()
+    }
     func ceshi3() {
         let brn = UIButton.init().yi.then({
-            $0.backgroundColor = UIColor.blue.withAlphaComponent(0.5)
+            $0.backgroundColor = UIColor.red
             $0.frame = view.bounds
             view.addSubview($0)
         })
+        let img = UIImageView.init(image: #imageLiteral(resourceName: "矩形 490"))
+        img.frame = .init(x: 50, y: 200, width: 50, height: 50)
+        brn.addSubview(img)
+        
         brn.yi.clickAction {
-            WYJLocation.shared.startPositioning() { (pl) in
-                WYJLog(pl)
-            } error: { (err) in
-                
-            }
-
-            return
             
             let img = UIImage.init(gradient: CGSize.init(width: 10, height: 10), direction: .leftBottom, colors: [.red,.blue])
             let image = UIImageView.init(image: img)
@@ -84,20 +85,15 @@ class ViewController: WYJBaseViewController {
             
 //            "https://beifuqi.sandpay.com.cn/jjf-api/login"
             var para = [String: Any]()
-            para["username"] = "18250808695"
-            para["password"] = "123456"
+            para["username"] = "18850053845"
+            para["password"] = "ads123456"
             para["rememberMe"] = "false"
-            WYJRequest().post(HomeAPI.login, para) { (model: MyInfo_Data) in
-
-                WYJLog(model.id)
-                let dic = model.toDictionary() as NSDictionary
-                
-                WYJHUD.show(model.id) {
-                    self.yi.push(MyViewController())
-                }
-                
-            } error: { (err) in
-                WYJLog(err)
+            WYJRequest().post(HomeAPI.login,para) { [weak self](model: MyInfo_Data) in
+                guard let strongSelf = self else {return }
+                WYJLog(model.realName)
+                strongSelf.yi.push(MyViewController())
+            } error: { (errjson) in
+                WYJLog(errjson)
             }
 
 //            WYJHUD.shared.locationStatus = .top
@@ -188,7 +184,6 @@ class ViewController: WYJBaseViewController {
 //            $0.frame = CGRect.init(x: 100, y: 100, width: 100, height: 100)
 //        }
         
-        
 //        img.image = UIImage.initGradient(size: .init(width: 100, height: 100), direction: .leftTop, colors: [.blue,.red])
 //        img.addBorderTop(size: 10, color: .blue)
         view.backgroundColor = .blue
@@ -226,6 +221,11 @@ class ViewController: WYJBaseViewController {
     }
 }
 
+struct DemoModel: WYJCodable {
+    var code: Int?
+    var msg: String?
+    var data: MyInfo_Data?
+}
 
 struct MyInfo_Data: WYJCodable {
     var activateTime: WYJStrInt?
@@ -249,7 +249,7 @@ struct MyInfo_Data: WYJCodable {
     var merchantStatus: String?
     var isVip: Bool?
     var reachTime: WYJStrInt?
-    var bindTime: WYJStrInt
+    var bindTime: WYJStrInt?
     var identityNo: String?
     var debitCardNo: String?
     var modifier: String?
@@ -277,7 +277,7 @@ func dealWithRequestByParams(params:[String:Any]) -> [String:Any]  {
     var para:[String:Any] = [:]
     para["data"] = encWithPubKey
     para["encrypted"] = "Y"
-    para["pos"] = "bpos"
+    para["pos"] = "mpos"
     return para
 }
 

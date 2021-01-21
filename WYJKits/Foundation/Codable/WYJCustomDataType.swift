@@ -31,6 +31,7 @@ public struct WYJStrInt: WYJCodable {
     }
 }
 
+
 ///bool and int
 public struct WYJBoolInt: WYJCodable {
     var int: Int?

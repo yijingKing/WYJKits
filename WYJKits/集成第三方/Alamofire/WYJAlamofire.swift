@@ -37,6 +37,11 @@ open class WYJAlamofire: NSObject {
     public var data: String = "data"
     ///错误获取参数,默认msg
     public var msg: String = "msg"
+    ///code获取参数,默认code
+    public var code: Int = 0
+    ///code获取参数,默认code
+    public var codeS: String = "code"
+    
     public var dataRequest: DataRequest?
     ///配置请求参数
     open func configureRequestParameters() { }
@@ -82,7 +87,6 @@ public extension WYJAlamofire {
                 self.nerworkingError(error)
             }
         }
-        
     }
     
     ///get
@@ -96,7 +100,7 @@ public extension WYJAlamofire {
             if $0 {
                 self.request(api, method: .get, parameters: parameters, encoding: self.encoding, headers: headers, interceptor: self.interceptor) { (result) in
                     let json = WYJJSON.init(result)
-                    if let model = try? T(from: json[self.data].dictionaryObject) {
+                    if let model = try? T(from: json.dictionaryObject) {
                         success?(model)
                     } else {
                         error?(json)
@@ -108,7 +112,6 @@ public extension WYJAlamofire {
                 self.nerworkingError(error)
             }
         }
-        
     }
     
     //MARK: --- post
@@ -131,8 +134,8 @@ public extension WYJAlamofire {
                 self.nerworkingError(error)
             }
         }
-        
     }
+    
     ///post
     final func post<T:WYJCodable>(_ api: String,_ parameters: [String: Any]? = nil,success: ((T)->())?,error: ErrorBlock) {
         configureRequestParameters()
@@ -142,15 +145,18 @@ public extension WYJAlamofire {
         }
         getNerworkingReachability {
             if $0 {
-                self.request(api, method: .post, parameters: parameters, encoding: self.encoding, headers: headers, interceptor: self.interceptor) { (result) in
+                self.request(api, method: .post, parameters: parameters, encoding: self.encoding, headers: headers, interceptor: self.interceptor) { [weak self](result) in
+                    guard let strongSelf = self else { return }
                     let json = WYJJSON.init(result)
-                    if let model = try? T(from: json[self.data].dictionaryObject) {
-                        success?(model)
+                    
+                    if json[strongSelf.codeS].int == strongSelf.code {
+                        if let model = try? T(from: json[strongSelf.data].dictionaryObject) {
+                            success?(model)
+                        } else {
+                            error?(json)
+                        }
                     } else {
-                        var dic = [String: Any]()
-                        dic["code"] = -77777
-                        dic[self.msg] = "model转换失败"
-                        error?(WYJJSON.init(dic))
+                        error?(json)
                     }
                 } error: { (afError,data) in
                     self.errorMethod(afError, error,data)
@@ -205,9 +211,10 @@ public extension WYJAlamofire {
                             }
                         }
                     }
-                }, to: api, usingThreshold: UInt64.init(), method: .post, headers: headers, interceptor: self.interceptor, fileManager: FileManager()) { (URLRequest) in
+                }, to: api, usingThreshold: UInt64.init(), method: .post, headers: headers, interceptor: self.interceptor, fileManager: FileManager()) { [weak self](URLRequest) in
+                    guard let strongSelf = self else { return }
                     ///超时时间
-                    URLRequest.timeoutInterval = self.timeOut
+                    URLRequest.timeoutInterval = strongSelf.timeOut
                 }.uploadProgress { (progress) in
                     if let b = progressHandler {
                         b(progress)
@@ -247,11 +254,13 @@ public extension WYJAlamofire {
                        success: ((Any)->())?,
                        error: ((AFError,Data?)->())?) {
         
-        dataRequest = AF.request(convertible, method: method, parameters: parameters, encoding: encoding, headers: headers, interceptor: interceptor) { (URLRequest) in
+        dataRequest = AF.request(convertible, method: method, parameters: parameters, encoding: encoding, headers: headers, interceptor: interceptor) { [weak self](URLRequest) in
+            guard let strongSelf = self else { return }
             ///超时时间
-            URLRequest.timeoutInterval = self.timeOut
+            URLRequest.timeoutInterval = strongSelf.timeOut
             
         }
+        
         dataRequest?.responseJSON { response in
             
             switch response.result {
@@ -262,7 +271,6 @@ public extension WYJAlamofire {
                     error?(err,response.data)
             }
         }
-        
     }
     
     //MARK: --- 错误处理
@@ -277,7 +285,7 @@ public extension WYJAlamofire {
         }
         var dic = [String: Any]()
         dic["code"] = afError._code
-        dic[self.msg] = dec
+        dic[msg] = dec
         errorB?(WYJJSON.init(dic))
     }
     
@@ -285,7 +293,7 @@ public extension WYJAlamofire {
     func nerworkingError(_ errorB: ErrorBlock) {
         var dic = [String: Any]()
         dic["code"] = -99999
-        dic[self.msg] = "网络异常,请检查网络后重试"
+        dic[msg] = "网络异常,请检查网络后重试"
         errorB?(WYJJSON.init(dic))
     }
 }

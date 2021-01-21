@@ -98,6 +98,13 @@ public extension WYJProtocol where T == String {
         let rect = text.boundingRect(with: size, options:.usesLineFragmentOrigin, attributes: [.font : font], context:nil)
         return rect.size.width
     }
+    
+    /// UUID
+    static func UUID() -> String? {
+        let uuid = CFUUIDCreate(kCFAllocatorDefault)
+        let cfString = CFUUIDCreateString(kCFAllocatorDefault, uuid)
+        return cfString as String?
+    }
 }
 
 //MARK: --- 截取  插入  删除  添加
@@ -367,7 +374,11 @@ public extension WYJProtocol where T == String {
         let data = obj.data(using: using)
         return data
     }
-    
+    ///转成json
+    func toJSON() -> WYJJSON? {
+        guard !obj.isEmpty else { return nil }
+        return WYJJSON.init(obj)
+    }
     //MARK: --- 进制
     ///十六进制转数字
     func hexToInt() -> Int {
@@ -507,7 +518,7 @@ public extension WYJProtocol where T == String {
         return NSAttributedString.init(string: obj)
     }
     
-    // MARK: 5.1、将金额字符串转化为带逗号的金额 按照千分位划分，如  "1234567" => 1,234,567   1234567.56 => 1,234,567.56
+    // MARK: 将金额字符串转化为带逗号的金额 按照千分位划分，如  "1234567" => 1,234,567   1234567.56 => 1,234,567.56
     /// 将金额字符串转化为带逗号的金额 按照千分位划分，如  "1234567" => 1,234,567   1234567.56 => 1,234,567.56
     func toThousands() -> String? {
         let formatter = NumberFormatter()
@@ -526,6 +537,49 @@ public extension WYJProtocol where T == String {
         }
         let result = formatter.string(from: num)
         return result
+    }
+    
+    // MARK:字符串转 UIViewController
+    /// 字符串转 UIViewController
+    /// - Returns: 对应的控制器
+    @discardableResult
+    func toViewController() -> UIViewController? {
+        // 1.获取类
+        guard let Class: AnyClass = self.toClass() else {
+            return nil
+        }
+        // 2.通过类创建对象
+        // 2.1、将AnyClass 转化为指定的类
+        let vcClass = Class as! UIViewController.Type
+        // 2.2、通过class创建对象
+        let vc = vcClass.init()
+        return vc
+    }
+    
+    // MARK: 字符串转 AnyClass
+    /// 字符串转 AnyClass
+    /// - Returns: 对应的 Class
+    @discardableResult
+    func toClass() -> AnyClass? {
+        // 1.动态获取命名空间
+        let namespace = Bundle.main.infoDictionary!["CFBundleExecutable"] as! String
+        // 2.将字符串转换为类
+        // 2.1.默认情况下命名空间就是项目的名称，但是命名空间的名称是可以更改的
+        guard let Class: AnyClass = NSClassFromString(namespace.yi.removeSomeStringUseSomeString(removeString: " ", replacingString: "_") + "." + obj)else {
+            return nil
+        }
+        return Class
+    }
+    
+    func removeSomeStringUseSomeString(removeString: String, replacingString: String = "") -> String {
+        return obj.replacingOccurrences(of: removeString, with: replacingString)
+    }
+    // MARK: 字符串转数组
+    /// 字符串转数组
+    /// - Returns: 转化后的数组
+    func toArray() -> Array<Any> {
+        let a = Array(obj)
+        return a
     }
 }
 

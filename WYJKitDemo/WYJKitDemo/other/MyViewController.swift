@@ -10,6 +10,19 @@ import UIKit
 
 class MyViewController: WYJBaseViewController {
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        WYJLocation.shared.startPositioning() { (pl) in
+            WYJLog(pl)
+        } error: { (err) in
+            
+        }
+    }
+    
+    @objc func injected() {
+        viewDidLoad()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         barStyle = .lightContent
