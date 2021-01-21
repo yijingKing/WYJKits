@@ -111,7 +111,7 @@
 		63243FB92589E20A0065688B /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		63243FBA2589E20A0065688B /* WeChat66467de1e87eb0c1de1a8add1099df0b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WeChat66467de1e87eb0c1de1a8add1099df0b.png; sourceTree = "<group>"; };
 		63243FBB2589E20A0065688B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		63243FBC2589E20A0065688B /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
+		63243FBC2589E20A0065688B /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		63243FBD2589E20A0065688B /* WYJKits-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WYJKits-Bridging-Header.h"; sourceTree = "<group>"; };
 		63243FBE2589E20A0065688B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63243FD02589E2100065688B /* WYJImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WYJImage.swift; sourceTree = "<group>"; };
