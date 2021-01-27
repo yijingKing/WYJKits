@@ -55,32 +55,12 @@ public class WYJLocation: NSObject {
                 locationManager?.distanceFilter = distance
                 locationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
                 locationManager?.startUpdatingLocation()
-                WYJLog("223qedssdaaaaqw")
                 break
             default:
                 reportLocationServicesAuthorizationStatus(status: CLLocationManager.authorizationStatus())
         }
         
     }
-//    if (self.locationManager == nil) {
-//        self.locationManager = CLLocationManager()
-//        self.locationManager?.delegate = self
-//    }
-//
-//    self.locationManager?.requestWhenInUseAuthorization()
-//    self.locationManager?.startUpdatingLocation()
-//
-//    if (CLLocationManager.authorizationStatus() == CLAuthorizationStatus.notDetermined) {
-//        locationManager?.requestWhenInUseAuthorization()
-//    }
-//
-//    if (CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse) {
-//        locationManager?.desiredAccuracy = kCLLocationAccuracyBest
-//        let distance: CLLocationDistance = 10.0
-//        locationManager?.distanceFilter = distance
-//        locationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-//        locationManager?.startUpdatingLocation()
-//    }
     
     //MARK: --- 获取定位代理返回状态进行处理
     private func reportLocationServicesAuthorizationStatus(status:CLAuthorizationStatus) {

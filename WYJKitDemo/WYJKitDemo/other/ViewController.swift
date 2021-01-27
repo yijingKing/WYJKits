@@ -31,6 +31,40 @@ class WYJRequest: WYJAlamofire {
     
 }
 
+
+protocol vcPro {
+//    var block: (Bool)-> { get set }
+    
+    func log1()
+}
+
+extension vcPro {
+    
+    func log1 () {
+        WYJLog("协议")
+    }
+    func log(_ block: @escaping (Bool)->()) {
+        WYJLog("block")
+        let bl = block
+        DispatchQueue.main.yi.after(2) {
+            bl(true)
+        }
+        DispatchQueue.main.yi.after(4) {
+            bl(false)
+        }
+    }
+}
+
+extension ViewController: vcPro {
+
+}
+
+extension UIViewController {
+    @objc func injected() {
+        viewDidLoad()
+    }
+}
+
 class ViewController: WYJBaseViewController {
     var tableView: WYJBaseTableView!
     var lab: UILabel?
@@ -44,28 +78,28 @@ class ViewController: WYJBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        log1()
         
+        log {
+            WYJLog($0)
+        }
         view.backgroundColor = .red
-//        var ss = "123133wqer"
-//        let aa = ss.deleteLast()
-        
-//        WYJLog("\(ss) + \(aa)")
-        
         
         let str = "{\"ss\":\"0.003880\",\"name\":null}"
-        model = try? Presonewe.init(from: str.yi.toDictionary())
+        model = try? Presonewe(from: str.yi.toDictionary())
         
-//        WYJLog(model?.name?.string ?? "123")
-//        WYJLog(model?.ss?.string ?? "0.0000000")
-//        WYJLog(model?.ss?.double ?? 0.0000000)
-//
-//        WYJLog("1234567890".yi.index(after: 3))
         ceshi3()
+        WYJHUD.show("", {
+            
+        }, view)
     }
-    @objc func injected() {
-        viewDidLoad()
+     
+    @objc func onNotifitionClick () {
+        
     }
+    
     func ceshi3() {
+        
         let brn = UIButton.init().yi.then({
             $0.backgroundColor = UIColor.red
             $0.frame = view.bounds
@@ -74,9 +108,9 @@ class ViewController: WYJBaseViewController {
         let img = UIImageView.init(image: #imageLiteral(resourceName: "矩形 490"))
         img.frame = .init(x: 50, y: 200, width: 50, height: 50)
         brn.addSubview(img)
-        
-        brn.yi.clickAction {
-            
+        brn.yi.titleColor(.blue)
+        brn.yi.title("1233ssssscccsdqwedss")
+        brn.yi.addTarget(.touchUpInside) {
             let img = UIImage.init(gradient: CGSize.init(width: 10, height: 10), direction: .leftBottom, colors: [.red,.blue])
             let image = UIImageView.init(image: img)
             image.frame = self.view.bounds

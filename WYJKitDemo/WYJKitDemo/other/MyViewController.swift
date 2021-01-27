@@ -19,19 +19,9 @@ class MyViewController: WYJBaseViewController {
         }
     }
     
-    @objc func injected() {
-        viewDidLoad()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         barStyle = .lightContent
-        // Do any additional setup after loading the view.
-//        addTableView()
-//        mainTableView?.cellForRowAtIndexPath({ (tab, inde) -> UITableViewCell in
-//            return UITableViewCell()
-//            }).numberRows(100)
-//        mainTableView?.heightRows(50)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -41,9 +31,7 @@ class MyViewController: WYJBaseViewController {
         para["password"] = "123456"
         para["rememberMe"] = "false"
         WYJRequest().post(HomeAPI.login, para) { (model: MyInfo_Data) in
-
             WYJLog(model.id)
-            
         } error: { (err) in
             WYJLog(err)
         }

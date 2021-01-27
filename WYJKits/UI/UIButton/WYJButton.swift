@@ -101,6 +101,12 @@ public extension WYJProtocol where T: UIButton {
         obj.clickAction = block
         return self
     }
+    
+    @discardableResult
+    func addTarget(_ taget: UIControl.Event,_ block:(()->())?) -> WYJProtocol {
+        obj.addTargetAction(block: block, for: taget)
+        return self
+    }
 }
 
 public enum WYJButtonImagePosition: Int {
@@ -169,6 +175,7 @@ public extension WYJProtocol where T: UIButton {
 extension UIButton {
     struct WYJRuntimeKey {
         static let WYJButtonClick = UnsafeRawPointer.init(bitPattern: "WYJButtonClick".hashValue)
+        static let WYJButtonAction = UnsafeRawPointer.init(bitPattern: "WYJButtonAction".hashValue)
     }
     ///点击
     var clickAction: (()->())? {
@@ -180,7 +187,22 @@ extension UIButton {
             return objc_getAssociatedObject(self, WYJRuntimeKey.WYJButtonClick!) as? () -> ()
         }
     }
-    
+    ///点击
+    var action: (()->())? {
+        set {
+            objc_setAssociatedObject(self, WYJRuntimeKey.WYJButtonClick!, newValue, .OBJC_ASSOCIATION_COPY_NONATOMIC)
+        }
+        get {
+            return objc_getAssociatedObject(self, WYJRuntimeKey.WYJButtonClick!) as? () -> ()
+        }
+    }
+    func addTargetAction(block: (()->())?, for controlEvents: UIControl.Event) {
+        action = block
+        addTarget(self, action: #selector(buttonAction), for: controlEvents)
+    }
+    @objc private func buttonAction() {
+        action?()
+    }
     @objc private func buttonClickAction() {
         clickAction?()
     }

@@ -69,7 +69,6 @@
 		632440732589E3D10065688B /* WYJProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632440722589E3D10065688B /* WYJProtocol.swift */; };
 		63327F9E2591A0C8008C99B5 /* WYJKits.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 63327F9D2591A0C8008C99B5 /* WYJKits.podspec */; };
 		635CA05625B9217000BC49CB /* WYJUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635CA05525B9217000BC49CB /* WYJUserDefaults.swift */; };
-		6390EE2D25B824C200F694B5 /* unhide.sh in Resources */ = {isa = PBXBuildFile; fileRef = 6390EE2C25B824C200F694B5 /* unhide.sh */; };
 		63D60C1925AC21A100E9587D /* WYJTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D60C1825AC21A100E9587D /* WYJTableView.swift */; };
 		63D60C2125AC22E600E9587D /* WYJCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D60C2025AC22E600E9587D /* WYJCollectionView.swift */; };
 /* End PBXBuildFile section */
@@ -166,7 +165,6 @@
 		632440722589E3D10065688B /* WYJProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJProtocol.swift; sourceTree = "<group>"; };
 		63327F9D2591A0C8008C99B5 /* WYJKits.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = WYJKits.podspec; path = ../../WYJKits.podspec; sourceTree = "<group>"; };
 		635CA05525B9217000BC49CB /* WYJUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJUserDefaults.swift; sourceTree = "<group>"; };
-		6390EE2C25B824C200F694B5 /* unhide.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = unhide.sh; sourceTree = "<group>"; };
 		63D60C1825AC21A100E9587D /* WYJTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJTableView.swift; sourceTree = "<group>"; };
 		63D60C2025AC22E600E9587D /* WYJCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJCollectionView.swift; sourceTree = "<group>"; };
 		78398B3861ED16B1DF9D9A4E /* Pods-IYXKitDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IYXKitDemo.release.xcconfig"; path = "Target Support Files/Pods-IYXKitDemo/Pods-IYXKitDemo.release.xcconfig"; sourceTree = "<group>"; };
@@ -236,7 +234,6 @@
 		63243FAC2589E20A0065688B /* WYJKitDemo */ = {
 			isa = PBXGroup;
 			children = (
-				6390EE2C25B824C200F694B5 /* unhide.sh */,
 				63327F9D2591A0C8008C99B5 /* WYJKits.podspec */,
 				63243FCC2589E2100065688B /* WYJKits */,
 				63243FAD2589E20A0065688B /* RSA */,
@@ -459,7 +456,7 @@
 				632440092589E2100065688B /* String */,
 				6324400C2589E2100065688B /* NSObject */,
 				6324400E2589E2100065688B /* Data */,
-				635CA05525B9217000BC49CB /* WYJUserDefaults.swift */,
+				6326944325C1002500130EF7 /* UserDefaults */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -694,6 +691,14 @@
 			path = Resource;
 			sourceTree = "<group>";
 		};
+		6326944325C1002500130EF7 /* UserDefaults */ = {
+			isa = PBXGroup;
+			children = (
+				635CA05525B9217000BC49CB /* WYJUserDefaults.swift */,
+			);
+			path = UserDefaults;
+			sourceTree = "<group>";
+		};
 		845C6C5FD91046F093DBF41D /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -826,7 +831,6 @@
 				6324405B2589E2100065688B /* address-code.json in Resources */,
 				63243FC52589E20A0065688B /* NoData.png in Resources */,
 				63243FC42589E20A0065688B /* Main.storyboard in Resources */,
-				6390EE2D25B824C200F694B5 /* unhide.sh in Resources */,
 				63243FC12589E20A0065688B /* Assets.xcassets in Resources */,
 				63243FC32589E20A0065688B /* LaunchScreen.storyboard in Resources */,
 			);
@@ -882,7 +886,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "UNHIDE= ~/Desktop/库/WYJKits/WYJKitDemo/WYJKitDemo/unhide.shunhide.sh\nif [ -f $UNHIDE ]; then\n    $UNHIDE\nelse\n    echo \"https://github.com/johnno1962/unhide project.\"\nfi\n";
+			shellScript = "UNHIDE=~/bin/unhide.sh\nif [ -f $UNHIDE ]; then\n    $UNHIDE\nelse\n    echo \"File $UNHIDE used for code Injection does not exist. Download and build the https://github.com/johnno1962/unhide project.\"\nfi\n";
 		};
 		A2E50710AE7E4A34B5AE8CAB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1174,6 +1178,10 @@
 					"\"UIKit\"",
 					"-Xlinker",
 					"-interposable",
+					"-Xlinker",
+					"-undefined",
+					"-Xlinker",
+					dynamic_lookup,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mk.WYJKits;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1221,6 +1229,10 @@
 					"\"UIKit\"",
 					"-Xlinker",
 					"-interposable",
+					"-Xlinker",
+					"-undefined",
+					"-Xlinker",
+					dynamic_lookup,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mk.WYJKits;
 				PRODUCT_NAME = "$(TARGET_NAME)";

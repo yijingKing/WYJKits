@@ -18,9 +18,9 @@ public enum WYJUploadFileWay {
 }
 
 public typealias ErrorBlock = ((WYJJSON)->())?
-///网络请求
+/// 网络请求
 open class WYJAlamofire: NSObject {
-    private var isNet = false
+    
     ///是否数据处理,默认false
     public var isDataManage: Bool = false
     ///超时时间,默认30秒

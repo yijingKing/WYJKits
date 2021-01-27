@@ -22,8 +22,16 @@ public enum managerLocation {
 open class WYJHUD {
     ///单例
     static var shared = WYJHUD()
-    ///超时时间
-    public var delayTime: TimeInterval?
+    ///最小隐藏时间
+    public var minTime = 1.5
+    ///最大隐藏时间
+    public var maxTime = 3.5
+    ///字数控制时间
+    public var maxCount = 7
+    ///字体大小
+    public var font = WYJFont(14)
+    ///加载字体大小
+    public var detailsFont = WYJFont(13)
     ///是否动画
     public var animated: Bool = true
     ///位置
@@ -37,56 +45,40 @@ open class WYJHUD {
     private var hud: MBProgressHUD?
     
     ///显示文本
-    public static func show(_ title: String?,_ completion:(() -> ())? = nil) {
+    public static func show(_ title: String?,_ addView: UIView? = nil,_ completion:(() -> ())? = nil) {
         DispatchQueue.getMainAsync {
             let text = title ?? ""
             WYJHUD.hideHUD()
-            manager.hud = MBProgressHUD.showAdded(to: onView, animated: manager.animated)
+            manager.hud = MBProgressHUD.showAdded(to: addView ?? onView, animated: manager.animated)
             manager.defaultConfiguration(manager.hud)
             manager.hud?.completionBlock = completion
-            var height = text.yi.getHeight(fixedWidth: WYJRatio(350))
-            height = height > WYJRatio(350) ? WYJRatio(350) : height
-            if height > WYJRatio(350) {
-                let tv = HUDTextView()
-                tv.text = text
-                tv.textColor = .white
-                tv.font = WYJFont(14)
-                tv.isEditable = false
-                tv.showsVerticalScrollIndicator = false
-                tv.showsHorizontalScrollIndicator = false
-                tv.backgroundColor = UIColor.black.withAlphaComponent(0)
-                manager.hud?.customView = tv
-                manager.hud?.mode = .customView
+            manager.hud?.label.font = manager.font
+            manager.hud?.label.text = text
+            manager.hud?.mode = .text
+            if text.count / manager.maxCount < 1 {
+                manager.hud?.minShowTime = manager.minTime
             } else {
-                manager.hud?.label.font = WYJFont(14)
-                manager.hud?.label.text = text
-                manager.hud?.mode = .text
-            }
-            if let time = manager.delayTime {
+                var time = Double(text.count) / manager.maxCount + 1
+                time = time > manager.maxTime ? manager.maxTime : time
                 manager.hud?.minShowTime = time
-            } else {
-                if text.count / 7 < 1 {
-                    manager.hud?.minShowTime = 1.6
-                } else {
-                    var time = Double(text.count) / 7 + 1
-                    time = time > 6 ? 5 : time
-                    manager.hud?.minShowTime = time
-                }
             }
+            manager.hud?.isUserInteractionEnabled = manager.isMask
             manager.hud?.hide(animated: manager.animated)
         }
     }
     
     //MARK: --- 菊花
     ///菊花
-    public static func loading(_ text: String? = nil) {
+    public static func loading(_ text: String? = nil,_ addView: UIView? = nil) {
         DispatchQueue.getMainAsync {
             WYJHUD.hideHUD()
-            manager.hud = MBProgressHUD.showAdded(to: onView, animated: manager.animated)
-            manager.hud?.detailsLabel.text = text
-            manager.hud?.detailsLabel.font = WYJFont(13)
-            manager.hud?.mode = .indeterminate
+            manager.hud = MBProgressHUD.showAdded(to: addView ?? onView, animated: manager.animated)
             manager.defaultConfiguration(manager.hud)
+            manager.hud?.detailsLabel.text = text
+            manager.hud?.detailsLabel.font = manager.detailsFont
+            manager.hud?.mode = .indeterminate
+            manager.hud?.isUserInteractionEnabled = manager.isMask
+            
         }
     }
     
