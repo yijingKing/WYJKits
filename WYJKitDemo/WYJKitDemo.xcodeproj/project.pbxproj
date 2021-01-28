@@ -570,7 +570,7 @@
 		632440102589E2100065688B /* 集成第三方 */ = {
 			isa = PBXGroup;
 			children = (
-				632440112589E2100065688B /* WYJJSON.swift */,
+				6326946925C166C500130EF7 /* JSON */,
 				632440122589E2100065688B /* Alamofire */,
 				632440142589E2100065688B /* MBHUD */,
 			);
@@ -697,6 +697,14 @@
 				635CA05525B9217000BC49CB /* WYJUserDefaults.swift */,
 			);
 			path = UserDefaults;
+			sourceTree = "<group>";
+		};
+		6326946925C166C500130EF7 /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				632440112589E2100065688B /* WYJJSON.swift */,
+			);
+			path = JSON;
 			sourceTree = "<group>";
 		};
 		845C6C5FD91046F093DBF41D /* Pods */ = {

@@ -12,12 +12,12 @@ import UIKit
 public extension WYJProtocol where T: UITextField {
     ///标识
     @discardableResult
-    func key(_ key: String) -> WYJProtocol {
-        obj.key = key
+    func identify(_ identify: String) -> WYJProtocol {
+        obj.identify = identify
         return self
     }
-    func key() -> String {
-        return obj.key
+    func identify() -> String {
+        return obj.identify
     }
     ///最大字数
     @discardableResult
@@ -135,35 +135,56 @@ public extension WYJProtocol where T: UITextField {
         obj.rightView = rightV
         return self
     }
+    /// 方法
+    /// - Parameters:
+    ///   - event: 事件方式
+    ///   - block: 回调
+    @discardableResult
+    func addTarget(_ event: UIControl.Event, _ block: ((UITextField)->())?) -> WYJProtocol {
+        obj.allEvent(event, block)
+        return self
+    }
+    
+}
+
+fileprivate extension UITextField {
+    func allEvent(_ event: UIControl.Event, _ block: ((UITextField)->())?) {
+        eventBlock = block
+        self.addTarget(self, action: #selector(allEventSelects(_:)), for: event)
+    }
 }
 
 private extension UITextField {
+    @objc func allEventSelects(_ tf: UITextField) {
+        eventBlock?(tf)
+    }
     @objc func textFieldDidChange() {
         if self.maxCount > 0 {
             self.setMaxCount()
         }
     }
     ///设置最大值
-    private func setMaxCount() {
+    func setMaxCount() {
         let textCount = self.text?.count ?? 0
         if textCount > self.maxCount {
             self.text = String(self.text?.prefix(self.maxCount) ?? "")
         }
     }
 }
-public extension UITextField {
+fileprivate extension UITextField {
     private struct WYJRuntimeKey {
         static let maxCount = UnsafeRawPointer.init(bitPattern: "maxCount".hashValue)
-        static let key = UnsafeRawPointer.init(bitPattern: "key".hashValue)
+        static let identify = UnsafeRawPointer.init(bitPattern: "identify".hashValue)
         static let placeholderColor = UnsafeRawPointer.init(bitPattern: "placeholderColor".hashValue)
+        static let eventBlock = UnsafeRawPointer.init(bitPattern: "eventBlock".hashValue)
     }
     ///标识
-    var key: String {
+    var identify: String {
         set {
-            objc_setAssociatedObject(self, WYJRuntimeKey.key!, newValue, .OBJC_ASSOCIATION_COPY_NONATOMIC)
+            objc_setAssociatedObject(self, WYJRuntimeKey.identify!, newValue, .OBJC_ASSOCIATION_COPY_NONATOMIC)
         }
         get {
-            return objc_getAssociatedObject(self, WYJRuntimeKey.key!) as! String
+            return objc_getAssociatedObject(self, WYJRuntimeKey.identify!) as! String
         }
     }
     ///最大字数
@@ -185,6 +206,15 @@ public extension UITextField {
         }
         get {
             return objc_getAssociatedObject(self, WYJRuntimeKey.placeholderColor!) as? UIColor ?? WYJ99Color
+        }
+    }
+    ///代理回调
+    var eventBlock: ((UITextField)->())? {
+        set {
+            objc_setAssociatedObject(self, WYJRuntimeKey.eventBlock!, newValue, .OBJC_ASSOCIATION_COPY_NONATOMIC)
+        }
+        get {
+            return objc_getAssociatedObject(self, WYJRuntimeKey.eventBlock!) as? (UITextField) -> ()
         }
     }
 }

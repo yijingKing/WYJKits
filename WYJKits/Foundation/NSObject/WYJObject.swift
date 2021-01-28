@@ -128,9 +128,6 @@ extension AssociatedWrapper where Base: NSObject {
     }
 }
 
-
-
-
 //MARK: --- 时间选择器
 public extension NSObject {
     ///时间选择器
@@ -170,8 +167,16 @@ public var WYJBottomHeight: CGFloat {
 }
 ///状态条占的高度
 public var WYJStatusHeight: CGFloat {
+    if #available(iOS 13.0, *) {
+        return UIApplication.shared.windows.first?.windowScene?.statusBarManager?.statusBarFrame.size.height ?? 0
+    }
     return UIApplication.shared.statusBarFrame.height
 }
+//if (@available(iOS 13.0, *)) {
+//    return [UIApplication sharedApplication].windows.firstObject.windowScene.statusBarManager.statusBarFrame.size.height
+//} else {
+//    return [UIApplication sharedApplication].statusBarFrame.size.height
+//}
 ///导航栏高度 + 状态栏高度
 public var WYJStatusAndNavHeight: CGFloat {
     return WYJStatusHeight + WYJNavHeight

@@ -88,10 +88,16 @@ class ViewController: WYJBaseViewController {
         let str = "{\"ss\":\"0.003880\",\"name\":null}"
         model = try? Presonewe(from: str.yi.toDictionary())
         
-        ceshi3()
-        WYJHUD.show("", {
-            
-        }, view)
+        let tf = UITextField(frame: .init(x: 20, y: 100, width: 200, height: 50))
+        tf.backgroundColor = .blue
+        view.addSubview(tf)
+//        tf.allEvent(.editingChanged) { (tf) in
+//            WYJLog(tf.text)
+//        }
+        tf.yi.addTarget(.editingChanged) {
+            WYJLog($0.text)
+        }
+//        ceshi3()
     }
      
     @objc func onNotifitionClick () {
@@ -106,7 +112,7 @@ class ViewController: WYJBaseViewController {
             view.addSubview($0)
         })
         let img = UIImageView.init(image: #imageLiteral(resourceName: "矩形 490"))
-        img.frame = .init(x: 50, y: 200, width: 50, height: 50)
+        img.frame = .init(x: 50, y: WYJStatusAndNavHeight, width: 50, height: 50)
         brn.addSubview(img)
         brn.yi.titleColor(.blue)
         brn.yi.title("1233ssssscccsdqwedss")
