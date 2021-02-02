@@ -20,6 +20,7 @@ public enum managerLocation {
 }
 
 open class WYJHUD {
+    
     ///单例
     static var shared = WYJHUD()
     ///最小隐藏时间
@@ -62,7 +63,6 @@ open class WYJHUD {
                 time = time > manager.maxTime ? manager.maxTime : time
                 manager.hud?.minShowTime = time
             }
-            manager.hud?.isUserInteractionEnabled = manager.isMask
             manager.hud?.hide(animated: manager.animated)
         }
     }
@@ -77,8 +77,6 @@ open class WYJHUD {
             manager.hud?.detailsLabel.text = text
             manager.hud?.detailsLabel.font = manager.detailsFont
             manager.hud?.mode = .indeterminate
-            manager.hud?.isUserInteractionEnabled = manager.isMask
-            
         }
     }
     
@@ -92,6 +90,8 @@ open class WYJHUD {
     //MARK: --- 默认配置
     ///默认配置
     private func defaultConfiguration(_ hud: MBProgressHUD?) {
+        hud?.frame = .init(x: 0, y: WYJStatusAndNavHeight, width: WYJScreenWidth, height: WYJScreenHeight - WYJBottomAndTabBarHeight - WYJStatusAndNavHeight)
+        manager.hud?.isUserInteractionEnabled = manager.isMask
         ///多行
         hud?.label.numberOfLines = 0
         hud?.detailsLabel.numberOfLines = 0

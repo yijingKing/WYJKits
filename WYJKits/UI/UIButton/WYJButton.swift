@@ -126,15 +126,17 @@ public extension WYJProtocol where T: UIButton {
     @discardableResult
     func imagePosition(_ type: WYJButtonImagePosition,_ space: CGFloat? = nil,_ imageW: CGFloat? = nil,_ imageH: CGFloat? = nil) -> WYJProtocol {
         var image: UIImage?
-        if imageW != 0 && imageH != 0 && imageW != nil && imageH != nil {
-            image = image?.yi.scale(imageW ?? 0.0, imageH ?? 0.0)
+        if let w = imageW, let h = imageH {
+            image = image?.yi.scale(w, h)
             obj.setImage(image, for: .normal)
         }
-        let imageWidth = obj.imageView?.image?.size.width ?? 0
-        let imageHeight = obj.imageView?.image?.size.height ?? 0
-        let titleWidth = obj.titleLabel?.text?.yi.getWidth(obj.titleLabel?.font ?? UIFont.systemFont(ofSize: 17)) ?? 0
-        
-        
+        guard let imageWidth = obj.imageView?.image?.size.width,
+              let imageHeight = obj.imageView?.image?.size.height else {
+            return self
+        }
+        guard let titleWidth = obj.titleLabel?.text?.yi.getWidth(obj.titleLabel?.font ?? UIFont.systemFont(ofSize: 17)) else {
+            return self
+        }
         let titleHeight = obj.titleLabel?.font.pointSize ?? 0
         let insetAmount = (space ?? 0) / 2
         let imageOffWidth = (imageWidth + titleWidth) / 2 - imageWidth / 2

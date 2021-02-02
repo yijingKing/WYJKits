@@ -24,10 +24,12 @@ public extension WYJProtocol where T: UILabel {
     /// - Parameter space: space
     @discardableResult
     func wordSpace(_ space: Float) -> WYJProtocol {
-        let labelText = obj.text
-        let attStr = NSMutableAttributedString.init(string: labelText!)
-        attStr.addAttribute(NSAttributedString.Key.kern, value: (space), range: NSMakeRange(0, (labelText?.count)!))
-        attStr.addAttribute(NSAttributedString.Key.paragraphStyle, value: NSMutableParagraphStyle.init(), range: NSMakeRange(0, (labelText?.count)!))
+        guard let labelText = obj.text else {
+            return self
+        }
+        let attStr = NSMutableAttributedString.init(string: labelText)
+        attStr.addAttribute(NSAttributedString.Key.kern, value: (space), range: NSMakeRange(0, labelText.count))
+        attStr.addAttribute(NSAttributedString.Key.paragraphStyle, value: NSMutableParagraphStyle.init(), range: NSMakeRange(0, labelText.count))
         obj.attributedText = attStr
         obj.sizeToFit()
         return self
@@ -38,11 +40,13 @@ public extension WYJProtocol where T: UILabel {
     /// - Parameter space: space
     @discardableResult
     func lineSpace(_ space: Float) -> WYJProtocol {
-        let labelText = obj.text
-        let attStr = NSMutableAttributedString.init(string: labelText!)
+        guard let labelText = obj.text else {
+            return self
+        }
+        let attStr = NSMutableAttributedString.init(string: labelText)
         let paragraphStyle:NSMutableParagraphStyle = NSMutableParagraphStyle.init()
         paragraphStyle.lineSpacing = CGFloat(space)
-        attStr.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, (labelText?.count)!))
+        attStr.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, labelText.count))
         obj.attributedText = attStr
         obj.sizeToFit()
         return self
@@ -55,12 +59,14 @@ public extension WYJProtocol where T: UILabel {
     ///   - wordSpace: 字间距
     @discardableResult
     func lineSpaceWithWordSpace(_ lineSpace:Float,_ wordSpace:Float) -> WYJProtocol  {
-        let labelText = obj.text
-        let attStr = NSMutableAttributedString.init(string: labelText!)
+        guard let labelText = obj.text else {
+            return self
+        }
+        let attStr = NSMutableAttributedString.init(string: labelText)
         let paragraphStyle:NSMutableParagraphStyle = NSMutableParagraphStyle.init()
         paragraphStyle.lineSpacing = CGFloat(lineSpace)
-        attStr.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, (labelText?.count)!))
-        attStr.addAttribute(NSAttributedString.Key.kern, value: (wordSpace), range: NSMakeRange(0, (labelText?.count)!))
+        attStr.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, labelText.count))
+        attStr.addAttribute(NSAttributedString.Key.kern, value: (wordSpace), range: NSMakeRange(0, labelText.count))
         obj.attributedText = attStr
         obj.sizeToFit()
         return self
@@ -105,8 +111,8 @@ public extension UILabel {
     }
     
     @objc func copyText() {
-        if self.text != nil {
-            UIPasteboard.general.string = self.text
+        if let t = text {
+            UIPasteboard.general.string = t
         }
     }
 }

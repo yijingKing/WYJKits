@@ -479,9 +479,11 @@ public class SynchronizedDictionary <Key: Hashable, Value> {
     }
     
     public func containValue(for key: Key) -> Bool {
-        return (dict.index(forKey: key) != nil)
+        guard let _ = dict.index(forKey: key) else {
+            return false
+        }
+        return true
     }
-    
 }
 
 //MARK: --- 前后时间

@@ -83,6 +83,7 @@ class ViewController: WYJBaseViewController {
         log {
             WYJLog($0)
         }
+        
         view.backgroundColor = .red
         
         let str = "{\"ss\":\"0.003880\",\"name\":null}"
@@ -91,17 +92,10 @@ class ViewController: WYJBaseViewController {
         let tf = UITextField(frame: .init(x: 20, y: 100, width: 200, height: 50))
         tf.backgroundColor = .blue
         view.addSubview(tf)
-//        tf.allEvent(.editingChanged) { (tf) in
-//            WYJLog(tf.text)
-//        }
         tf.yi.addTarget(.editingChanged) {
             WYJLog($0.text)
         }
 //        ceshi3()
-    }
-     
-    @objc func onNotifitionClick () {
-        
     }
     
     func ceshi3() {

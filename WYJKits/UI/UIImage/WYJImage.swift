@@ -854,13 +854,12 @@ public extension UIImage {
      - Returns New image or nil
      */
     func applyBlur(withRadius blurRadius: CGFloat, tintColor: UIColor?, saturationDeltaFactor: CGFloat, maskImage: UIImage? = nil) -> UIImage? {
+        
         guard size.width > 0 && size.height > 0 && cgImage != nil else {
             return nil
         }
-        if maskImage != nil {
-            guard maskImage?.cgImage != nil else {
-                return nil
-            }
+        guard let maskI = maskImage,maskI.cgImage != nil else {
+            return nil
         }
         let imageRect = CGRect(origin: CGPoint.zero, size: size)
         var effectImage = self
@@ -880,7 +879,7 @@ public extension UIImage {
                 width: UInt((effectInContext?.width)!),
                 rowBytes: (effectInContext?.bytesPerRow)!)
             
-            UIGraphicsBeginImageContextWithOptions(size, false, 0.0);
+            UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
             let effectOutContext = UIGraphicsGetCurrentContext()
             
             var effectOutBuffer = vImage_Buffer(

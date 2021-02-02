@@ -86,8 +86,8 @@ open class WYJDatePickerViewController: UIViewController {
         case .none:
             break
         }
-        if backDate != nil {
-            backDate!(dateString)
+        if let b = backDate {
+            b(dateString)
         }
         dismiss(animated: true, completion: nil)
     }

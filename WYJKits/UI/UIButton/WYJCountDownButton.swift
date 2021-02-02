@@ -38,8 +38,8 @@ open class WYJCountDownButton: UIButton {
         second = maxSecond
         updateDisabled()
         
-        if timer != nil {
-            timer!.invalidate()
+        if let tr = timer {
+            tr.invalidate()
             timer = nil
         }
         

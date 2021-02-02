@@ -8,10 +8,6 @@ GitHub:        https://github.com/MemoryKing
 
 import UIKit
 
-class WYJToolManager: NSObject {
-    
-}
-
 //MARK: --- 设置别名
 ///设置别名
 public typealias Byte  = Int8

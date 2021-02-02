@@ -299,8 +299,8 @@ public extension WYJProtocol where T: UIDevice {
                 return true
             }
         }
-        let bash = fopen("/bin/bash", "r")
-        if bash != nil {
+        
+        if let bash = fopen("/bin/bash", "r") {
             fclose(bash)
             return true
         }
