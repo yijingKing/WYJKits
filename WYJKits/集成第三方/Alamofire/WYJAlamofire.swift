@@ -65,9 +65,51 @@ open class WYJAlamofire: NSObject {
 }
 
 public extension WYJAlamofire {
+    
+    //MARK: --- 多方式请求(暂支持get,post)
+    ///多方式请求(暂支持get,post)
+    final func request(_ httpMethod: HTTPMethod,
+                       _ api: String,
+                       _ parameters: [String: Any]? = nil,
+                       success: ((WYJJSON)->())?,
+                       error: ErrorBlock) {
+        switch httpMethod {
+            case .get:
+                self.get(api, parameters, success: success, error: error)
+                break
+            case .post:
+                self.post(api, parameters, success: success, error: error)
+                break
+            default:
+                break
+        }
+    }
+    
+    //MARK: --- 多方式请求(暂支持get,post)
+    ///多方式请求(暂支持get,post)
+    final func request<T: WYJCodable>(_ httpMethod: HTTPMethod,
+                                      _ api: String,
+                                      _ parameters: [String: Any]? = nil,
+                                      success: ((T)->())?,
+                                      error: ErrorBlock) {
+        switch httpMethod {
+            case .get:
+                self.get(api, parameters, success: success, error: error)
+                break
+            case .post:
+                self.post(api, parameters, success: success, error: error)
+                break
+            default:
+                break
+        }
+    }
+    
     //MARK: --- get
     ///get
-    final func get(_ api: String,_ parameters: [String: Any]? = nil,success: ((WYJJSON)->())?,error: ErrorBlock) {
+    final func get(_ api: String,
+                   _ parameters: [String: Any]? = nil,
+                   success: ((WYJJSON)->())?,
+                   error: ErrorBlock) {
         
         configureRequestParameters()
         var headers: HTTPHeaders?
@@ -76,9 +118,10 @@ public extension WYJAlamofire {
         }
         getNerworkingReachability {
             if $0 {
-                self.request(api, method: .get, parameters: parameters, encoding: self.encoding, headers: headers, interceptor: self.interceptor) { (result) in
+                self.request(api, method: .get, parameters: parameters,
+                             encoding: self.encoding, headers: headers,
+                             interceptor: self.interceptor) { (result) in
                     let json = WYJJSON.init(result)
-                    
                     success?(json)
                 } error: { (afError,data) in
                     self.errorMethod(afError, error,data)
@@ -90,7 +133,8 @@ public extension WYJAlamofire {
     }
     
     ///get
-    final func get<T: WYJCodable>(_ api: String,_ parameters: [String: Any]? = nil,success: ((T)->())?,error: ErrorBlock) {
+    final func get<T: WYJCodable>(_ api: String,_ parameters: [String: Any]? = nil,
+                                  success: ((T)->())?,error: ErrorBlock) {
         configureRequestParameters()
         var headers: HTTPHeaders?
         if let h = header {
@@ -98,7 +142,9 @@ public extension WYJAlamofire {
         }
         getNerworkingReachability {
             if $0 {
-                self.request(api, method: .get, parameters: parameters, encoding: self.encoding, headers: headers, interceptor: self.interceptor) { (result) in
+                self.request(api, method: .get, parameters: parameters,
+                             encoding: self.encoding, headers: headers,
+                             interceptor: self.interceptor) { (result) in
                     let json = WYJJSON.init(result)
                     if let model = try? T(from: json.dictionaryObject) {
                         success?(model)
@@ -116,7 +162,8 @@ public extension WYJAlamofire {
     
     //MARK: --- post
     ///post
-    final func post(_ api: String,_ parameters: [String: Any]? = nil,success: ((WYJJSON)->())?,error: ErrorBlock) {
+    final func post(_ api: String,_ parameters: [String: Any]? = nil,
+                    success: ((WYJJSON)->())?,error: ErrorBlock) {
         configureRequestParameters()
         var headers: HTTPHeaders?
         if let h = header {
@@ -124,7 +171,9 @@ public extension WYJAlamofire {
         }
         getNerworkingReachability {
             if $0 {
-                self.request(api, method: .post, parameters: parameters, encoding: self.encoding, headers: headers, interceptor: self.interceptor) { (result) in
+                self.request(api, method: .post, parameters: parameters,
+                             encoding: self.encoding, headers: headers,
+                             interceptor: self.interceptor) { (result) in
                     let json = WYJJSON.init(result)
                     success?(json)
                 } error: { (afError,data) in
@@ -137,7 +186,8 @@ public extension WYJAlamofire {
     }
     
     ///post
-    final func post<T:WYJCodable>(_ api: String,_ parameters: [String: Any]? = nil,success: ((T)->())?,error: ErrorBlock) {
+    final func post<T:WYJCodable>(_ api: String,_ parameters: [String: Any]? = nil,
+                                  success: ((T)->())?,error: ErrorBlock) {
         configureRequestParameters()
         var headers: HTTPHeaders?
         if let h = header {
@@ -145,10 +195,11 @@ public extension WYJAlamofire {
         }
         getNerworkingReachability {
             if $0 {
-                self.request(api, method: .post, parameters: parameters, encoding: self.encoding, headers: headers, interceptor: self.interceptor) { [weak self](result) in
+                self.request(api, method: .post, parameters: parameters,
+                             encoding: self.encoding, headers: headers,
+                             interceptor: self.interceptor) { [weak self](result) in
                     guard let strongSelf = self else { return }
                     let json = WYJJSON.init(result)
-                    
                     if json[strongSelf.codeS].int == strongSelf.code {
                         if let model = try? T(from: json[strongSelf.data].dictionaryObject) {
                             success?(model)
@@ -163,6 +214,43 @@ public extension WYJAlamofire {
                 }
             } else {
                 self.nerworkingError(error)
+            }
+        }
+    }
+    
+    /// 通用请求
+    /// - Parameters:
+    ///   - convertible: 地址
+    ///   - method: 方式
+    ///   - parameters: 参数
+    ///   - headers: 头部
+    ///   - encoding: 编码
+    ///   - interceptor: 拦截器
+    ///   - successB: 成功返回
+    ///   - errorB: 失败返回
+    final func request(_ convertible: URLConvertible,
+                       method: HTTPMethod ,
+                       parameters: Parameters? = nil,
+                       encoding: ParameterEncoding = URLEncoding.default,
+                       headers: HTTPHeaders? = nil,
+                       interceptor: RequestInterceptor? = nil,
+                       success: ((Any)->())?,
+                       error: ((AFError,Data?)->())?) {
+        
+        dataRequest = AF.request(convertible, method: method, parameters: parameters, encoding: encoding, headers: headers, interceptor: interceptor) { [weak self](URLRequest) in
+            guard let strongSelf = self else { return }
+            ///超时时间
+            URLRequest.timeoutInterval = strongSelf.timeOut
+        }
+        
+        dataRequest?.responseJSON { response in
+            
+            switch response.result {
+                case .success(let result):
+                    success?(result)
+                    
+                case .failure(let err):
+                    error?(err,response.data)
             }
         }
     }
@@ -231,44 +319,6 @@ public extension WYJAlamofire {
                 }
             } else {
                 self.nerworkingError(error)
-            }
-        }
-    }
-    
-    /// 通用请求
-    /// - Parameters:
-    ///   - convertible: 地址
-    ///   - method: 方式
-    ///   - parameters: 参数
-    ///   - headers: 头部
-    ///   - encoding: 编码
-    ///   - interceptor: 拦截器
-    ///   - successB: 成功返回
-    ///   - errorB: 失败返回
-    final func request(_ convertible: URLConvertible,
-                       method: HTTPMethod ,
-                       parameters: Parameters? = nil,
-                       encoding: ParameterEncoding = URLEncoding.default,
-                       headers: HTTPHeaders? = nil,
-                       interceptor: RequestInterceptor? = nil,
-                       success: ((Any)->())?,
-                       error: ((AFError,Data?)->())?) {
-        
-        dataRequest = AF.request(convertible, method: method, parameters: parameters, encoding: encoding, headers: headers, interceptor: interceptor) { [weak self](URLRequest) in
-            guard let strongSelf = self else { return }
-            ///超时时间
-            URLRequest.timeoutInterval = strongSelf.timeOut
-            
-        }
-        
-        dataRequest?.responseJSON { response in
-            
-            switch response.result {
-                case .success(let result):
-                    success?(result)
-                    
-                case .failure(let err):
-                    error?(err,response.data)
             }
         }
     }
