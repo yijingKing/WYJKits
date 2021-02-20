@@ -30,3 +30,5 @@ public func WYJLog<T>(_ message: T, fileName: String = #file, methodName: String
       
     #endif
 }
+
+

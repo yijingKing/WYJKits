@@ -67,6 +67,10 @@ open class WYJBaseViewController: UIViewController {
         view.backgroundColor = WYJF5Color
         configureInterface()
     }
+    ///InjectionIII 调用方法
+    @objc func injected() {
+        viewDidLoad()
+    }
     
     ///侧滑开始
     open func willMode() { }

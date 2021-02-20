@@ -30,11 +30,6 @@ class MyViewController: WYJBaseViewController {
         para["username"] = "18250808695"
         para["password"] = "123456"
         para["rememberMe"] = "false"
-        WYJRequest().post(HomeAPI.login, para) { (model: MyInfo_Data) in
-            WYJLog(model.id)
-        } error: { (err) in
-            WYJLog(err)
-        }
     }
     /*
     // MARK: - Navigation
