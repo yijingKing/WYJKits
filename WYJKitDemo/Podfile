@@ -13,4 +13,5 @@ pod 'SnapKit',:inhibit_warnings => true
 pod 'MBProgressHUD',:inhibit_warnings => true
 pod 'Alamofire',:inhibit_warnings => true
 #pod 'CaamDau', :git => 'https://gitee.com/CaamDau/CaamDau.git'
+pod 'IQKeyboardManagerSwift',:inhibit_warnings => true
 end

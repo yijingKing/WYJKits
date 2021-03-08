@@ -35,8 +35,23 @@ public extension WYJProtocol where T: UserDefaults {
             return nil
         }
         return result
-        
     }
+    
+    
+    /// 移除所有值
+    static func removeAll() {
+        if let bundleID = Bundle.main.bundleIdentifier {
+            UserDefaults.standard.removePersistentDomain(forName: bundleID)
+        }
+    }
+    
+    
+    /// 移除单个值
+    /// - Parameter key: 键名
+    static func remove(_ key: String) {
+        UserDefaults.standard.removeObject(forKey: key)
+    }
+    
 }
 
 // MARK: 模型持久化

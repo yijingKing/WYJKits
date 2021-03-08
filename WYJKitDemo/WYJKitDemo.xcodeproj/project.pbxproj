@@ -70,6 +70,7 @@
 		632440732589E3D10065688B /* WYJProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632440722589E3D10065688B /* WYJProtocol.swift */; };
 		63327F9E2591A0C8008C99B5 /* WYJKits.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 63327F9D2591A0C8008C99B5 /* WYJKits.podspec */; };
 		635CA05625B9217000BC49CB /* WYJUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635CA05525B9217000BC49CB /* WYJUserDefaults.swift */; };
+		63802B8825F60AF2005D773F /* WYJKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63802B8725F60AF2005D773F /* WYJKeyboard.swift */; };
 		63D60C1925AC21A100E9587D /* WYJTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D60C1825AC21A100E9587D /* WYJTableView.swift */; };
 		63D60C2125AC22E600E9587D /* WYJCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D60C2025AC22E600E9587D /* WYJCollectionView.swift */; };
 /* End PBXBuildFile section */
@@ -167,6 +168,7 @@
 		632440722589E3D10065688B /* WYJProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJProtocol.swift; sourceTree = "<group>"; };
 		63327F9D2591A0C8008C99B5 /* WYJKits.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = WYJKits.podspec; path = ../../WYJKits.podspec; sourceTree = "<group>"; };
 		635CA05525B9217000BC49CB /* WYJUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJUserDefaults.swift; sourceTree = "<group>"; };
+		63802B8725F60AF2005D773F /* WYJKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJKeyboard.swift; sourceTree = "<group>"; };
 		63D60C1825AC21A100E9587D /* WYJTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJTableView.swift; sourceTree = "<group>"; };
 		63D60C2025AC22E600E9587D /* WYJCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJCollectionView.swift; sourceTree = "<group>"; };
 		78398B3861ED16B1DF9D9A4E /* Pods-IYXKitDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IYXKitDemo.release.xcconfig"; path = "Target Support Files/Pods-IYXKitDemo/Pods-IYXKitDemo.release.xcconfig"; sourceTree = "<group>"; };
@@ -584,6 +586,7 @@
 				6326946925C166C500130EF7 /* JSON */,
 				632440122589E2100065688B /* Alamofire */,
 				632440142589E2100065688B /* MBHUD */,
+				63802B8C25F60B14005D773F /* IQKeyboardManagerSwift */,
 			);
 			path = "集成第三方";
 			sourceTree = "<group>";
@@ -716,6 +719,14 @@
 				632440112589E2100065688B /* WYJJSON.swift */,
 			);
 			path = JSON;
+			sourceTree = "<group>";
+		};
+		63802B8C25F60B14005D773F /* IQKeyboardManagerSwift */ = {
+			isa = PBXGroup;
+			children = (
+				63802B8725F60AF2005D773F /* WYJKeyboard.swift */,
+			);
+			path = IQKeyboardManagerSwift;
 			sourceTree = "<group>";
 		};
 		845C6C5FD91046F093DBF41D /* Pods */ = {
@@ -991,6 +1002,7 @@
 				632440562589E2100065688B /* WYJSystem.swift in Sources */,
 				632440732589E3D10065688B /* WYJProtocol.swift in Sources */,
 				6324404B2589E2100065688B /* WYJString.swift in Sources */,
+				63802B8825F60AF2005D773F /* WYJKeyboard.swift in Sources */,
 				632440442589E2100065688B /* WYJArray.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
