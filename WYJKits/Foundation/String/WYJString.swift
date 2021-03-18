@@ -535,6 +535,9 @@ public extension WYJProtocol where T == String {
         if num.doubleValue.isNaN {
             num = NSDecimalNumber(string: "0")
         }
+        formatter.usesGroupingSeparator = true //设置用组分隔
+        formatter.groupingSeparator = "," //分隔符号
+        formatter.groupingSize = 4 //分隔位数
         let result = formatter.string(from: num)
         return result
     }

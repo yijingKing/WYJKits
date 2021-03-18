@@ -32,15 +32,18 @@ public extension WYJCompatible {
     }
 }
 
-extension NSObject: WYJCompatible {}
 extension CGPoint: WYJCompatible {}
-extension CGRect: WYJCompatible {}
 extension CGSize: WYJCompatible {}
 extension CGVector: WYJCompatible {}
+extension CGRect: WYJCompatible {}
+extension NSObject: WYJCompatible {}
 extension Array: WYJCompatible {}
-extension String: WYJCompatible {}
-extension Dictionary: WYJCompatible {}
-extension Set: WYJCompatible {}
 extension Data: WYJCompatible {}
 extension Date: WYJCompatible {}
+extension String: WYJCompatible {}
+extension Int: WYJCompatible {}
+extension Dictionary: WYJCompatible {}
+extension Float: WYJCompatible {}
+extension Set: WYJCompatible {}
+extension Double: WYJCompatible {}
 extension DateComponents: WYJCompatible {}

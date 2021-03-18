@@ -12,6 +12,7 @@ import UIKit
 
 ///倒计时按钮
 open class WYJCountDownButton: UIButton {
+    static  let shared = WYJCountDownButton()
     /// 最大倒计时
     public var maxSecond = 60
     /// 判断是否处于倒计时状态(默认false)
@@ -20,7 +21,7 @@ open class WYJCountDownButton: UIButton {
             oldValue ? startCountdown() : stopCountdown()
         }
     }
-    static  let shared = WYJCountDownButton()
+    
     private var second = 0
     private var timer: Timer?
     private var timeLabel = UILabel()
@@ -32,7 +33,7 @@ open class WYJCountDownButton: UIButton {
     deinit {
         isCountDown = false
     }
-    
+
     private func startCountdown() {
         setupLabel()
         second = maxSecond

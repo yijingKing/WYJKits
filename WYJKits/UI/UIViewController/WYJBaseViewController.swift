@@ -56,7 +56,7 @@ open class WYJBaseViewController: UIViewController {
     //MARK: --- viewDidLoad
     open override func viewDidLoad() {
         super.viewDidLoad()
-        
+        WYJLog("当前页面:" + "\(self.self)")
         //防止自动下移64
         automaticallyAdjustsScrollViewInsets = false
         

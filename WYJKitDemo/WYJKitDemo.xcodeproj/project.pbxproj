@@ -1210,9 +1210,7 @@
 					"\"UIKit\"",
 					"-Xlinker",
 					"-interposable",
-					"-Xlinker",
 					"-undefined",
-					"-Xlinker",
 					dynamic_lookup,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mk.WYJKits;
@@ -1261,9 +1259,7 @@
 					"\"UIKit\"",
 					"-Xlinker",
 					"-interposable",
-					"-Xlinker",
 					"-undefined",
-					"-Xlinker",
 					dynamic_lookup,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mk.WYJKits;

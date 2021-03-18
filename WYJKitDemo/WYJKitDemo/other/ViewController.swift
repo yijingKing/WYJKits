@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 class ViewController: WYJBaseViewController  {
 
@@ -14,15 +15,19 @@ class ViewController: WYJBaseViewController  {
         super.viewDidLoad()
 
         view.backgroundColor = .systemBlue
-
+        let d =  0.123
+        WYJLog(d.yi.localized(.percent))
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let v = MainInstructions()
-        view.addSubview(v)
-        v.snp.makeConstraints({
-            $0.edges.equalToSuperview()
-        })
+        let d =  0.123
+        WYJLog(d.yi.localized(.currencyPlural))
+        
+//        let v = MainInstructions()
+//        view.addSubview(v)
+//        v.snp.makeConstraints({
+//            $0.edges.equalToSuperview()
+//        })
     }
 
 }
