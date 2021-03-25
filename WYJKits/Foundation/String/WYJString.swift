@@ -289,24 +289,28 @@ public extension WYJProtocol where T == String {
         
         return NSDecimalNumber.init(string: String(format: "%@", obj)).intValue
     }
+    
     /// Number
     func toNumber() -> NSNumber? {
         guard !obj.isEmpty else { return nil }
         
         return NSNumber.init(value: NSDecimalNumber.init(string: String(format: "%@", obj)).intValue)
     }
+    
     /// Double
     func toDouble() -> Double? {
         guard !obj.isEmpty else { return nil }
         
         return NSDecimalNumber.init(string: String(format: "%@", obj)).doubleValue
     }
+    
     /// Float
     func toFloat() -> Float? {
         guard !obj.isEmpty else { return nil }
         
         return NSDecimalNumber.init(string: String(format: "%@", obj)).floatValue
     }
+    
     /// Bool
     func toBool() -> Bool? {
         guard !obj.isEmpty else { return nil }
@@ -317,6 +321,7 @@ public extension WYJProtocol where T == String {
         }
         return nil
     }
+    
     //MARK: --- 时间
     ///string --> date
     func toDate(from dateFormat: String,_ timeZone: TimeZone = NSTimeZone.system) -> Date? {
@@ -329,6 +334,7 @@ public extension WYJProtocol where T == String {
         let date = formatter.date(from: obj)
         return date
     }
+    
     ///string --> date
     func toDate(_ dateFormat: WYJDateFormatter,_ timeZone: TimeZone = NSTimeZone.system) -> Date? {
         guard !obj.isEmpty else { return nil }
@@ -340,6 +346,7 @@ public extension WYJProtocol where T == String {
         let date = formatter.date(from: obj)
         return date
     }
+    
     /// 字符串转时间戳
     func toStampTime(_ mode: WYJDateFormatter = .dateModeYMDHMS) -> Int {
         guard !obj.isEmpty else { return 0 }
@@ -367,6 +374,7 @@ public extension WYJProtocol where T == String {
         }
         return dict as? [String : Any]
     }
+    
     /// JSONString转换为data
     func toData(_ using: String.Encoding = .utf8) -> Data? {
         guard !obj.isEmpty else { return nil }
@@ -374,11 +382,13 @@ public extension WYJProtocol where T == String {
         let data = obj.data(using: using)
         return data
     }
+    
     ///转成json
     func toJSON() -> WYJJSON? {
         guard !obj.isEmpty else { return nil }
         return WYJJSON.init(obj)
     }
+    
     //MARK: --- 进制
     ///十六进制转数字
     func hexToInt() -> Int {
@@ -396,6 +406,7 @@ public extension WYJProtocol where T == String {
         }
         return sum
     }
+    
     ///十六进制转换为普通字符串
     func hexToString() -> String {
         guard !obj.isEmpty else { return "" }
@@ -416,6 +427,7 @@ public extension WYJProtocol where T == String {
         dataBStr = String.init(data: Data(bytes), encoding: String.Encoding.ascii) ?? ""
         return dataBStr
     }
+    
     ///普通字符串转换为十六进制
     func toHexString() -> String {
         guard !obj.isEmpty else { return "" }
@@ -433,6 +445,7 @@ public extension WYJProtocol where T == String {
         }
         return sumString
     }
+    
     //MARK: --- 加密
     /// base64
     func toBase64 (_ options: Data.Base64EncodingOptions? = nil) -> String {
@@ -449,6 +462,7 @@ public extension WYJProtocol where T == String {
         }
         return base64String
     }
+    
     ///转成byte数组
     func toBytes() -> [UInt8] {
         guard !obj.isEmpty else { return [] }
@@ -459,6 +473,7 @@ public extension WYJProtocol where T == String {
         strData.getBytes(&bytesArray, length:count * MemoryLayout<UInt8>.size)
         return bytesArray
     }
+    
     ///md5 字符串加密
     func md5() -> String {
         guard !obj.isEmpty else { return "" }
@@ -475,6 +490,7 @@ public extension WYJProtocol where T == String {
         free(result)
         return String(format: hash as String)
     }
+    
     ///encode
     func encoded(_ charactersIn: String? = nil) -> String? {
         guard !obj.isEmpty else { return obj }
@@ -510,7 +526,6 @@ public extension WYJProtocol where T == String {
         }
         return UIImage.init(data: data)
     }
-    
     
     ///NSAttributedString
     func toAttributedString() -> NSAttributedString {
@@ -577,6 +592,7 @@ public extension WYJProtocol where T == String {
     func removeSomeStringUseSomeString(removeString: String, replacingString: String = "") -> String {
         return obj.replacingOccurrences(of: removeString, with: replacingString)
     }
+    
     // MARK: 字符串转数组
     /// 字符串转数组
     /// - Returns: 转化后的数组
@@ -709,3 +725,4 @@ public extension String {
         return self.count
     }
 }
+

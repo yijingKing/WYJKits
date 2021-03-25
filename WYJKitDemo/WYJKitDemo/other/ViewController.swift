@@ -9,25 +9,51 @@
 import UIKit
 import Foundation
 
+
+var RSA_PrivateKey:String = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAMLgqFw6BLWl8icHGYJN3imP5WOuKvTsrkk3kAOztuumhGDM+I2dkyxeg9kPBe5s9uU76A+dWZalBd2fu+YGol00YHN8cHlOCEUpxpkfrKkaqeIAQLB9TiLG0ElByI/0AYi2+bavn0mZUQWq/VklY5a+CdOSxJvyiQH/gBf81GMHAgMBAAECgYEAl6FYPpKCMZiSZx2WEpZmA27MbJgLIpG6Nov+CXNfI9Jn9C3oQ8BU0FQmQND4q4CrRsgrE2M6XwW+H6h2+k81KvQ/14FlXi713RE1L+SO6/ciaqPLm6rEJrlPKF5IlOk/OQL8fyP3yUj2Qb5LAWCY2FB+fzS05hVq7CpUyR6NtpkCQQD8HS3rwNam1uNdG+LFJHH6Ug9oimQT3oUY689qupy8J/ZnrJE6Rp6DGtz7fd9jWhBS98ASTH8IK1E91ay3ADGjAkEAxeGg0WNnfgVt33i60B0HhMHSguBqnLGzXqH0H0qzH/kB3/GPdvK9bVsuGYSRXtMyJAymlypZf7Roe6hseI4HTQJAeJ2VLKcTirpgCFmhAmRPS00bJg6flons72FR2GPzPGl6D1uWF2VVzK97ba5ow2WBTdBNyfNjCwt+ULD7conbNQJAHLek5h5d+50AGAlmWyOLXsneKh41eq4TUO2CBzSJEF/L1NsyrdmGgiNUamGh0zglM7QeTRvZRz5AV4nWzBwYlQJBAIykTzvPaISpSZUT5WVb5TDleUN79a9BAjxHaD+EvOaIoqLDI1L+bDkbqpKcqETcFycb5uLjnJ3Hu9iVmQR7Ki0="
+var RSA_PublicKey:String = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDC4KhcOgS1pfInBxmCTd4pj+Vjrir07K5JN5ADs7brpoRgzPiNnZMsXoPZDwXubPblO+gPnVmWpQXdn7vmBqJdNGBzfHB5TghFKcaZH6ypGqniAECwfU4ixtBJQciP9AGItvm2r59JmVEFqv1ZJWOWvgnTksSb8okB/4AX/NRjBwIDAQAB"
+
 class ViewController: WYJBaseViewController  {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = .systemBlue
-        let d =  0.123
-        WYJLog(d.yi.localized(.percent))
+//        let d =  0.123
+//        WYJLog(d.yi.localized(.percent))
+        
+//        calculateDifference(startTime: "431025200206054026".yi.index(6, 14), endTime: Date().yi.toString(format: "yyyyMMdd"))
+        let s = "431025200206054026"
+        let d: String = s.yi.RSAEncrypted(publicKeyBase64: RSA_PublicKey) ?? ""
+        let dd = RSA.encryptString(s, publicKey: RSA_PublicKey) ?? ""
+        let ss = dd.yi.RSADecrypted(privateBase64: RSA_PrivateKey)
+        let sss = d.yi.RSADecrypted(privateBase64: RSA_PrivateKey)
+        WYJLog(ss)
+        WYJLog(sss)
+        
+    }
+    func calculateDifference(startTime: String,endTime: String) -> Bool {
+        let dateFormatter = DateFormatter()
+        
+        dateFormatter.timeZone = TimeZone.init(secondsFromGMT: 8)
+        dateFormatter.dateFormat = "yyyyMMdd"
+
+        if let date1 = dateFormatter.date(from: startTime),let date2 = dateFormatter.date(from: endTime) {
+            let components = NSCalendar.current.dateComponents([.year,.month,.day], from: date1, to: date2)
+            if let year = components.year {
+                if year <= 59 && year >= 18 {
+                    return true
+                }
+            }
+        } else {
+            
+        }
+        return false
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let d =  0.123
         WYJLog(d.yi.localized(.currencyPlural))
-        
-//        let v = MainInstructions()
-//        view.addSubview(v)
-//        v.snp.makeConstraints({
-//            $0.edges.equalToSuperview()
-//        })
     }
 
 }

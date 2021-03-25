@@ -64,7 +64,6 @@ public extension WYJProtocol where T == Float {
                  _ minInteger: Int? = nil,_ maxInteger: Int? = nil) -> String? {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = style
-        
         if let min = minFraction,let max = maxFraction {
             numberFormatter.maximumFractionDigits = max
             numberFormatter.minimumFractionDigits = min

@@ -49,7 +49,7 @@ public extension WYJCodable {
     }
     
     ///model 转 json
-    func toJSONString () throws -> String {
+    func toJSON() throws -> String {
         if let jsonData = try? JSONEncoder().encode(self) {
             if let jsonString = String.init(data: jsonData, encoding: String.Encoding.utf8) {
                 return jsonString
