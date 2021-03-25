@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
   s.dependency 'MBProgressHUD'
   s.dependency 'Alamofire'
   s.dependency 'IQKeyboardManagerSwift'
-  S.dependency 'SwiftyRSA'
+  s.dependency 'SwiftyRSA'
   s.resource_bundles = { 'WYJResources' => 'WYJKits/**/*.xcassets' }
   
   s.source_files = 'WYJKits/**/*.swift'
