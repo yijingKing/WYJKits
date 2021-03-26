@@ -111,7 +111,7 @@
 		63243FB52589E20A0065688B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		63243FB72589E20A0065688B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		63243FB82589E20A0065688B /* NoData.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NoData.png; sourceTree = "<group>"; };
-		63243FB92589E20A0065688B /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
+		63243FB92589E20A0065688B /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		63243FBA2589E20A0065688B /* WeChat66467de1e87eb0c1de1a8add1099df0b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WeChat66467de1e87eb0c1de1a8add1099df0b.png; sourceTree = "<group>"; };
 		63243FBB2589E20A0065688B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63243FBC2589E20A0065688B /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };

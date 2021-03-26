@@ -24,10 +24,10 @@ class ViewController: WYJBaseViewController  {
         
 //        calculateDifference(startTime: "431025200206054026".yi.index(6, 14), endTime: Date().yi.toString(format: "yyyyMMdd"))
         let s = "431025200206054026"
-        let d: String = s.yi.RSAEncrypted(publicKeyBase64: RSA_PublicKey) ?? ""
+        let d: String = s.yi.RSAEncrypt(.base64(RSA_PublicKey)) ?? ""
         let dd = RSA.encryptString(s, publicKey: RSA_PublicKey) ?? ""
-        let ss = dd.yi.RSADecrypted(privateBase64: RSA_PrivateKey)
-        let sss = d.yi.RSADecrypted(privateBase64: RSA_PrivateKey)
+        let ss = dd.yi.RSADecrypt(.base64(RSA_PrivateKey))
+        let sss = d.yi.RSADecrypt(.base64(RSA_PrivateKey))
         WYJLog(ss)
         WYJLog(sss)
         

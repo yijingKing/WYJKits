@@ -17,8 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         hotReload()
         
-        WYJKeyboard.open()
-        
+        WYJKeyboard.open({_ in
+            
+        })
         window?.rootViewController = WYJBaseNavigationController.init(rootViewController: ViewController())
         return true
     }
