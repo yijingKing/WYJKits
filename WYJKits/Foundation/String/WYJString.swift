@@ -111,8 +111,10 @@ public extension WYJProtocol where T == String {
 public extension WYJProtocol where T == String {
     ///开始结束
     func index(_ start: Int ,_ stop: Int) -> String {
-        guard !obj.isEmpty else { return "" }
-        
+        guard !obj.isEmpty else {
+            WYJLog("字符串为空")
+            return ""
+        }
         let string = obj
         let index1 = string.index(string.startIndex, offsetBy: start)
         let index2 = string.index(string.startIndex, offsetBy: stop)

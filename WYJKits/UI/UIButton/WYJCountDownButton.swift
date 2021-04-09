@@ -17,8 +17,8 @@ open class WYJCountDownButton: UIButton {
     public var maxSecond = 60
     /// 判断是否处于倒计时状态(默认false)
     public var isCountDown = false {
-        didSet {
-            oldValue ? startCountdown() : stopCountdown()
+        willSet {
+            newValue ? startCountdown() : stopCountdown()
         }
     }
     
@@ -35,8 +35,8 @@ open class WYJCountDownButton: UIButton {
     }
 
     private func startCountdown() {
-        setupLabel()
         second = maxSecond
+        setupLabel()
         updateDisabled()
         
         if let tr = timer {

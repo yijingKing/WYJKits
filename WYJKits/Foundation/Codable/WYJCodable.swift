@@ -25,15 +25,19 @@ public enum WYJCodableError: Error {
 
 
 public protocol WYJCodable: Codable {
+    init(from decoder: Any?) throws
     init(from decoder: String?) throws
     init(from decoder: Dictionary<String,Any>?) throws
 }
 public extension WYJCodable {
-    init(from decoder: String?) throws {
+    init(from decoder: Any?) throws {
         self = try Self.yi_init(decoder)
     }
+    init(from decoder: String?) throws {
+        self = try Self.yi_init(jsons: decoder)
+    }
     init(from decoder: Dictionary<String,Any>?) throws {
-        self = try Self.yi_init(decoder)
+        self = try Self.yi_init(dictionary: decoder)
     }
 }
 public extension WYJCodable {
@@ -57,8 +61,42 @@ public extension WYJCodable {
         }
         throw WYJCodableError.dicToJsonFail
     }
+
+    static func yi_init<T : WYJCodable>(_ t: Any?) throws -> T {
+        switch t {
+            case let dic as Dictionary<String, Any>:
+                guard let JSONString = dic.yi.toJSONString() else {
+                    throw WYJCodableError.dicToJsonFail
+                }
+                guard let jsonData = JSONString.data(using: .utf8) else {
+                    throw WYJCodableError.jsonToDataFail
+                }
+                let decoder = JSONDecoder()
+                do {
+                    let obj = try decoder.decode(T.self, from: jsonData)
+                    return obj
+                }catch {
+                    WYJLog(error)
+                }
+            case let json as String:
+                guard let jsonData = json.data(using: .utf8) else {
+                    throw WYJCodableError.jsonToDataFail
+                }
+                let decoder = JSONDecoder()
+                do {
+                    let obj = try decoder.decode(T.self, from: jsonData)
+                    return obj
+                }catch {
+                    WYJLog(error)
+                }
+            default:
+            break
+        }
+        throw WYJCodableError.jsonToModelFail
+    }
+    
     ///dic 转 model
-    static func yi_init<T : WYJCodable>(_ dic: Dictionary<String, Any>?) throws -> T {
+    static func yi_init<T : WYJCodable>(dictionary dic: Dictionary<String, Any>?) throws -> T {
         
         guard let JSONString = dic?.yi.toJSONString() else {
             throw WYJCodableError.dicToJsonFail
@@ -76,7 +114,7 @@ public extension WYJCodable {
         throw WYJCodableError.jsonToModelFail
     }
     ///jsonstring 转 model
-    static func yi_init<T : WYJCodable>(_ json: String?) throws -> T {
+    static func yi_init<T : WYJCodable>(jsons json: String?) throws -> T {
         
         guard let jsonData = json?.data(using: .utf8) else {
             throw WYJCodableError.jsonToDataFail

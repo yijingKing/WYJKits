@@ -59,7 +59,6 @@ public class WYJLocation: NSObject {
             default:
                 reportLocationServicesAuthorizationStatus(status: CLLocationManager.authorizationStatus())
         }
-        
     }
     
     //MARK: --- 获取定位代理返回状态进行处理

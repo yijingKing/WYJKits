@@ -60,19 +60,26 @@ public extension WYJProtocol where T == Float {
     ///   - minInteger: 最小整数位
     ///   - maxInteger: 最大整数位
     /// - Returns: 转换成带百分号字符串
-    func localized(_ style: NumberFormatter.Style,_ minFraction: Int? = 2,_ maxFraction: Int? = 2,
-                 _ minInteger: Int? = nil,_ maxInteger: Int? = nil) -> String? {
+    func localized(_ style: NumberFormatter.Style,_ minFraction: Int? = nil,_ maxFraction: Int? = nil,_ minInteger: Int? = nil,_ maxInteger: Int? = nil) -> String? {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = style
-        if let min = minFraction,let max = maxFraction {
-            numberFormatter.maximumFractionDigits = max
+        
+        if let min = minFraction {
             numberFormatter.minimumFractionDigits = min
         }
-        if let min = minInteger,let max = maxInteger {
+        if let max = maxFraction {
+            numberFormatter.maximumFractionDigits = max
+        }
+        numberFormatter.minimumIntegerDigits = minInteger ?? 1
+        if let max = maxInteger {
             numberFormatter.maximumIntegerDigits = max
-            numberFormatter.minimumIntegerDigits = min
         }
         return numberFormatter.string(for: obj)
+    }
+    
+    ///分数(默认最小2位,最大3位)
+    func decimal(_ minFraction: Int? = 2,_ maxFraction: Int? = nil) -> String? {
+        return self.localized(.decimal, minFraction, maxFraction,1,nil)
     }
     
     /// 分割位数

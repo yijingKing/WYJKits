@@ -322,8 +322,22 @@ public extension WYJProtocol where T: UIView {
             obj.layer.render(in: rendererContext.cgContext)
         }
     }
-    
 }
+
+public extension WYJProtocol where T: UIView {
+    ///视图包含控制器
+    func viewContainingController() -> UIViewController? {
+        var nextResponder: UIResponder? = obj
+        repeat {
+            nextResponder = nextResponder?.next
+            if let viewController = nextResponder as? UIViewController {
+                return viewController
+            }
+        } while nextResponder != nil
+        return nil
+    }
+}
+
 
 public extension UIView {
     /// 渐变色方向
@@ -699,3 +713,6 @@ fileprivate extension UIView {
         }
     }
 }
+
+
+

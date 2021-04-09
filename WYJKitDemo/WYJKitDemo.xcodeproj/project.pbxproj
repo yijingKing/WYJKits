@@ -10,13 +10,10 @@
 		23F39A31A0420E3037CF8214 /* Pods_WYJKitDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57EC6E7EF1AC034D23110B08 /* Pods_WYJKitDemo.framework */; };
 		6316B71A25E0AA74005C759C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6316B71925E0AA74005C759C /* ViewController.swift */; };
 		6316B72225E0AB9C005C759C /* WYJResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6316B72125E0AB9C005C759C /* WYJResponder.swift */; };
-		63243FBF2589E20A0065688B /* RSA.m in Sources */ = {isa = PBXBuildFile; fileRef = 63243FAE2589E20A0065688B /* RSA.m */; };
 		63243FC12589E20A0065688B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63243FB22589E20A0065688B /* Assets.xcassets */; };
 		63243FC22589E20A0065688B /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63243FB32589E20A0065688B /* MyViewController.swift */; };
 		63243FC32589E20A0065688B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63243FB42589E20A0065688B /* LaunchScreen.storyboard */; };
 		63243FC42589E20A0065688B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63243FB62589E20A0065688B /* Main.storyboard */; };
-		63243FC52589E20A0065688B /* NoData.png in Resources */ = {isa = PBXBuildFile; fileRef = 63243FB82589E20A0065688B /* NoData.png */; };
-		63243FC62589E20A0065688B /* WeChat66467de1e87eb0c1de1a8add1099df0b.png in Resources */ = {isa = PBXBuildFile; fileRef = 63243FBA2589E20A0065688B /* WeChat66467de1e87eb0c1de1a8add1099df0b.png */; };
 		63243FC72589E20A0065688B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63243FBB2589E20A0065688B /* AppDelegate.swift */; };
 		6324402C2589E2100065688B /* WYJImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63243FD02589E2100065688B /* WYJImage.swift */; };
 		6324402D2589E2100065688B /* WYJLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63243FD22589E2100065688B /* WYJLabel.swift */; };
@@ -69,6 +66,7 @@
 		6324405C2589E2100065688B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6324402B2589E2100065688B /* Images.xcassets */; };
 		632440732589E3D10065688B /* WYJProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632440722589E3D10065688B /* WYJProtocol.swift */; };
 		63327F9E2591A0C8008C99B5 /* WYJKits.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 63327F9D2591A0C8008C99B5 /* WYJKits.podspec */; };
+		63441845261EF9FB007EBC1C /* WYJCGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63441844261EF9FB007EBC1C /* WYJCGFloat.swift */; };
 		635CA05625B9217000BC49CB /* WYJUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635CA05525B9217000BC49CB /* WYJUserDefaults.swift */; };
 		63775757260B2030002C3E06 /* WYJRSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63775756260B2030002C3E06 /* WYJRSA.swift */; };
 		63802B8825F60AF2005D773F /* WYJKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63802B8725F60AF2005D773F /* WYJKeyboard.swift */; };
@@ -104,17 +102,11 @@
 		57EC6E7EF1AC034D23110B08 /* Pods_WYJKitDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WYJKitDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6316B71925E0AA74005C759C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		6316B72125E0AB9C005C759C /* WYJResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJResponder.swift; sourceTree = "<group>"; };
-		63243FAE2589E20A0065688B /* RSA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSA.m; sourceTree = "<group>"; };
-		63243FAF2589E20A0065688B /* RSA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSA.h; sourceTree = "<group>"; };
 		63243FB22589E20A0065688B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		63243FB32589E20A0065688B /* MyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
 		63243FB52589E20A0065688B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		63243FB72589E20A0065688B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		63243FB82589E20A0065688B /* NoData.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NoData.png; sourceTree = "<group>"; };
-		63243FB92589E20A0065688B /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		63243FBA2589E20A0065688B /* WeChat66467de1e87eb0c1de1a8add1099df0b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WeChat66467de1e87eb0c1de1a8add1099df0b.png; sourceTree = "<group>"; };
 		63243FBB2589E20A0065688B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		63243FBC2589E20A0065688B /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		63243FBD2589E20A0065688B /* WYJKits-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WYJKits-Bridging-Header.h"; sourceTree = "<group>"; };
 		63243FBE2589E20A0065688B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63243FD02589E2100065688B /* WYJImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WYJImage.swift; sourceTree = "<group>"; };
@@ -168,6 +160,7 @@
 		6324402B2589E2100065688B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		632440722589E3D10065688B /* WYJProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJProtocol.swift; sourceTree = "<group>"; };
 		63327F9D2591A0C8008C99B5 /* WYJKits.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = WYJKits.podspec; path = ../../WYJKits.podspec; sourceTree = "<group>"; };
+		63441844261EF9FB007EBC1C /* WYJCGFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJCGFloat.swift; sourceTree = "<group>"; };
 		635CA05525B9217000BC49CB /* WYJUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJUserDefaults.swift; sourceTree = "<group>"; };
 		63775756260B2030002C3E06 /* WYJRSA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJRSA.swift; sourceTree = "<group>"; };
 		63802B8725F60AF2005D773F /* WYJKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJKeyboard.swift; sourceTree = "<group>"; };
@@ -250,22 +243,11 @@
 			children = (
 				63327F9D2591A0C8008C99B5 /* WYJKits.podspec */,
 				63243FCC2589E2100065688B /* WYJKits */,
-				63243FAD2589E20A0065688B /* RSA */,
 				63243FB02589E20A0065688B /* other */,
-				63243FBC2589E20A0065688B /* MyPlayground.playground */,
 				63243FBD2589E20A0065688B /* WYJKits-Bridging-Header.h */,
 				63243FBE2589E20A0065688B /* Info.plist */,
 			);
 			path = WYJKitDemo;
-			sourceTree = "<group>";
-		};
-		63243FAD2589E20A0065688B /* RSA */ = {
-			isa = PBXGroup;
-			children = (
-				63243FAE2589E20A0065688B /* RSA.m */,
-				63243FAF2589E20A0065688B /* RSA.h */,
-			);
-			path = RSA;
 			sourceTree = "<group>";
 		};
 		63243FB02589E20A0065688B /* other */ = {
@@ -275,9 +257,6 @@
 				63243FB32589E20A0065688B /* MyViewController.swift */,
 				63243FB42589E20A0065688B /* LaunchScreen.storyboard */,
 				63243FB62589E20A0065688B /* Main.storyboard */,
-				63243FB82589E20A0065688B /* NoData.png */,
-				63243FB92589E20A0065688B /* MyPlayground.playground */,
-				63243FBA2589E20A0065688B /* WeChat66467de1e87eb0c1de1a8add1099df0b.png */,
 				63243FBB2589E20A0065688B /* AppDelegate.swift */,
 				6316B71925E0AA74005C759C /* ViewController.swift */,
 			);
@@ -472,6 +451,7 @@
 				6324400C2589E2100065688B /* NSObject */,
 				6324400E2589E2100065688B /* Data */,
 				6326944325C1002500130EF7 /* UserDefaults */,
+				6344184C261EFA3E007EBC1C /* CGFloat */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -724,6 +704,14 @@
 			path = JSON;
 			sourceTree = "<group>";
 		};
+		6344184C261EFA3E007EBC1C /* CGFloat */ = {
+			isa = PBXGroup;
+			children = (
+				63441844261EF9FB007EBC1C /* WYJCGFloat.swift */,
+			);
+			path = CGFloat;
+			sourceTree = "<group>";
+		};
 		63802B8C25F60B14005D773F /* IQKeyboardManagerSwift */ = {
 			isa = PBXGroup;
 			children = (
@@ -859,10 +847,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				63327F9E2591A0C8008C99B5 /* WYJKits.podspec in Resources */,
-				63243FC62589E20A0065688B /* WeChat66467de1e87eb0c1de1a8add1099df0b.png in Resources */,
 				6324405C2589E2100065688B /* Images.xcassets in Resources */,
 				6324405B2589E2100065688B /* address-code.json in Resources */,
-				63243FC52589E20A0065688B /* NoData.png in Resources */,
 				63243FC42589E20A0065688B /* Main.storyboard in Resources */,
 				63243FC12589E20A0065688B /* Assets.xcassets in Resources */,
 				63243FC32589E20A0065688B /* LaunchScreen.storyboard in Resources */,
@@ -955,6 +941,7 @@
 				632440502589E2100065688B /* WYJAlamofire.swift in Sources */,
 				6324402C2589E2100065688B /* WYJImage.swift in Sources */,
 				632440532589E2100065688B /* WYJPageViewController.swift in Sources */,
+				63441845261EF9FB007EBC1C /* WYJCGFloat.swift in Sources */,
 				632440392589E2100065688B /* WYJBaseViewController.swift in Sources */,
 				632440582589E2100065688B /* WYJLocation.swift in Sources */,
 				632440422589E2100065688B /* WYJCustomDataType.swift in Sources */,
@@ -1001,7 +988,6 @@
 				6324404E2589E2100065688B /* WYJData.swift in Sources */,
 				6324403E2589E2100065688B /* WYJTextField.swift in Sources */,
 				6324403A2589E2100065688B /* WYJViewController.swift in Sources */,
-				63243FBF2589E20A0065688B /* RSA.m in Sources */,
 				6324402F2589E2100065688B /* WYJButton.swift in Sources */,
 				632440562589E2100065688B /* WYJSystem.swift in Sources */,
 				632440732589E3D10065688B /* WYJProtocol.swift in Sources */,
@@ -1191,6 +1177,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/WYJKitDemo/MP100",
+				);
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1239,6 +1229,10 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/WYJKitDemo/MP100",
 				);
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (

@@ -39,6 +39,7 @@ public extension WYJProtocol where T == Array<Any> {
     func toJSON(_ options: JSONSerialization.WritingOptions = []) -> WYJJSON {
         return WYJJSON.init(toJSONString(options) ?? "")
     }
+    
 }
 //MARK: --- 类型转换
 public extension Array where Element == UInt8 {

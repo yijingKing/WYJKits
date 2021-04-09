@@ -473,7 +473,7 @@ public extension WYJProtocol where T: UIImage {
     /**
      *  等比率缩放
      */
-    func scaleImage(scaleSize:CGFloat) -> UIImage? {
+    func scaleImage(_ scaleSize:CGFloat) -> UIImage? {
         let reSize = CGSize(width: obj.size.width * scaleSize, height: obj.size.height * scaleSize)
         
         return resetSizeImage(reSize)

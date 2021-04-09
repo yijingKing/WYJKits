@@ -23,6 +23,7 @@ public class WYJKeyboard {
         //最新版的设置键盘的returnKey的关键字 ,可以点击键盘上的next键，自动跳转到下一个输入框，最后一个输入框点击完成，自动收起键盘
         manager.toolbarManageBehaviour = .byPosition
         block?(manager)
+        
     }
 }
 

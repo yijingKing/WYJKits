@@ -66,7 +66,9 @@ open class WYJBaseViewController: UIViewController {
         
         view.backgroundColor = WYJF5Color
         configureInterface()
+        
     }
+    
     ///InjectionIII 调用方法
     @objc func injected() {
         viewDidLoad()
@@ -162,6 +164,7 @@ extension WYJBaseViewController {
             tab.estimatedRowHeight = 44
             tab.estimatedSectionFooterHeight = 0
             tab.estimatedSectionHeaderHeight = 0
+            tab.keyboardDismissMode = .onDrag
             view.addSubview(tab)
             var top: CGFloat
             var bottom: CGFloat
