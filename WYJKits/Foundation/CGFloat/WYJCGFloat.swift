@@ -47,8 +47,12 @@ public extension WYJProtocol where T == CGFloat {
     }
     
     ///分数(默认最小2位,最大3位)
-    func decimal(_ minFraction: Int? = 2,_ maxFraction: Int? = nil) -> String? {
+    func toDecimal(min minFraction: Int? = 2,max maxFraction: Int? = nil) -> String? {
         return self.localized(.decimal, minFraction, maxFraction,1,nil)
+    }
+    ///百分数(默认最小2位,最大3位)
+    func toPercent(min minFraction: Int? = 2,max maxFraction: Int? = nil) -> String? {
+        return self.localized(.percent, minFraction, maxFraction,1,nil)
     }
     
     /// 分割位数

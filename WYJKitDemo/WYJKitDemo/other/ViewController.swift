@@ -51,7 +51,7 @@ class ViewController: WYJBaseViewController,Protocal1  {
         
         WYJLog(model?.id)
         WYJLog(model?.toDictionary())
-        WYJLog((0.51500 / 100).yi.decimal(2))
+        WYJLog((0.51500 / 100).yi.toDecimal(min: 2, max: 23))
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
