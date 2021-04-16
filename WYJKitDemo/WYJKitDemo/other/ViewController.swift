@@ -39,11 +39,12 @@ class ViewController: WYJBaseViewController,Protocal1  {
             $0.keyboardType = .default
             $0.placeholder = "1233333333333333333333"
         })
+        
         view.addSubview(textf)
         textf.snp.makeConstraints({
             $0.width.equalTo(300)
             $0.height.equalTo(50)
-            $0.top.equalTo(577)
+            $0.top.equalTo(566)
         })
         
         let dec = Decimal.init(0.042330000)
@@ -52,6 +53,9 @@ class ViewController: WYJBaseViewController,Protocal1  {
         WYJLog(model?.id)
         WYJLog(model?.toDictionary())
         WYJLog((0.51500 / 100).yi.toDecimal(min: 2, max: 23))
+        let d: Double = 0.04
+        d.yi.positive(.decimal, prefix: "", suffix: "")
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

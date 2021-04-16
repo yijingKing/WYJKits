@@ -167,7 +167,7 @@ public extension WYJProtocol where T == String {
     ///   - replac: 替换字符
     ///   - cycle: 是否循环插入替换字符串
     /// - Returns: 新字符串
-    func replacing(index:Int,length:Int,replac:String,_ cycle: Bool? = nil) -> String {
+    func replacing(index:Int, length:Int, replac:String,_ cycle: Bool? = nil) -> String {
         guard !obj.isEmpty else { return "" }
         
         var string = obj

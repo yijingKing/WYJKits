@@ -62,7 +62,7 @@ public extension WYJProtocol where T == Double {
     ///   - minInteger: 最小整数位
     ///   - maxInteger: 最大整数位
     /// - Returns: 转换格式后的字符串
-    func localized(_ style: NumberFormatter.Style,_ minFraction: Int? = nil,_ maxFraction: Int? = nil,_ minInteger: Int? = nil,_ maxInteger: Int? = nil) -> String? {
+    func localized(_ style: NumberFormatter.Style,minFraction: Int? = nil,maxFraction: Int? = nil,minInteger: Int? = nil,maxInteger: Int? = nil) -> String? {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = style
         
@@ -81,11 +81,11 @@ public extension WYJProtocol where T == Double {
     
     ///分数(默认最小2位,最大3位)
     func toDecimal(min minFraction: Int? = 2,max maxFraction: Int? = nil) -> String? {
-        return self.localized(.decimal, minFraction, maxFraction,1,nil)
+        return localized(.decimal, minFraction: minFraction, maxFraction: maxFraction,minInteger: 1,maxInteger: nil)
     }
     ///百分数(默认最小2位,最大3位)
     func toPercent(min minFraction: Int? = 2,max maxFraction: Int? = nil) -> String? {
-        return self.localized(.percent, minFraction, maxFraction,1,nil)
+        return localized(.percent, minFraction: minFraction, maxFraction: maxFraction,minInteger: 1,maxInteger: nil)
     }
     
     /// 分割位数
@@ -94,12 +94,12 @@ public extension WYJProtocol where T == Double {
     ///   - groupingSeparator: 分隔符号
     ///   - groupingSize: 分隔位数
     /// - Returns: 分割后的字符串
-    func separator(_ style: NumberFormatter.Style,groupingSeparator: String? = ",",groupingSize: Int? = 4) -> String? {
+    func toSeparator(_ style: NumberFormatter.Style,separator: String? = ",",length: Int? = 4) -> String? {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = style
         numberFormatter.usesGroupingSeparator = true
-        numberFormatter.groupingSeparator = groupingSeparator
-        numberFormatter.groupingSize = groupingSize ?? 0
+        numberFormatter.groupingSeparator = separator
+        numberFormatter.groupingSize = length ?? 0
         return numberFormatter.string(for: obj)
     }
     
@@ -109,7 +109,7 @@ public extension WYJProtocol where T == Double {
     ///   - prefix: 前缀
     ///   - suffix: 后缀
     /// - Returns: 增加后的字符串
-    func positive(_ style: NumberFormatter.Style,_ prefix: String? = nil,_ suffix: String? = nil) -> String? {
+    func toPositive(_ style: NumberFormatter.Style,prefix: String? = nil,suffix: String? = nil) -> String? {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = style
         numberFormatter.positivePrefix = prefix
