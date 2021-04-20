@@ -390,7 +390,7 @@ public extension Date {
         return nil
     }
     
-    ///时间戳初始化
+    ///时间戳初始化m 
     init?(_ timeInterval: Double) {
         self = Date.init(timeIntervalSince1970: timeInterval)
     }
@@ -408,7 +408,7 @@ public extension Date {
         
         return dateFormatter!
     }
-    
+
     //MARK: --- 格式化
     /// 格式化
     fileprivate func createDateFormatter(for format: String) -> DateFormatter {

@@ -186,8 +186,8 @@ public extension WYJProtocol where T: UIView {
         obj.cornerRadii = .init(topLeft: topLeft, topRight: topRight, bottomLeft: bottomLeft, bottomRight: bottomRight)
         return self
     }
-    //MARK: --- 连框
-    ///连框
+    //MARK: --- 边框
+    ///边框
     @discardableResult
     func borderWidth(width: CGFloat) -> WYJProtocol {
         obj.layer.borderWidth = width

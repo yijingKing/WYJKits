@@ -26,13 +26,15 @@ open class WYJHUD {
     ///最小隐藏时间
     public var minTime = 1.5
     ///最大隐藏时间
-    public var maxTime = 3.5
+    public var maxTime = 3.0
+    ///textview time
+    public var minTextviewTime = 5.0
     ///字数控制时间
     public var maxCount = 7
     ///字体大小
-    public var font = WYJFont(14)
+    public var font = WYJFont(16)
     ///加载字体大小
-    public var detailsFont = WYJFont(13)
+    public var detailsFont = WYJFont(14)
     ///是否动画
     public var animated: Bool = true
     ///位置
@@ -63,6 +65,31 @@ open class WYJHUD {
                 time = time > manager.maxTime ? manager.maxTime : time
                 manager.hud?.minShowTime = time
             }
+            manager.hud?.hide(animated: manager.animated)
+        }
+    }
+    
+    ///显示文本,可滑动
+    public static func showText(_ title: String?,_ addView: UIView? = nil,_ completion:(() -> ())? = nil) {
+        DispatchQueue.getMainAsync {
+            let text = title ?? ""
+            WYJHUD.hideHUD()
+            manager.hud = MBProgressHUD.showAdded(to: addView ?? onView, animated: manager.animated)
+            manager.defaultConfiguration(manager.hud)
+            manager.hud?.completionBlock = completion
+            
+            let tv = HUDTextView.init()
+            tv.text = text
+            tv.backgroundColor = UIColor.black.withAlphaComponent(0)
+            tv.textColor = manager.textColor
+            tv.font = manager.font
+            tv.isEditable = false
+            tv.showsVerticalScrollIndicator = false
+            tv.showsHorizontalScrollIndicator = false
+            manager.hud?.customView = tv
+            manager.hud?.mode = .customView
+            
+            manager.hud?.minShowTime = manager.minTextviewTime
             manager.hud?.hide(animated: manager.animated)
         }
     }
@@ -130,3 +157,4 @@ fileprivate class HUDTextView: UITextView {
         return .init(width: width, height: height)
     }
 }
+

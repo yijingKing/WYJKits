@@ -53,14 +53,14 @@ class ViewController: WYJBaseViewController,Protocal1  {
         WYJLog(model?.id)
         WYJLog(model?.toDictionary())
         WYJLog((0.51500 / 100).yi.toDecimal(min: 2, max: 23))
-        let d: Double = 0.04
-        d.yi.positive(.decimal, prefix: "", suffix: "")
+        let _: Double = 0.04
         
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let vc = MyViewController()
-        vc.name = name
-        yi.push(vc)
+        WYJHUD.showText("fgbgrerwfbghrgtrewsadfgterweqefgr423wefghrtert43egfhetgrt4r3eghegrwteerhrgetrtewgrhrgwet3qrtegrhget3ewrdfghtghdhrtwghdhrgttewdgnhrtehtghgfgbgrerwfbghrgtrewsadfgterweqefgr423wefghrtert43egfhetgrt4r3eghegrwteerhrgetrtewgrhrgwet3qrtegrhget3ewrdfghtghdhrtwghdhrgttewdgnhrtehtghgfgbgrerwfbghrgtrewsadfgterweqefgr423wefghrtert43egfhetgrt4r3eghegrwteerhrgetrtewgrhrgwet3qrtegrhget3ewrdfghtghdhrtwghdhrgttewdgnhrtehtghgfgbgrerwfbghrgtrewsadfgterweqefgr423wefghrtert43egfhetgrt4r3eghegrwteerhrgetrtewgrhrgwet3qrtegrhget3ewrdfghtghdhrtwghdhrgttewdgnhrtehtghgfgbgrerwfbghrgtrewsadfgterweqefgr423wefghrtert43egfhetgrt4r3eghegrwteerhrgetrtewgrhrgwet3qrtegrhget3ewrdfghtghdhrtwghdhrgttewdgnhrtehtghgfgbgrerwfbghrgtrewsadfgterweqefgr423wefghrtert43egfhetgrt4r3eghegrwteerhrgetrtewgrhrgwet3qrtegrhget3ewrdfghtghdhrtwghdhrgttewdgnhrtehtghgfgbgrerwfbghrgtrewsadfgterweqefgr423wefghrtert43egfhetgrt4r3eghegrwteerhrgetrtewgrhrgwet3qrtegrhget3ewrdfghtghdhrtwghdhrgttewdgnhrtehtghgfgbgrerwfbghrgtrewsadfgterweqefgr423wefghrtert43egfhetgrt4r3eghegrwteerhrgetrtewgrhrgwet3qrtegrhget3ewrdfghtghdhrtwghdhrgttewdgnhrtehtghg")
+//        let vc = MyViewController()
+//        vc.name = name
+//        yi.push(vc)
     }
 }

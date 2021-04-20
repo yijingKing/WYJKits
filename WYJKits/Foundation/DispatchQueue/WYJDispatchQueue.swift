@@ -55,7 +55,7 @@ public extension WYJProtocol where T: DispatchQueue {
 }
 
 public extension DispatchQueue {
-    static var `default`: DispatchQueue { return DispatchQueue.global(qos: .`default`) }
+    static var `default`: DispatchQueue { return DispatchQueue.global(qos: .default) }
     static var userInteractive: DispatchQueue { return DispatchQueue.global(qos: .userInteractive) }
     static var userInitiated: DispatchQueue { return DispatchQueue.global(qos: .userInitiated) }
     static var utility: DispatchQueue { return DispatchQueue.global(qos: .utility) }
