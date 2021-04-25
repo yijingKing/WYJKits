@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'WYJKits'
-  s.version          = '1.1.6'
+  s.version          = '1.1.7'
   s.summary          = 'WYJKits 类扩展,功能集合'
   s.description      = <<-DESC
                             ...
@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'https://github.com/MemoryKing/WYJKits.git', :tag => s.version.to_s }
   #s.pod_target_xcconfig = {'SWIFT_VERSION' => '5.0'}
   s.swift_versions   = '5.0'
-  s.platform         = :ios, "10.0"
+  s.platform         = :ios, "11.0"
   s.frameworks       = 'UIKit','Foundation','QuartzCore','CoreGraphics','AssetsLibrary','AVFoundation','Accelerate'
   s.dependency 'MJRefresh'
   s.dependency 'DZNEmptyDataSet'
