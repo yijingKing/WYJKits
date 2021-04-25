@@ -67,6 +67,7 @@
 		632440732589E3D10065688B /* WYJProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632440722589E3D10065688B /* WYJProtocol.swift */; };
 		63327F9E2591A0C8008C99B5 /* WYJKits.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 63327F9D2591A0C8008C99B5 /* WYJKits.podspec */; };
 		63441845261EF9FB007EBC1C /* WYJCGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63441844261EF9FB007EBC1C /* WYJCGFloat.swift */; };
+		63567970263152540020DB58 /* HOX.m in Sources */ = {isa = PBXBuildFile; fileRef = 6356796F263152540020DB58 /* HOX.m */; };
 		635CA05625B9217000BC49CB /* WYJUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635CA05525B9217000BC49CB /* WYJUserDefaults.swift */; };
 		63775757260B2030002C3E06 /* WYJRSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63775756260B2030002C3E06 /* WYJRSA.swift */; };
 		63802B8825F60AF2005D773F /* WYJKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63802B8725F60AF2005D773F /* WYJKeyboard.swift */; };
@@ -161,6 +162,8 @@
 		632440722589E3D10065688B /* WYJProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJProtocol.swift; sourceTree = "<group>"; };
 		63327F9D2591A0C8008C99B5 /* WYJKits.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = WYJKits.podspec; path = ../../WYJKits.podspec; sourceTree = "<group>"; };
 		63441844261EF9FB007EBC1C /* WYJCGFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJCGFloat.swift; sourceTree = "<group>"; };
+		6356796E263152540020DB58 /* HOX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HOX.h; sourceTree = "<group>"; };
+		6356796F263152540020DB58 /* HOX.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HOX.m; sourceTree = "<group>"; };
 		635CA05525B9217000BC49CB /* WYJUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJUserDefaults.swift; sourceTree = "<group>"; };
 		63775756260B2030002C3E06 /* WYJRSA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJRSA.swift; sourceTree = "<group>"; };
 		63802B8725F60AF2005D773F /* WYJKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJKeyboard.swift; sourceTree = "<group>"; };
@@ -245,6 +248,8 @@
 				63243FCC2589E2100065688B /* WYJKits */,
 				63243FB02589E20A0065688B /* other */,
 				63243FBD2589E20A0065688B /* WYJKits-Bridging-Header.h */,
+				6356796E263152540020DB58 /* HOX.h */,
+				6356796F263152540020DB58 /* HOX.m */,
 				63243FBE2589E20A0065688B /* Info.plist */,
 			);
 			path = WYJKitDemo;
@@ -891,19 +896,19 @@
 		};
 		6390EE2825B8248F00F694B5 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/unhide.sh",
+				"$(SRCROOT)/bin/unhide.sh",
 			);
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "UNHIDE=~/bin/unhide.sh\nif [ -f $UNHIDE ]; then\n    $UNHIDE\nelse\n    echo \"File $UNHIDE used for code Injection does not exist. Download and build the https://github.com/johnno1962/unhide project.\"\nfi\n";
 		};
@@ -989,6 +994,7 @@
 				6324403E2589E2100065688B /* WYJTextField.swift in Sources */,
 				6324403A2589E2100065688B /* WYJViewController.swift in Sources */,
 				6324402F2589E2100065688B /* WYJButton.swift in Sources */,
+				63567970263152540020DB58 /* HOX.m in Sources */,
 				632440562589E2100065688B /* WYJSystem.swift in Sources */,
 				632440732589E3D10065688B /* WYJProtocol.swift in Sources */,
 				6324404B2589E2100065688B /* WYJString.swift in Sources */,

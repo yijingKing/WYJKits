@@ -27,7 +27,7 @@ class Model:WYJCodable {
 
 class ViewController: WYJBaseViewController,Protocal1  {
     var name: String?
-    
+    var textf: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -35,7 +35,7 @@ class ViewController: WYJBaseViewController,Protocal1  {
         name = "123"
         wqewe1()
         
-        let textf = UITextField().yi.then({
+        textf = UITextField().yi.then({
             $0.keyboardType = .default
             $0.placeholder = "1233333333333333333333"
         })
@@ -54,11 +54,14 @@ class ViewController: WYJBaseViewController,Protocal1  {
         WYJLog(model?.toDictionary())
         WYJLog((0.51500 / 100).yi.toDecimal(min: 2, max: 23))
         let _: Double = 0.04
+        WYJLog("mklll".prefix(4))
         
+        WYJLog(HOX().newByteArray(from: "4A6E144E48A24009654150E1E0125D19"))
+        textf.isSecureTextEntry = true
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        WYJHUD.showText("fgbgrerwfbghrgtrewsadfgterweqefgr423wefghrtert43egfhetgrt4r3eghegrwteerhrgetrtewgrhrgwet3qrtegrhget3ewrdfghtghdhrtwghdhrgttewdgnhrtehtghgfgbgrerwfbghrgtrewsadfgterweqefgr423wefghrtert43egfhetgrt4r3eghegrwteerhrgetrtewgrhrgwet3qrtegrhget3ewrdfghtghdhrtwghdhrgttewdgnhrtehtghgfgbgrerwfbghrgtrewsadfgterweqefgr423wefghrtert43egfhetgrt4r3eghegrwteerhrgetrtewgrhrgwet3qrtegrhget3ewrdfghtghdhrtwghdhrgttewdgnhrtehtghgfgbgrerwfbghrgtrewsadfgterweqefgr423wefghrtert43egfhetgrt4r3eghegrwteerhrgetrtewgrhrgwet3qrtegrhget3ewrdfghtghdhrtwghdhrgttewdgnhrtehtghgfgbgrerwfbghrgtrewsadfgterweqefgr423wefghrtert43egfhetgrt4r3eghegrwteerhrgetrtewgrhrgwet3qrtegrhget3ewrdfghtghdhrtwghdhrgttewdgnhrtehtghgfgbgrerwfbghrgtrewsadfgterweqefgr423wefghrtert43egfhetgrt4r3eghegrwteerhrgetrtewgrhrgwet3qrtegrhget3ewrdfghtghdhrtwghdhrgttewdgnhrtehtghgfgbgrerwfbghrgtrewsadfgterweqefgr423wefghrtert43egfhetgrt4r3eghegrwteerhrgetrtewgrhrgwet3qrtegrhget3ewrdfghtghdhrtwghdhrgttewdgnhrtehtghgfgbgrerwfbghrgtrewsadfgterweqefgr423wefghrtert43egfhetgrt4r3eghegrwteerhrgetrtewgrhrgwet3qrtegrhget3ewrdfghtghdhrtwghdhrgttewdgnhrtehtghg")
+        textf.isSecureTextEntry = !textf.isSecureTextEntry
 //        let vc = MyViewController()
 //        vc.name = name
 //        yi.push(vc)
