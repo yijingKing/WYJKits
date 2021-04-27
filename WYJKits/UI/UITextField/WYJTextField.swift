@@ -105,16 +105,15 @@ public extension WYJProtocol where T: UITextField {
                        _ titleWidth: CGFloat,
                        _ color: UIColor? = nil,
                        _ font: UIFont? = nil,
-                       _ textAlignment: NSTextAlignment? = nil,
-                       _ spacing: CGFloat? = nil) -> WYJProtocol {
-        let label = UILabel()
-        label.text = title
-        label.textColor = color ?? obj.textColor
-        label.font = font ?? obj.font
-        label.textAlignment = textAlignment ?? obj.textAlignment
+                       block:(()->())?) -> WYJProtocol {
+        let button = UIButton()
+        button.yi.title(title)
+        button.yi.titleColor(color ?? obj.textColor)
+        button.yi.titleFont(font ?? obj.font)
+        button.yi.addTarget(.touchUpInside, block)
         let leftV = UIView(frame: CGRect(x: 0, y: 0, width: titleWidth, height: 30))
-        label.frame = CGRect(x: spacing ?? 0, y: 0, width: titleWidth - (spacing ?? 0), height: 30)
-        leftV.addSubview(label)
+        button.frame = CGRect(x: 0, y: 0, width: titleWidth, height: 30)
+        leftV.addSubview(button)
         obj.rightViewMode = .always
         obj.rightView = leftV
         return self
@@ -126,11 +125,13 @@ public extension WYJProtocol where T: UITextField {
     ///   - size: size
     ///   - padding: padding
     @discardableResult
-    func rightIcon(_ image: UIImage,size:CGSize,padding: CGFloat) -> WYJProtocol {
-        let rightV = UIView(frame: CGRect(x: 0, y: 0, width: size.width + 2 * padding, height: size.height))
-        let imageView = UIImageView(image: image)
-        imageView.frame = CGRect(x: padding, y: 0, width: size.width, height: size.height)
-        rightV.addSubview(imageView)
+    func rightIcon(_ image: UIImage,size:CGSize,_ block:(()->())?) -> WYJProtocol {
+        let rightV = UIView(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        let button = UIButton()
+        button.yi.image(image)
+        button.yi.addTarget(.touchUpInside, block)
+        button.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        rightV.addSubview(button)
         obj.rightViewMode = .always
         obj.rightView = rightV
         return self
@@ -177,6 +178,7 @@ fileprivate extension UITextField {
         static let identify = UnsafeRawPointer.init(bitPattern: "identify".hashValue)
         static let placeholderColor = UnsafeRawPointer.init(bitPattern: "placeholderColor".hashValue)
         static let eventBlock = UnsafeRawPointer.init(bitPattern: "eventBlock".hashValue)
+        
     }
     ///标识
     var identify: String {

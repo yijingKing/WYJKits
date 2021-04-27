@@ -13,7 +13,7 @@ import IQKeyboardManagerSwift
 
 public class WYJKeyboard {
     
-    static func open(_ block: ((IQKeyboardManager)->())? = nil) {
+    public static func open(_ block: ((IQKeyboardManager)->())? = nil) {
         let manager = IQKeyboardManager.shared
         manager.enable = true
         //控制点击背景是否收起键盘
