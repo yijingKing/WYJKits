@@ -60,16 +60,14 @@ public extension WYJProtocol where T: UITextField {
                       _ titleWidth: CGFloat,
                       _ color: UIColor? = nil,
                       _ font: UIFont? = nil,
-                      _ textAlignment: NSTextAlignment? = nil,
-                      _ spacing: CGFloat? = nil) -> WYJProtocol {
-        let label = UILabel()
-        label.text = title
-        label.textColor = color ?? obj.textColor
-        label.font = font ?? obj.font
-        label.textAlignment = textAlignment ?? obj.textAlignment
+                      _ textAlignment: NSTextAlignment? = nil) -> WYJProtocol {
+        let button = UIButton()
+        button.yi.title(title)
+        button.yi.titleColor(color ?? obj.textColor)
+        button.yi.titleFont(font ?? obj.font)
         let leftV = UIView(frame: CGRect(x: 0, y: 0, width: titleWidth, height: 30))
-        label.frame = CGRect(x: spacing ?? 0, y: 0, width: titleWidth - (spacing ?? 0), height: 30)
-        leftV.addSubview(label)
+        button.frame = CGRect(x: 0, y: 0, width: titleWidth , height: 30)
+        leftV.addSubview(button)
         obj.leftViewMode = .always
         obj.leftView = leftV
         return self
@@ -83,12 +81,12 @@ public extension WYJProtocol where T: UITextField {
     ///   - padding: 距离文本距离
     @discardableResult
     func leftIcon(_ image: UIImage,
-                  _ size:CGSize,
-                  _ padding: CGFloat) -> WYJProtocol {
-        let leftV = UIView(frame: CGRect(x: 0, y: 0, width: size.width + 2 * padding - 3, height: size.height))
-        let imageView = UIImageView(image: image)
-        imageView.frame = CGRect(x: padding, y: 0, width: size.width, height: size.height)
-        leftV.addSubview(imageView)
+                  _ size:CGSize) -> WYJProtocol {
+        let leftV = UIView(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        let button = UIButton()
+        button.yi.image(image)
+        leftV.addSubview(button)
+        button.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
         obj.leftViewMode = .always
         obj.leftView = leftV
         return self
