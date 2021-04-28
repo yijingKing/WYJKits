@@ -66,6 +66,7 @@
 		6324405C2589E2100065688B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6324402B2589E2100065688B /* Images.xcassets */; };
 		632440732589E3D10065688B /* WYJProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632440722589E3D10065688B /* WYJProtocol.swift */; };
 		63327F9E2591A0C8008C99B5 /* WYJKits.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 63327F9D2591A0C8008C99B5 /* WYJKits.podspec */; };
+		633C3B7526395A280059CBF6 /* WYJCardSlidingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633C3B7426395A280059CBF6 /* WYJCardSlidingView.swift */; };
 		63441845261EF9FB007EBC1C /* WYJCGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63441844261EF9FB007EBC1C /* WYJCGFloat.swift */; };
 		63567970263152540020DB58 /* HOX.m in Sources */ = {isa = PBXBuildFile; fileRef = 6356796F263152540020DB58 /* HOX.m */; };
 		635CA05625B9217000BC49CB /* WYJUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635CA05525B9217000BC49CB /* WYJUserDefaults.swift */; };
@@ -161,6 +162,7 @@
 		6324402B2589E2100065688B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		632440722589E3D10065688B /* WYJProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJProtocol.swift; sourceTree = "<group>"; };
 		63327F9D2591A0C8008C99B5 /* WYJKits.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = WYJKits.podspec; path = ../../WYJKits.podspec; sourceTree = "<group>"; };
+		633C3B7426395A280059CBF6 /* WYJCardSlidingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJCardSlidingView.swift; sourceTree = "<group>"; };
 		63441844261EF9FB007EBC1C /* WYJCGFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJCGFloat.swift; sourceTree = "<group>"; };
 		6356796E263152540020DB58 /* HOX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HOX.h; sourceTree = "<group>"; };
 		6356796F263152540020DB58 /* HOX.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HOX.m; sourceTree = "<group>"; };
@@ -598,6 +600,7 @@
 		632440162589E2100065688B /* 功能 */ = {
 			isa = PBXGroup;
 			children = (
+				633C3B7326395A090059CBF6 /* 卡片居中放大 */,
 				632440172589E2100065688B /* 正则表达式 */,
 				632440192589E2100065688B /* PageViewController */,
 				6324401B2589E2100065688B /* 配置协议 */,
@@ -707,6 +710,14 @@
 				632440112589E2100065688B /* WYJJSON.swift */,
 			);
 			path = JSON;
+			sourceTree = "<group>";
+		};
+		633C3B7326395A090059CBF6 /* 卡片居中放大 */ = {
+			isa = PBXGroup;
+			children = (
+				633C3B7426395A280059CBF6 /* WYJCardSlidingView.swift */,
+			);
+			path = "卡片居中放大";
 			sourceTree = "<group>";
 		};
 		6344184C261EFA3E007EBC1C /* CGFloat */ = {
@@ -966,6 +977,7 @@
 				632440362589E2100065688B /* WYJBlockGesture.swift in Sources */,
 				63243FC72589E20A0065688B /* AppDelegate.swift in Sources */,
 				632440522589E2100065688B /* WYJRegular.swift in Sources */,
+				633C3B7526395A280059CBF6 /* WYJCardSlidingView.swift in Sources */,
 				6324402D2589E2100065688B /* WYJLabel.swift in Sources */,
 				632440572589E2100065688B /* WYJTouchIDManager.swift in Sources */,
 				632440512589E2100065688B /* WYJHUD.swift in Sources */,

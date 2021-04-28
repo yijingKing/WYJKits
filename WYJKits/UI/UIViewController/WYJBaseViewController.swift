@@ -198,7 +198,6 @@ extension WYJBaseViewController {
         
         let layout = UICollectionViewFlowLayout.init()
         layout.scrollDirection = .vertical
-        layout.estimatedItemSize = CGSize.init(width: 100, height: 100)
         mainCollection = WYJBaseCollectionView.init(frame: .init(), collectionViewLayout: layout)
         if let col = mainCollection {
             col.showsVerticalScrollIndicator = false
