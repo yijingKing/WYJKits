@@ -9,15 +9,15 @@ GitHub:        https://github.com/MemoryKing
 import UIKit
 
 //代理
-@objc protocol WYJCardSlidingViewDelegate: NSObjectProtocol {
+public protocol WYJCardSlidingViewDelegate: NSObjectProtocol {
     //滑动切换到新的位置回调
-    @objc optional func cardSwitchDidScrollToIndex(index: Int) -> ()
+    func cardSwitchDidScrollToIndex(index: Int) -> ()
     //手动点击了
-    @objc optional func cardSwitchDidSelectedAtIndex(index: Int) -> ()
+    func cardSwitchDidSelectedAtIndex(index: Int) -> ()
 }
 
 //数据源
-@objc protocol WYJCardSlidingViewDataSource: NSObjectProtocol {
+public protocol WYJCardSlidingViewDataSource: NSObjectProtocol {
     //卡片的个数
     func cardSwitchNumberOfCard() -> (Int)
     //卡片cell
@@ -25,7 +25,7 @@ import UIKit
 }
 
 //展示类
-class WYJCardSlidingView: UIView ,UICollectionViewDelegate,UICollectionViewDataSource,UIScrollViewDelegate {
+open class WYJCardSlidingView: UIView ,UICollectionViewDelegate,UICollectionViewDataSource,UIScrollViewDelegate {
     //公有属性
     public weak var delegate: WYJCardSlidingViewDelegate?
     public weak var dataSource: WYJCardSlidingViewDataSource?
@@ -59,7 +59,7 @@ class WYJCardSlidingView: UIView ,UICollectionViewDelegate,UICollectionViewDataS
         return view
     }()
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -82,21 +82,21 @@ class WYJCardSlidingView: UIView ,UICollectionViewDelegate,UICollectionViewDataS
     }
     
     //MARK:自动布局
-    override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         _collectionView.frame = bounds
     }
 
     //MARK:CollectionView方法
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return (dataSource?.cardSwitchNumberOfCard()) ?? 0
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         return (dataSource?.cardSwitchCellForItemAtIndex(index: indexPath.row))!
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //执行代理方法
         selectedIndex = indexPath.row
         scrollToCenterAnimated(animated: true)
@@ -129,14 +129,14 @@ class WYJCardSlidingView: UIView ,UICollectionViewDelegate,UICollectionViewDataS
     }
     
     //手指拖动开始
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         if (!pagingEnabled) { return }
         _dragStartX = scrollView.contentOffset.x
         _dragAtIndex = selectedIndex
     }
     
     //手指拖动停止
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if (!pagingEnabled) { return }
         _dragEndX = scrollView.contentOffset.x
         //在主线程执行居中方法
@@ -149,17 +149,13 @@ class WYJCardSlidingView: UIView ,UICollectionViewDelegate,UICollectionViewDataS
     //回调滚动方法
     func delegateUpdateScrollIndex(index: Int) -> () {
         guard let delegate = delegate else { return }
-        if (delegate.responds(to: #selector(delegate.cardSwitchDidScrollToIndex(index:)))) {
-            delegate.cardSwitchDidScrollToIndex?(index: index)
-        }
+        delegate.cardSwitchDidScrollToIndex(index: index)
     }
     
     //回调点击方法
     func delegateSelectedAtIndex(index: Int) -> () {
         guard let delegate = delegate else { return }
-        if (delegate.responds(to: #selector(delegate.cardSwitchDidSelectedAtIndex(index:)))) {
-            delegate.cardSwitchDidSelectedAtIndex?(index: index)
-        }
+        delegate.cardSwitchDidSelectedAtIndex(index: index)
     }
     
     //MARK:切换位置方法
@@ -208,7 +204,7 @@ class WYJCardSlidingView: UIView ,UICollectionViewDelegate,UICollectionViewDataS
 typealias WYJCardScollIndexChangeBlock = (Int) -> Void
 
 //布局类
-class WYJCardSlidingViewFlowLayout: UICollectionViewFlowLayout {
+public class WYJCardSlidingViewFlowLayout: UICollectionViewFlowLayout {
     //卡片和父视图宽度比例
     var cardWidthScale: CGFloat = 0.7
     //卡片和父视图高度比例
@@ -216,14 +212,14 @@ class WYJCardSlidingViewFlowLayout: UICollectionViewFlowLayout {
     //滚动到中间的调方法
     var indexChangeBlock: WYJCardScollIndexChangeBlock?
     
-    override func prepare() {
+    public override func prepare() {
         scrollDirection = UICollectionView.ScrollDirection.horizontal
         sectionInset = UIEdgeInsets(top: insetY(), left: insetX(), bottom: insetY(), right: insetX())
         itemSize = CGSize(width: itemWidth(), height: itemHeight())
         minimumLineSpacing = 5
     }
     
-    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+    public override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         //获取cell的布局
         let originalAttributesArr = super.layoutAttributesForElements(in: rect)
         //复制布局,以下操作，在复制布局中处理
@@ -283,7 +279,7 @@ class WYJCardSlidingViewFlowLayout: UICollectionViewFlowLayout {
     }
     
     //是否实时刷新布局
-    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+    public override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         return true
     }
 }
