@@ -97,13 +97,13 @@ public extension WYJProtocol where T: UIButton {
     
     ///点击
     @discardableResult
-    func clickAction(_ block:(()->())?) -> WYJProtocol {
+    func clickAction(_ block:((UIButton)->())?) -> WYJProtocol {
         obj.clickAction = block
         return self
     }
     
     @discardableResult
-    func addTarget(_ taget: UIControl.Event,_ block:(()->())?) -> WYJProtocol {
+    func addTarget(_ taget: UIControl.Event,_ block:((UIButton)->())?) -> WYJProtocol {
         obj.addTargetAction(block: block, for: taget)
         return self
     }
@@ -180,33 +180,33 @@ extension UIButton {
         static let WYJButtonAction = UnsafeRawPointer.init(bitPattern: "WYJButtonAction".hashValue)
     }
     ///点击
-    var clickAction: (()->())? {
+    var clickAction: ((UIButton)->())? {
         set {
             objc_setAssociatedObject(self, WYJRuntimeKey.WYJButtonClick!, newValue, .OBJC_ASSOCIATION_COPY_NONATOMIC)
-            addTarget(self, action: #selector(buttonClickAction), for: .touchUpInside)
+            addTarget(self, action: #selector(buttonClickAction(_:)), for: .touchUpInside)
         }
         get {
-            return objc_getAssociatedObject(self, WYJRuntimeKey.WYJButtonClick!) as? () -> ()
+            return objc_getAssociatedObject(self, WYJRuntimeKey.WYJButtonClick!) as? (UIButton) -> ()
         }
     }
     ///点击
-    var action: (()->())? {
+    var action: ((UIButton)->())? {
         set {
             objc_setAssociatedObject(self, WYJRuntimeKey.WYJButtonClick!, newValue, .OBJC_ASSOCIATION_COPY_NONATOMIC)
         }
         get {
-            return objc_getAssociatedObject(self, WYJRuntimeKey.WYJButtonClick!) as? () -> ()
+            return objc_getAssociatedObject(self, WYJRuntimeKey.WYJButtonClick!) as? (UIButton) -> ()
         }
     }
-    func addTargetAction(block: (()->())?, for controlEvents: UIControl.Event) {
+    func addTargetAction(block: ((UIButton)->())?, for controlEvents: UIControl.Event) {
         action = block
-        addTarget(self, action: #selector(buttonAction), for: controlEvents)
+        addTarget(self, action: #selector(buttonAction(_:)), for: controlEvents)
     }
-    @objc private func buttonAction() {
-        action?()
+    @objc private func buttonAction(_ button: UIButton) {
+        action?(button)
     }
-    @objc private func buttonClickAction() {
-        clickAction?()
+    @objc private func buttonClickAction(_ button: UIButton) {
+        clickAction?(button)
     }
 }
 
