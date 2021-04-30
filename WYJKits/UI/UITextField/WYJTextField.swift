@@ -103,7 +103,7 @@ public extension WYJProtocol where T: UITextField {
                        _ titleWidth: CGFloat,
                        _ color: UIColor? = nil,
                        _ font: UIFont? = nil,
-                       block:(()->())?) -> WYJProtocol {
+                       block:((UIButton)->())?) -> WYJProtocol {
         let button = UIButton()
         button.yi.title(title)
         button.yi.titleColor(color ?? obj.textColor)
@@ -123,7 +123,7 @@ public extension WYJProtocol where T: UITextField {
     ///   - size: size
     ///   - padding: padding
     @discardableResult
-    func rightIcon(_ image: UIImage,size:CGSize,_ block:(()->())?) -> WYJProtocol {
+    func rightIcon(_ image: UIImage,size:CGSize,_ block:((UIButton)->())?) -> WYJProtocol {
         let rightV = UIView(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         let button = UIButton()
         button.yi.image(image)
