@@ -103,8 +103,8 @@ public extension WYJProtocol where T: UIButton {
     }
     
     @discardableResult
-    func addTarget(_ taget: UIControl.Event,_ block:((UIButton)->())?) -> WYJProtocol {
-        obj.addTargetAction(block: block, for: taget)
+    func addTarget(_ taget: UIControl.Event? = nil,_ block:((UIButton)->())?) -> WYJProtocol {
+        obj.addTargetAction(block: block, for: taget ?? .touchUpInside)
         return self
     }
 }
