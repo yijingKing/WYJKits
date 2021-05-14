@@ -10,6 +10,15 @@ import UIKit
 
 ///分页控制器
 open class WYJPageViewController: WYJBaseViewController {
+    public var pageTitles: Array<String>? {
+        willSet {
+            if let array = newValue {
+                for (i,t) in array.enumerated() {
+                    selectView.buttons?[i].yi.title(t)
+                }
+            }
+        }
+    }
     private var currentIndex: Int = 0
     public var page_normalColor: UIColor? {
         willSet {

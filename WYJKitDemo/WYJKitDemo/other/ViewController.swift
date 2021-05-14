@@ -52,9 +52,9 @@ class ViewController: WYJBaseViewController,Protocal1  {
         
         WYJLog(model?.id)
         WYJLog(model?.toDictionary())
-        WYJLog((0.51500 / 100).yi.toDecimal(min: 2, max: 23))
+        WYJLog((0.51500 / 100).yi.toDecimal())
         let _: Double = 0.04
-        WYJLog("mklll".prefix(4))
+        WYJLog("".prefix(4))
         
         WYJLog(HOX().newByteArray(from: "4A6E144E48A24009654150E1E0125D19"))
         textf.isSecureTextEntry = true
@@ -62,8 +62,5 @@ class ViewController: WYJBaseViewController,Protocal1  {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         textf.isSecureTextEntry = !textf.isSecureTextEntry
-//        let vc = MyViewController()
-//        vc.name = name
-//        yi.push(vc)
     }
 }

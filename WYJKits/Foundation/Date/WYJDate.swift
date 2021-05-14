@@ -527,7 +527,7 @@ public extension WYJProtocol where T == Date {
         return newDate
     }
     ///转时间戳
-    func toCurrentStampTime(_ isMS:Bool = true) ->Int? {
+    func toCurrentTimeStamp(_ isMS:Bool = true) ->Int? {
         let dateFormatter = DateFormatter()
         var format = "yyyy-MM-dd HH:mm:ss.SSS"
         if isMS == false {

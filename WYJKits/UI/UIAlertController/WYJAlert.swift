@@ -21,17 +21,13 @@ open class WYJAlert: UIView {
     ///   - handler: 设置action
     ///   - titleArr: 选择数组
     ///   - type: 类型
-    public class func show(title: String = "",
-                       message: String,
+    public class func show(title: String?,
+                       message: String?,
                        titles: [String],
                        type: UIAlertController.Style = .alert,
                        handler: ((UIAlertController,UIAlertAction,NSInteger) -> Void)?,
                        complete: @escaping ((UIAlertController,NSInteger,String)->(Void))) {
-        var mes = message
-        if title.isEmpty {
-            mes = "\n" + mes
-        }
-        let alert = UIAlertController(title: title, message: mes, preferredStyle: type)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: type)
         for (index,item) in titles.enumerated() {
             let action = UIAlertAction.init(title: item, style: .default, handler: { (action) in
                 complete(alert,index,item)
@@ -57,18 +53,14 @@ open class WYJAlert: UIView {
     ///   - actionHandler: 设置Alert
     ///   - tfHandler: 设置输入框
     ///   - type: 类型
-    public class func show(title: String = "",message: String,
+    public class func show(title: String?,message: String?,
                        titleArr: [String],
                        textFields: [String],
                        type: UIAlertController.Style = .alert,
                        actionHandler: ((UIAlertController,UIAlertAction,NSInteger) -> Void)?,
                        tfHandler: ((UITextField,NSInteger) -> Void)?,
                        complete: @escaping ((UIAlertController,NSInteger,String)->(Void))) {
-        var mes = message
-        if title.isEmpty {
-            mes = "\n" + mes
-        }
-        let alert = UIAlertController(title: title, message: mes, preferredStyle: type)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: type)
         for (index,item) in titleArr.enumerated() {
             let action = UIAlertAction.init(title: item, style: .default, handler: { (action) in
                 complete(alert,index,item)
