@@ -173,11 +173,12 @@ extension WYJBaseViewController {
             } else {
                 top = WYJStatusHeight
             }
-            if let _ = tabBarController {
-                bottom = WYJBottomAndTabBarHeight
-            } else {
+            if let _ = tabBarController?.tabBar.isHidden {
                 bottom = WYJBottomHeight
+            } else {
+                bottom = WYJBottomAndTabBarHeight
             }
+            
             tab.snp.makeConstraints {
                 $0.top.equalTo(top)
                 $0.left.equalToSuperview()
@@ -204,11 +205,23 @@ extension WYJBaseViewController {
             col.showsHorizontalScrollIndicator = false
             col.backgroundColor = WYJF5Color
             view.addSubview(col)
+            var top: CGFloat
+            var bottom: CGFloat
+            if let _ = navigationController {
+                top = WYJStatusAndNavHeight
+            } else {
+                top = WYJStatusHeight
+            }
+            if let _ = tabBarController?.tabBar.isHidden {
+                bottom = WYJBottomHeight
+            } else {
+                bottom = WYJBottomAndTabBarHeight
+            }
             col.snp.makeConstraints {
-                $0.top.equalTo(WYJStatusAndNavHeight)
+                $0.top.equalTo(top)
                 $0.left.equalToSuperview()
                 $0.right.equalToSuperview()
-                $0.bottom.equalTo(-WYJBottomHeight)
+                $0.bottom.equalTo(-bottom)
             }
             block?(layout,col)
         }
