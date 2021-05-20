@@ -137,6 +137,16 @@ public extension WYJProtocol where T: UIViewController {
         obj.rightNavBlock = navBlk
         return self
     }
+    @discardableResult
+    func navRightTitleItem (_ title: String,
+                               _ font: UIFont? = nil,
+                               _ color: UIColor? = nil,
+                               _ navBlk: @escaping(UIButton)->()) -> WYJProtocol {
+        let item = obj._customBarButtonItem(title, color ?? UIColor.black, font ?? UIFont.systemFont(ofSize: 14), nil, obj, #selector(obj.navRightItemAction(_:)))
+        obj.navigationItem.rightBarButtonItem = item
+        obj.rNavBlock = navBlk
+        return self
+    }
     
     ///右图片按钮
     @discardableResult
@@ -144,6 +154,14 @@ public extension WYJProtocol where T: UIViewController {
         let rightItem = UIBarButtonItem(image: image.withRenderingMode(.alwaysOriginal), style: .plain, target: obj, action: #selector(obj.navRightItemClick))
         obj.navigationItem.rightBarButtonItem = rightItem
         obj.rightNavBlock = navBlk
+        return self
+    }
+    ///右图片按钮
+    @discardableResult
+    func navRightImageItem (_ image: UIImage,_ navBlk: @escaping(UIButton)->()) -> WYJProtocol {
+        let rightItem = UIBarButtonItem(image: image.withRenderingMode(.alwaysOriginal), style: .plain, target: obj, action: #selector(obj.navRightItemAction(_:)))
+        obj.navigationItem.rightBarButtonItem = rightItem
+        obj.rNavBlock = navBlk
         return self
     }
     
@@ -250,6 +268,7 @@ fileprivate extension UIViewController {
     private struct WYJRuntimeKey {
         static let leftKey = UnsafeRawPointer.init(bitPattern: "leftKey".hashValue)
         static let rightKey = UnsafeRawPointer.init(bitPattern: "rightKey".hashValue)
+        static let rNavBlock = UnsafeRawPointer.init(bitPattern: "rNavBlock".hashValue)
         static let titleColorKey = UnsafeRawPointer.init(bitPattern: "titleColorKey".hashValue)
         static let hiddenShadowKey = UnsafeRawPointer.init(bitPattern: "hiddenShadowKey".hashValue)
         static let interfaceStyleKey = UnsafeRawPointer.init(bitPattern: "interfaceStyleKey".hashValue)
@@ -272,6 +291,14 @@ fileprivate extension UIViewController {
             return (objc_getAssociatedObject(self, WYJRuntimeKey.rightKey!) as! (() ->()))
         }
     }
+    var rNavBlock: ((UIButton) ->())? {
+        set {
+            objc_setAssociatedObject(self, WYJRuntimeKey.rNavBlock!, newValue, .OBJC_ASSOCIATION_COPY_NONATOMIC)
+        }
+        get {
+            return (objc_getAssociatedObject(self, WYJRuntimeKey.rNavBlock!) as! ((UIButton) ->()))
+        }
+    }
     
     @objc func navLeftItemClick() {
         if let block = leftNavBlock {
@@ -282,6 +309,11 @@ fileprivate extension UIViewController {
     @objc func navRightItemClick() {
         if let block = rightNavBlock {
             block()
+        }
+    }
+    @objc func navRightItemAction(_ bar: UIButton) {
+        if let block = rNavBlock {
+            block(bar)
         }
     }
     
