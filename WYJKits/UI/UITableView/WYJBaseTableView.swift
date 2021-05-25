@@ -282,8 +282,8 @@ extension WYJBaseTableView: DZNEmptyDataSetSource,DZNEmptyDataSetDelegate {
 
     ///重新加载按钮背景图片
     public func buttonBackgroundImage(forEmptyDataSet scrollView: UIScrollView!, for state: UIControl.State) -> UIImage! {
-        if let empty_image = empty_image {
-            return empty_image
+        if let empty_btn_image = empty_btn_image {
+            return empty_btn_image
         }
         return nil
        

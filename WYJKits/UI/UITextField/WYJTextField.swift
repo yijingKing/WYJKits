@@ -109,11 +109,31 @@ public extension WYJProtocol where T: UITextField {
         button.yi.titleColor(color ?? obj.textColor)
         button.yi.titleFont(font ?? obj.font)
         button.yi.addTarget(.touchUpInside, block)
-        let leftV = UIView(frame: CGRect(x: 0, y: 0, width: titleWidth, height: 30))
+        let rightView = UIView(frame: CGRect(x: 0, y: 0, width: titleWidth, height: 30))
         button.frame = CGRect(x: 0, y: 0, width: titleWidth, height: 30)
-        leftV.addSubview(button)
+        rightView.addSubview(button)
         obj.rightViewMode = .always
-        obj.rightView = leftV
+        obj.rightView = rightView
+        return self
+    }
+    @discardableResult
+    func rightTitle(_ title: String,
+                       _ titleWidth: CGFloat,
+                       _ color: UIColor? = nil,
+                       _ font: UIFont? = nil,
+                       block:((WYJCountDownButton)->())?) -> WYJProtocol {
+        let button = WYJCountDownButton()
+        button.yi.title(title)
+        button.yi.titleColor(color ?? obj.textColor)
+        button.yi.titleFont(font ?? obj.font)
+        button.addTapGesture { tap in
+            block?(button)
+        }
+        let rightView = UIView(frame: CGRect(x: 0, y: 0, width: titleWidth, height: 30))
+        button.frame = CGRect(x: 0, y: 0, width: titleWidth, height: 30)
+        rightView.addSubview(button)
+        obj.rightViewMode = .always
+        obj.rightView = rightView
         return self
     }
     /// 添加右侧icon
