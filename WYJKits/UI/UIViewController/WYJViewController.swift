@@ -79,6 +79,15 @@ public extension WYJProtocol where T: UIViewController {
         }
         return self
     }
+    ///导航背景图
+    @discardableResult
+    func navBackgroundImage(_ img: UIImage) -> WYJProtocol {
+        let backGroundImage = img.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: UIImage.ResizingMode.stretch)
+        if let nav = obj.navigationController {
+            nav.navigationBar.setBackgroundImage(backGroundImage, for: .default)
+        }
+        return self
+    }
     ///文本
     @discardableResult
     func navTitle (_ title: String?,
