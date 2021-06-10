@@ -42,7 +42,9 @@ open class WYJTableViewDelegate: NSObject {
     public var cellForRowAtIndexPath: ((UITableView, IndexPath)->(UITableViewCell))?
     ///单元点击
     public var didSelectRowAtIndexPath: ((UITableView, IndexPath)->())?
-    
+    ///侧滑点击
+    public var didSwipeActionsForRowAtIndexPath: ((UITableView, IndexPath)->(Array<UIContextualAction>))?
+//    public var willBeginEditingRowAtIndexPath: ((UITableView, IndexPath,UIView?)->())?
     ///数据
     public var dataArray: Array? = []
 }
@@ -122,4 +124,8 @@ extension WYJTableViewDelegate : UITableViewDelegate,UITableViewDataSource {
         return viewForFooterInSection?(tableView,section) ?? UIView.init()
     }
     
+    @available(iOS 11.0, *)
+    public func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        return UISwipeActionsConfiguration.init(actions: didSwipeActionsForRowAtIndexPath?(tableView,indexPath) ?? [])
+    }
 }

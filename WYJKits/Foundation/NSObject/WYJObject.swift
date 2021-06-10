@@ -172,11 +172,6 @@ public var WYJStatusHeight: CGFloat {
     }
     return UIApplication.shared.statusBarFrame.height
 }
-//if (@available(iOS 13.0, *)) {
-//    return [UIApplication sharedApplication].windows.firstObject.windowScene.statusBarManager.statusBarFrame.size.height
-//} else {
-//    return [UIApplication sharedApplication].statusBarFrame.size.height
-//}
 ///导航栏高度 + 状态栏高度
 public var WYJStatusAndNavHeight: CGFloat {
     return WYJStatusHeight + WYJNavHeight

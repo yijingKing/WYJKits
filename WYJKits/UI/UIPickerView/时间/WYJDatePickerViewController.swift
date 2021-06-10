@@ -300,7 +300,7 @@ extension WYJDatePickerViewController {
     ///   - sureBtnColor: 颜色
     ///   - sureBtnFont: 字体
     ///   - block: 确认回调
-    public func showDatePicker(_ types: WYJComponentsType,
+    private func showDatePicker(_ types: WYJComponentsType,
                                   _ startTimes: Int? = nil,
                                   _ cancel: String? = nil,
                                   _ cancelBtnColor: UIColor? = nil,

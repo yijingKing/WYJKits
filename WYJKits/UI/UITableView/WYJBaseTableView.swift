@@ -440,4 +440,18 @@ public extension WYJProtocol where T: WYJBaseTableView {
         obj.WYJDelegate?.didSelectRowAtIndexPath = block
         return self
     }
+    ///创建侧滑按钮
+    @discardableResult
+    func swipeActionsRowAtIndexPath(_ block: @escaping ((UITableView, IndexPath)->(Array<UIContextualAction>))) -> WYJProtocol {
+        obj.delegateInitialize()
+        obj.WYJDelegate?.didSwipeActionsForRowAtIndexPath = block
+        return self
+    }
+//    ///编辑侧滑按钮
+//    @discardableResult
+//    func willBeginEditingRowAtIndexPath(_ block: @escaping ((UITableView, IndexPath,UIView?)->())) -> WYJProtocol {
+//        obj.delegateInitialize()
+//        obj.WYJDelegate?.willBeginEditingRowAtIndexPath = block
+//        return self
+//    }
 }

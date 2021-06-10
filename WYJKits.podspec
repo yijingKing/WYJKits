@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'WYJKits'
-  s.version          = '1.2.6'
+  s.version          = '1.2.7'
   s.summary          = 'WYJKits 类扩展,功能集合'
   s.description      = <<-DESC
                             ...
@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
   s.dependency 'Alamofire'
   s.dependency 'IQKeyboardManagerSwift'
   s.dependency 'SwiftyRSA'
-  s.resource_bundles = { 'WYJResources' => 'WYJKits/**/*.xcassets' }
+  s.resource_bundles = { 'WYJResources' => 'WYJKits/**/*' }
   
   s.source_files = 'WYJKits/**/*.swift'
 
