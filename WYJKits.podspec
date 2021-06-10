@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
   s.dependency 'Alamofire'
   s.dependency 'IQKeyboardManagerSwift'
   s.dependency 'SwiftyRSA'
-  s.resource_bundles = { 'WYJResources' => 'WYJKits/**/*' }
+  s.resource_bundles = { 'WYJResources' => 'WYJKits/Resource/*' }
   
   s.source_files = 'WYJKits/**/*.swift'
 
