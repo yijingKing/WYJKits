@@ -33,6 +33,7 @@ class ViewController: WYJBaseViewController,Protocal1  {
 
         view.backgroundColor = .red
         name = "123"
+        
         wqewe1()
     }
     

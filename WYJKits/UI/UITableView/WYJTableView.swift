@@ -72,21 +72,21 @@ public extension UITableView {
         static let WYJDataCountKey = UnsafeRawPointer.init(bitPattern: "WYJDataCountKey".hashValue)
     }
     ///分页页数
-    var page: Int? {
+    var page: Int {
         set {
             objc_setAssociatedObject(self, WYJRuntimeKey.WYJPageKey!, newValue, .OBJC_ASSOCIATION_ASSIGN)
         }
         get {
-            objc_getAssociatedObject(self, WYJRuntimeKey.WYJPageKey!) as? Int
+            objc_getAssociatedObject(self, WYJRuntimeKey.WYJPageKey!) as? Int ?? 0
         }
     }
     ///分页每页个数
-    var pageNumber: Int? {
+    var pageNumber: Int {
         set {
             objc_setAssociatedObject(self, WYJRuntimeKey.WYJPageNumberKey!, newValue, .OBJC_ASSOCIATION_ASSIGN)
         }
         get {
-            objc_getAssociatedObject(self, WYJRuntimeKey.WYJPageNumberKey!) as? Int
+            objc_getAssociatedObject(self, WYJRuntimeKey.WYJPageNumberKey!) as? Int ?? 0
         }
     }
     ///数据个数
@@ -129,7 +129,7 @@ public extension UITableView {
     func endRefreshing() {
         mj_header?.endRefreshing()
         mj_footer?.endRefreshing()
-        if let _ = mj_footer,let page = page,let pageNumber = pageNumber,let dataCount = dataCount {
+        if let _ = mj_footer,let dataCount = dataCount {
             if page * pageNumber > dataCount {
                 endRefreshingWithNoMoreData()
             }

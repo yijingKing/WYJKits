@@ -55,7 +55,7 @@ public extension WYJProtocol where T: UIImage {
 
 //MARK: --- 图片初始化
 public extension UIImage {
-    /// 根据view 生成image
+    /// 根据url 生成image
     convenience init?(url: String) {
         guard let u = URL.init(string: url) else {
             return nil

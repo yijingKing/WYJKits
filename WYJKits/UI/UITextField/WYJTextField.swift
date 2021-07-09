@@ -117,7 +117,7 @@ public extension WYJProtocol where T: UITextField {
         return self
     }
     @discardableResult
-    func rightTitle(_ title: String,
+    func rightCountDown(_ title: String,
                        _ titleWidth: CGFloat,
                        _ color: UIColor? = nil,
                        _ font: UIFont? = nil,
@@ -127,7 +127,10 @@ public extension WYJProtocol where T: UITextField {
         button.yi.titleColor(color ?? obj.textColor)
         button.yi.titleFont(font ?? obj.font)
         button.addTapGesture { tap in
+            WYJLog("wqewqewq")
             block?(button)
+            
+            
         }
         let rightView = UIView(frame: CGRect(x: 0, y: 0, width: titleWidth, height: 30))
         button.frame = CGRect(x: 0, y: 0, width: titleWidth, height: 30)

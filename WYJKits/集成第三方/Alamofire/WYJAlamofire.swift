@@ -20,9 +20,10 @@ public enum WYJUploadFileWay {
 public typealias ErrorBlock = ((WYJJSON)->())?
 /// 网络请求
 open class WYJAlamofire: NSObject {
-    
-    ///是否数据处理,默认false
-    public var isDataManage: Bool = false
+    ///主地址
+    public var baseURL: String = ""
+    ///是否数据输出,默认true
+    public var isDataLog: Bool = true
     ///超时时间,默认30秒
     public var timeOut: Double = 30.0
     ///请求头
@@ -75,10 +76,10 @@ public extension WYJAlamofire {
                        error: ErrorBlock) {
         switch httpMethod {
             case .get:
-                self.get(api, parameters, success: success, error: error)
+                get(api, parameters, success: success, error: error)
                 break
             case .post:
-                self.post(api, parameters, success: success, error: error)
+                post(api, parameters, success: success, error: error)
                 break
             default:
                 break
@@ -94,10 +95,10 @@ public extension WYJAlamofire {
                                       error: ErrorBlock) {
         switch httpMethod {
             case .get:
-                self.get(api, parameters, success: success, error: error)
+                get(api, parameters, success: success, error: error)
                 break
             case .post:
-                self.post(api, parameters, success: success, error: error)
+                post(api, parameters, success: success, error: error)
                 break
             default:
                 break
@@ -146,7 +147,7 @@ public extension WYJAlamofire {
                              encoding: self.encoding, headers: headers,
                              interceptor: self.interceptor) { (result) in
                     let json = WYJJSON.init(result)
-                    if let model = try? T(from: json.dictionaryObject) {
+                    if let model = try? T(from: json.description) {
                         success?(model)
                     } else {
                         error?(json)
@@ -175,7 +176,11 @@ public extension WYJAlamofire {
                              encoding: self.encoding, headers: headers,
                              interceptor: self.interceptor) { (result) in
                     let json = WYJJSON.init(result)
-                    success?(json)
+                    if json[self.codeS].int == self.code {
+                        success?(json)
+                    } else {
+                        error?(json)
+                    }
                 } error: { (afError,data) in
                     self.errorMethod(afError, error,data)
                 }
@@ -201,7 +206,7 @@ public extension WYJAlamofire {
                     guard let strongSelf = self else { return }
                     let json = WYJJSON.init(result)
                     if json[strongSelf.codeS].int == strongSelf.code {
-                        if let model = try? T(from: json[strongSelf.data].dictionaryObject) {
+                        if let model = try? T(from: json.description) {
                             success?(model)
                         } else {
                             error?(json)
@@ -237,7 +242,9 @@ public extension WYJAlamofire {
                        success: ((Any)->())?,
                        error: ((AFError,Data?)->())?) {
         
-        dataRequest = AF.request(convertible, method: method, parameters: parameters, encoding: encoding, headers: headers, interceptor: interceptor) { [weak self](URLRequest) in
+        let api: String = convertible as? String ?? ""
+        WYJLog("请求地址--> \(baseURL + api)")
+        dataRequest = AF.request(baseURL + api, method: method, parameters: parameters, encoding: encoding, headers: headers, interceptor: interceptor) { [weak self](URLRequest) in
             guard let strongSelf = self else { return }
             ///超时时间
             URLRequest.timeoutInterval = strongSelf.timeOut
@@ -247,9 +254,16 @@ public extension WYJAlamofire {
             
             switch response.result {
                 case .success(let result):
+                    if self.isDataLog {
+                        WYJLog("请求成功--> \(WYJJSON.init(result).description)")
+                    }
                     success?(result)
                     
                 case .failure(let err):
+                    if self.isDataLog {
+                        WYJLog("请求失败 --> error = \(err)")
+                        WYJLog("请求失败 --> response.data = \(String(describing: response.data))")
+                    }
                     error?(err,response.data)
             }
         }
@@ -344,6 +358,9 @@ public extension WYJAlamofire {
         var dic = [String: Any]()
         dic["code"] = -99999
         dic[msg] = "网络异常,请检查网络后重试"
+        if self.isDataLog {
+            WYJLog(WYJJSON.init(dic))
+        }
         errorB?(WYJJSON.init(dic))
     }
 }
