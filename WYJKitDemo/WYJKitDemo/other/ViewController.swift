@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import SSKeychain
 
 public protocol Protocal1 {
     var name: String? { get set }
@@ -35,6 +36,11 @@ class ViewController: WYJBaseViewController,Protocal1  {
         name = "123"
         
         wqewe1()
+        
+        
+//        SSKeychain.setPassword(<#T##password: String!##String!#>, forService: <#T##String!#>, account: <#T##String!#>)
+//
+//        SSKeychain.setva
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

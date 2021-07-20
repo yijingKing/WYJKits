@@ -46,23 +46,6 @@ open class WYJAlamofire: NSObject {
     public var dataRequest: DataRequest?
     ///配置请求参数
     open func configureRequestParameters() { }
-    
-    ///获取当前网络状态
-    func getNerworkingReachability(_ block: ((Bool)->())?) {
-        let manager = NetworkReachabilityManager.init(host: "www.baidu.com")
-        manager?.startListening(onUpdatePerforming: { (status) in
-            switch status {
-            case .notReachable:
-                block?(false)
-            case .unknown:
-                block?(false)
-            case .reachable(.cellular):
-                block?(true)
-            case .reachable(.ethernetOrWiFi):
-                block?(true)
-            }
-        })
-    }
 }
 
 public extension WYJAlamofire {
@@ -105,124 +88,6 @@ public extension WYJAlamofire {
         }
     }
     
-    //MARK: --- get
-    ///get
-    final func get(_ api: String,
-                   _ parameters: [String: Any]? = nil,
-                   success: ((WYJJSON)->())?,
-                   error: ErrorBlock) {
-        
-        configureRequestParameters()
-        var headers: HTTPHeaders?
-        if let h = header {
-            headers = HTTPHeaders(h)
-        }
-        getNerworkingReachability {
-            if $0 {
-                self.request(api, method: .get, parameters: parameters,
-                             encoding: self.encoding, headers: headers,
-                             interceptor: self.interceptor) { (result) in
-                    let json = WYJJSON.init(result)
-                    success?(json)
-                } error: { (afError,data) in
-                    self.errorMethod(afError, error,data)
-                }
-            } else {
-                self.nerworkingError(error)
-            }
-        }
-    }
-    
-    ///get
-    final func get<T: WYJCodable>(_ api: String,_ parameters: [String: Any]? = nil,
-                                  success: ((T)->())?,error: ErrorBlock) {
-        configureRequestParameters()
-        var headers: HTTPHeaders?
-        if let h = header {
-            headers = HTTPHeaders(h)
-        }
-        getNerworkingReachability {
-            if $0 {
-                self.request(api, method: .get, parameters: parameters,
-                             encoding: self.encoding, headers: headers,
-                             interceptor: self.interceptor) { (result) in
-                    let json = WYJJSON.init(result)
-                    if let model = try? T(from: json.description) {
-                        success?(model)
-                    } else {
-                        error?(json)
-                    }
-                } error: { (afError,data) in
-                    self.errorMethod(afError, error,data)
-                }
-            } else {
-                self.nerworkingError(error)
-            }
-        }
-    }
-    
-    //MARK: --- post
-    ///post
-    final func post(_ api: String,_ parameters: [String: Any]? = nil,
-                    success: ((WYJJSON)->())?,error: ErrorBlock) {
-        configureRequestParameters()
-        var headers: HTTPHeaders?
-        if let h = header {
-            headers = HTTPHeaders(h)
-        }
-        getNerworkingReachability {
-            if $0 {
-                self.request(api, method: .post, parameters: parameters,
-                             encoding: self.encoding, headers: headers,
-                             interceptor: self.interceptor) { (result) in
-                    let json = WYJJSON.init(result)
-                    if json[self.codeS].int == self.code {
-                        success?(json)
-                    } else {
-                        error?(json)
-                    }
-                } error: { (afError,data) in
-                    self.errorMethod(afError, error,data)
-                }
-            } else {
-                self.nerworkingError(error)
-            }
-        }
-    }
-    
-    ///post
-    final func post<T:WYJCodable>(_ api: String,_ parameters: [String: Any]? = nil,
-                                  success: ((T)->())?,error: ErrorBlock) {
-        configureRequestParameters()
-        var headers: HTTPHeaders?
-        if let h = header {
-            headers = HTTPHeaders(h)
-        }
-        getNerworkingReachability {
-            if $0 {
-                self.request(api, method: .post, parameters: parameters,
-                             encoding: self.encoding, headers: headers,
-                             interceptor: self.interceptor) { [weak self](result) in
-                    guard let strongSelf = self else { return }
-                    let json = WYJJSON.init(result)
-                    if json[strongSelf.codeS].int == strongSelf.code {
-                        if let model = try? T(from: json.description) {
-                            success?(model)
-                        } else {
-                            error?(json)
-                        }
-                    } else {
-                        error?(json)
-                    }
-                } error: { (afError,data) in
-                    self.errorMethod(afError, error,data)
-                }
-            } else {
-                self.nerworkingError(error)
-            }
-        }
-    }
-    
     /// 通用请求
     /// - Parameters:
     ///   - convertible: 地址
@@ -243,7 +108,6 @@ public extension WYJAlamofire {
                        error: ((AFError,Data?)->())?) {
         
         let api: String = convertible as? String ?? ""
-        WYJLog("请求地址--> \(baseURL + api)")
         dataRequest = AF.request(baseURL + api, method: method, parameters: parameters, encoding: encoding, headers: headers, interceptor: interceptor) { [weak self](URLRequest) in
             guard let strongSelf = self else { return }
             ///超时时间
@@ -255,14 +119,14 @@ public extension WYJAlamofire {
             switch response.result {
                 case .success(let result):
                     if self.isDataLog {
-                        WYJLog("请求成功--> \(WYJJSON.init(result).description)")
+                        WYJLog("请求地址--> \(self.baseURL + api)" + "\n请求成功--> \(WYJJSON.init(result).description)")
                     }
                     success?(result)
                     
                 case .failure(let err):
                     if self.isDataLog {
                         WYJLog("请求失败 --> error = \(err)")
-                        WYJLog("请求失败 --> response.data = \(String(describing: response.data))")
+                        WYJLog("请求地址--> \(self.baseURL + api)" + "\n请求失败 --> --> error = \(err) --> response.data = \(String(describing: response.data))")
                     }
                     error?(err,response.data)
             }
@@ -337,12 +201,149 @@ public extension WYJAlamofire {
         }
     }
     
+}
+
+///私有
+extension WYJAlamofire {
+    ///获取当前网络状态
+    private final func getNerworkingReachability(_ block: ((Bool)->())?) {
+        let manager = NetworkReachabilityManager.init(host: "www.baidu.com")
+        manager?.startListening(onUpdatePerforming: { (status) in
+            switch status {
+            case .notReachable:
+                block?(false)
+            case .unknown:
+                block?(false)
+            case .reachable(.cellular):
+                block?(true)
+            case .reachable(.ethernetOrWiFi):
+                block?(true)
+            }
+        })
+    }
+    //MARK: --- get
+    ///get
+    private func get(_ api: String,
+                   _ parameters: [String: Any]? = nil,
+                   success: ((WYJJSON)->())?,
+                   error: ErrorBlock) {
+        
+        configureRequestParameters()
+        var headers: HTTPHeaders?
+        if let h = header {
+            headers = HTTPHeaders(h)
+        }
+        getNerworkingReachability {
+            if $0 {
+                self.request(api, method: .get, parameters: parameters,
+                             encoding: self.encoding, headers: headers,
+                             interceptor: self.interceptor) { (result) in
+                    let json = WYJJSON.init(result)
+                    success?(json)
+                } error: { (afError,data) in
+                    self.errorMethod(afError, error,data)
+                }
+            } else {
+                self.nerworkingError(error)
+            }
+        }
+    }
+    
+    ///get
+    private func get<T: WYJCodable>(_ api: String,_ parameters: [String: Any]? = nil,
+                                  success: ((T)->())?,error: ErrorBlock) {
+        configureRequestParameters()
+        var headers: HTTPHeaders?
+        if let h = header {
+            headers = HTTPHeaders(h)
+        }
+        getNerworkingReachability {
+            if $0 {
+                self.request(api, method: .get, parameters: parameters,
+                             encoding: self.encoding, headers: headers,
+                             interceptor: self.interceptor) { (result) in
+                    let json = WYJJSON.init(result)
+                    if let model = try? T(from: json.description) {
+                        success?(model)
+                    } else {
+                        error?(json)
+                    }
+                } error: { (afError,data) in
+                    self.errorMethod(afError, error,data)
+                }
+            } else {
+                self.nerworkingError(error)
+            }
+        }
+    }
+    
+    //MARK: --- post
+    ///post
+    private func post(_ api: String,_ parameters: [String: Any]? = nil,
+                    success: ((WYJJSON)->())?,error: ErrorBlock) {
+        configureRequestParameters()
+        var headers: HTTPHeaders?
+        if let h = header {
+            headers = HTTPHeaders(h)
+        }
+        getNerworkingReachability {
+            if $0 {
+                self.request(api, method: .post, parameters: parameters,
+                             encoding: self.encoding, headers: headers,
+                             interceptor: self.interceptor) { (result) in
+                    let json = WYJJSON.init(result)
+                    if json[self.codeS].int == self.code {
+                        success?(json)
+                    } else {
+                        error?(json)
+                    }
+                } error: { (afError,data) in
+                    self.errorMethod(afError, error,data)
+                }
+            } else {
+                self.nerworkingError(error)
+            }
+        }
+    }
+    
+    ///post
+    private func post<T:WYJCodable>(_ api: String,_ parameters: [String: Any]? = nil,
+                                  success: ((T)->())?,error: ErrorBlock) {
+        configureRequestParameters()
+        var headers: HTTPHeaders?
+        if let h = header {
+            headers = HTTPHeaders(h)
+        }
+        getNerworkingReachability {
+            if $0 {
+                self.request(api, method: .post, parameters: parameters,
+                             encoding: self.encoding, headers: headers,
+                             interceptor: self.interceptor) { [weak self](result) in
+                    guard let strongSelf = self else { return }
+                    let json = WYJJSON.init(result)
+                    if json[strongSelf.codeS].int == strongSelf.code {
+                        if let model = try? T(from: json.description) {
+                            success?(model)
+                        } else {
+                            error?(json)
+                        }
+                    } else {
+                        error?(json)
+                    }
+                } error: { (afError,data) in
+                    self.errorMethod(afError, error,data)
+                }
+            } else {
+                self.nerworkingError(error)
+            }
+        }
+    }
     //MARK: --- 错误处理
     ///返回错误处理
-    func errorMethod(_ afError: AFError,_ errorB: ErrorBlock,_ data:Data?) {
+    private func errorMethod(_ afError: AFError,_ errorB: ErrorBlock,_ data:Data?) {
         var dec : String?
         switch afError._code {
-        case 13: dec = "请求超时"
+        case 13: dec = "code = 13,请求超时"
         case -1009: dec = "网络异常,请检查网络后重试"
         default:
             dec = data?.yi.toEncodingString()
@@ -354,7 +355,7 @@ public extension WYJAlamofire {
     }
     
     ///网络错误处理
-    func nerworkingError(_ errorB: ErrorBlock) {
+    private func nerworkingError(_ errorB: ErrorBlock) {
         var dic = [String: Any]()
         dic["code"] = -99999
         dic[msg] = "网络异常,请检查网络后重试"

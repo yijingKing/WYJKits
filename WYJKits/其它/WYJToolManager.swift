@@ -14,8 +14,8 @@ public typealias Byte  = Int8
 public typealias Short = Int16
 public typealias Long  = Int64
 
-class WYJToolManager {
-    static func compareVersion(v1:String,v2:String) -> Int {
+public class WYJToolManager: NSObject {
+    public static func compareVersion(v1:String,v2:String) -> Int {
         let arr1 = v1.components(separatedBy:".")
         let arr2 = v2.components(separatedBy:".")
         if arr1.count != 3 { return 2 }

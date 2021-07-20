@@ -10,6 +10,7 @@ GitHub:        https://github.com/MemoryKing
 import Foundation
 import UIKit
 
+///渐变label
 public enum WYJLabelGradient: Int {
     ///水平
     case level                  = 0x00

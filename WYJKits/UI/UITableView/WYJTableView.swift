@@ -63,6 +63,13 @@ public extension WYJProtocol where T: UITableView {
         obj.endRefreshing()
         return self
     }
+    ///更新数据并结束刷新
+    @discardableResult
+    func reloadDataAndEndRefreshing() -> WYJProtocol {
+        obj.endRefreshing()
+        obj.reloadData()
+        return self
+    }
 }
 
 public extension UITableView {
@@ -86,7 +93,7 @@ public extension UITableView {
             objc_setAssociatedObject(self, WYJRuntimeKey.WYJPageNumberKey!, newValue, .OBJC_ASSOCIATION_ASSIGN)
         }
         get {
-            objc_getAssociatedObject(self, WYJRuntimeKey.WYJPageNumberKey!) as? Int ?? 0
+            objc_getAssociatedObject(self, WYJRuntimeKey.WYJPageNumberKey!) as? Int ?? 10
         }
     }
     ///数据个数
@@ -130,7 +137,7 @@ public extension UITableView {
         mj_header?.endRefreshing()
         mj_footer?.endRefreshing()
         if let _ = mj_footer,let dataCount = dataCount {
-            if page * pageNumber > dataCount {
+            if pageNumber > dataCount {
                 endRefreshingWithNoMoreData()
             }
         }
