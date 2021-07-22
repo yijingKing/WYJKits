@@ -247,6 +247,14 @@
 			path = UIResponder;
 			sourceTree = "<group>";
 		};
+		632381C026A95F3000FFD6B1 /* 适配 */ = {
+			isa = PBXGroup;
+			children = (
+				632381BE26A913C400FFD6B1 /* WYJAuto.swift */,
+			);
+			path = "适配";
+			sourceTree = "<group>";
+		};
 		63243FAC2589E20A0065688B /* WYJKitDemo */ = {
 			isa = PBXGroup;
 			children = (
@@ -264,7 +272,6 @@
 		63243FB02589E20A0065688B /* other */ = {
 			isa = PBXGroup;
 			children = (
-				632381BE26A913C400FFD6B1 /* WYJAuto.swift */,
 				63243FB22589E20A0065688B /* Assets.xcassets */,
 				63243FB32589E20A0065688B /* MyViewController.swift */,
 				63243FB42589E20A0065688B /* LaunchScreen.storyboard */,
@@ -606,6 +613,7 @@
 		632440162589E2100065688B /* 功能 */ = {
 			isa = PBXGroup;
 			children = (
+				632381C026A95F3000FFD6B1 /* 适配 */,
 				633C3B7326395A090059CBF6 /* 卡片居中放大 */,
 				632440172589E2100065688B /* 正则表达式 */,
 				632440192589E2100065688B /* PageViewController */,
