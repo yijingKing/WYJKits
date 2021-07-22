@@ -12,7 +12,7 @@ import SnapKit
 
 open class WYJBaseViewController: UIViewController {
     ///分页页数
-    public var page: Int = 0 {
+    public var page: Int = 1 {
         willSet {
             self.mainTableView?.page = newValue
         }

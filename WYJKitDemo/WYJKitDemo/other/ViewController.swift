@@ -25,7 +25,6 @@ extension Protocal1 {
 class Model:WYJCodable {
     var id: Decimal?
 }
-
 class ViewController: WYJBaseViewController,Protocal1  {
     var name: String?
     var textf: UITextField!
@@ -40,7 +39,17 @@ class ViewController: WYJBaseViewController,Protocal1  {
         
 //        SSKeychain.setPassword(<#T##password: String!##String!#>, forService: <#T##String!#>, account: <#T##String!#>)
 //
-//        SSKeychain.setva
+        WYJLog(WYJFont(10.auto()))
+        
+        UILabel().yi.font(10.auto())
+        
+        WYJAuto.set {(value) -> Double in
+            let base = 1000
+            let screenWidth = Double(UIScreen.main.bounds.width)
+            let screenHeight = Double(UIScreen.main.bounds.height)
+            let width = min(screenWidth, screenHeight)
+            return value * (width / base)
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -69,14 +78,14 @@ class AnnouncementViewController: WYJBaseViewController {
     lazy var noTipButton: UIButton = {
         return UIButton().yi.then({
             $0.yi.title("总不提示")
-            $0.yi.titleColor(.white)
+            $0.yi.color(.white)
         })
     }()
     lazy var shutDownButton: UIButton = {
         return UIButton().yi.then({
             $0.yi.title("X")
-            $0.yi.titleColor(.white)
-            $0.yi.titleFont(WYJFont(33))
+            $0.yi.color(.white)
+            $0.yi.font(WYJFont(33))
         })
     }()
     

@@ -10,6 +10,19 @@ import Foundation
 import UIKit
 // MARK:--- 基本的扩展
 public extension WYJProtocol where T: UILabel {
+    ///字体大小
+    @discardableResult
+    func font(_ font: CGFloat,_ weight: UIFont.Weight? = nil) -> WYJProtocol {
+        obj.font = UIFont.systemFont(ofSize: font, weight: weight ?? .medium)
+        return self
+    }
+    ///加粗字体大小
+    @discardableResult
+    func boldFont(_ font: CGFloat) -> WYJProtocol {
+        obj.font = UIFont.boldSystemFont(ofSize: font)
+        return self
+    }
+    
     ///开启长按复制
     @discardableResult
     func isOpenCopy(_ isCopy: Bool) -> WYJProtocol {
@@ -114,5 +127,18 @@ public extension UILabel {
         if let t = text {
             UIPasteboard.general.string = t
         }
+    }
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        
+        if action == #selector(copyText) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    /// 拥有成为响应者的能力
+    override var canBecomeFirstResponder: Bool{
+        return true
     }
 }

@@ -36,7 +36,7 @@ public class WYJGradientLabel: UILabel {
         }
     }
     
-    public override var font: UIFont! {
+    public override var font: UIFont? {
         set {
             textLabel?.font = newValue
         }

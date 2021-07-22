@@ -210,8 +210,8 @@ public class WYJSelectView: UIView {
             titW = lineWidth ?? titW
             let button = UIButton().yi.then({
                 $0.yi.title(string)
-                $0.yi.titleColor(normalColor ?? WYJ33Color)
-                $0.yi.titleFont(font ?? WYJFont(14))
+                $0.yi.color(normalColor ?? WYJ33Color)
+                $0.yi.font(font ?? WYJFont(14))
                 $0.yi.selectedColor(selectColor)
                 $0.tag = i
                 $0.addTarget(self, action: #selector(allClick(_:)), for: .touchUpInside)

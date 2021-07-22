@@ -10,8 +10,8 @@ import Foundation
 
 ///string and int
 public struct WYJStrInt: WYJCodable {
-    var int: Int?
-    var string: String?
+    public var int: Int?
+    public var string: String?
     
     public init(from decoder: Decoder) throws {
         let singleValueContainer = try decoder.singleValueContainer()
@@ -30,8 +30,8 @@ public struct WYJStrInt: WYJCodable {
 
 ///bool and int
 public struct WYJBoolInt: WYJCodable {
-    var int: Int?
-    var bool: Bool?
+    public var int: Int?
+    public var bool: Bool?
     
     public init(from decoder: Decoder) throws {
         let singleValueContainer = try decoder.singleValueContainer()
@@ -50,9 +50,9 @@ public struct WYJBoolInt: WYJCodable {
 
 ///string  double
 public struct WYJStrDouble: WYJCodable {
-    var double: Double?
+    public var double: Double?
     
-    var string: String?
+    public var string: String?
     
     public init(from decoder: Decoder) throws {
         let singleValueContainer = try decoder.singleValueContainer()

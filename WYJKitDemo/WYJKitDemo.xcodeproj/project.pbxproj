@@ -10,6 +10,7 @@
 		23F39A31A0420E3037CF8214 /* Pods_WYJKitDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57EC6E7EF1AC034D23110B08 /* Pods_WYJKitDemo.framework */; };
 		6316B71A25E0AA74005C759C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6316B71925E0AA74005C759C /* ViewController.swift */; };
 		6316B72225E0AB9C005C759C /* WYJResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6316B72125E0AB9C005C759C /* WYJResponder.swift */; };
+		632381BF26A913C400FFD6B1 /* WYJAuto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632381BE26A913C400FFD6B1 /* WYJAuto.swift */; };
 		63243FC12589E20A0065688B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63243FB22589E20A0065688B /* Assets.xcassets */; };
 		63243FC22589E20A0065688B /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63243FB32589E20A0065688B /* MyViewController.swift */; };
 		63243FC32589E20A0065688B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63243FB42589E20A0065688B /* LaunchScreen.storyboard */; };
@@ -105,6 +106,7 @@
 		57EC6E7EF1AC034D23110B08 /* Pods_WYJKitDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WYJKitDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6316B71925E0AA74005C759C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		6316B72125E0AB9C005C759C /* WYJResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJResponder.swift; sourceTree = "<group>"; };
+		632381BE26A913C400FFD6B1 /* WYJAuto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WYJAuto.swift; sourceTree = "<group>"; };
 		63243FB22589E20A0065688B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		63243FB32589E20A0065688B /* MyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
 		63243FB52589E20A0065688B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 		63243FB02589E20A0065688B /* other */ = {
 			isa = PBXGroup;
 			children = (
+				632381BE26A913C400FFD6B1 /* WYJAuto.swift */,
 				63243FB22589E20A0065688B /* Assets.xcassets */,
 				63243FB32589E20A0065688B /* MyViewController.swift */,
 				63243FB42589E20A0065688B /* LaunchScreen.storyboard */,
@@ -985,6 +988,7 @@
 				6324402C2589E2100065688B /* WYJImage.swift in Sources */,
 				632440532589E2100065688B /* WYJPageViewController.swift in Sources */,
 				63441845261EF9FB007EBC1C /* WYJCGFloat.swift in Sources */,
+				632381BF26A913C400FFD6B1 /* WYJAuto.swift in Sources */,
 				632440392589E2100065688B /* WYJBaseViewController.swift in Sources */,
 				632440582589E2100065688B /* WYJLocation.swift in Sources */,
 				632440422589E2100065688B /* WYJCustomDataType.swift in Sources */,

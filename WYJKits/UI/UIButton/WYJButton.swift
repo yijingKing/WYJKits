@@ -15,10 +15,19 @@ public extension WYJProtocol where T: UIButton {
         obj.setTitle(string, for: .normal)
         return self
     }
-    
     @discardableResult
-    func titleFont(_ font: UIFont?) -> WYJProtocol {
+    func font(_ font: UIFont?) -> WYJProtocol {
         obj.titleLabel?.font = font
+        return self
+    }
+    @discardableResult
+    func font(_ font: CGFloat,_ weight: UIFont.Weight? = nil) -> WYJProtocol {
+        obj.titleLabel?.font = UIFont.systemFont(ofSize: font, weight: weight ?? .medium)
+        return self
+    }
+    @discardableResult
+    func boldFont(_ font: CGFloat) -> WYJProtocol {
+        obj.titleLabel?.font = UIFont.boldSystemFont(ofSize: font)
         return self
     }
     
@@ -29,7 +38,7 @@ public extension WYJProtocol where T: UIButton {
     }
     
     @discardableResult
-    func titleColor(_ color: UIColor?) -> WYJProtocol {
+    func color(_ color: UIColor?) -> WYJProtocol {
         obj.setTitleColor(color, for: .normal)
         obj.setTitleColor(color?.withAlphaComponent(0.5), for: .disabled)
         obj.setTitleColor(color, for: .selected)

@@ -63,8 +63,8 @@ public extension WYJProtocol where T: UITextField {
                       _ textAlignment: NSTextAlignment? = nil) -> WYJProtocol {
         let button = UIButton()
         button.yi.title(title)
-        button.yi.titleColor(color ?? obj.textColor)
-        button.yi.titleFont(font ?? obj.font)
+        button.yi.color(color ?? obj.textColor)
+        button.yi.font(font ?? obj.font)
         let leftV = UIView(frame: CGRect(x: 0, y: 0, width: titleWidth, height: 30))
         button.frame = CGRect(x: 0, y: 0, width: titleWidth , height: 30)
         leftV.addSubview(button)
@@ -106,8 +106,8 @@ public extension WYJProtocol where T: UITextField {
                        block:((UIButton)->())?) -> WYJProtocol {
         let button = UIButton()
         button.yi.title(title)
-        button.yi.titleColor(color ?? obj.textColor)
-        button.yi.titleFont(font ?? obj.font)
+        button.yi.color(color ?? obj.textColor)
+        button.yi.font(font ?? obj.font)
         button.yi.addTarget(.touchUpInside, block)
         let rightView = UIView(frame: CGRect(x: 0, y: 0, width: titleWidth, height: 30))
         button.frame = CGRect(x: 0, y: 0, width: titleWidth, height: 30)
@@ -124,8 +124,8 @@ public extension WYJProtocol where T: UITextField {
                        block:((WYJCountDownButton)->())?) -> WYJProtocol {
         let button = WYJCountDownButton()
         button.yi.title(title)
-        button.yi.titleColor(color ?? obj.textColor)
-        button.yi.titleFont(font ?? obj.font)
+        button.yi.color(color ?? obj.textColor)
+        button.yi.font(font ?? obj.font)
         button.addTapGesture { tap in
             WYJLog("wqewqewq")
             block?(button)
