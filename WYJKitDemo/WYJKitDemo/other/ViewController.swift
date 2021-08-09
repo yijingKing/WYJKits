@@ -26,8 +26,18 @@ class Model:WYJCodable {
     var id: Decimal?
 }
 class ViewController: WYJBaseViewController,Protocal1  {
-    var name: String?
+    var name: String? {
+        willSet {
+            WYJLog("-->" + (newValue ?? ""))
+        }
+        didSet {
+            WYJLog("------->" + (oldValue ?? " "))
+        }
+    }
     var textf: UITextField!
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -35,27 +45,18 @@ class ViewController: WYJBaseViewController,Protocal1  {
         name = "123"
         
         wqewe1()
-        
-        
 //        SSKeychain.setPassword(<#T##password: String!##String!#>, forService: <#T##String!#>, account: <#T##String!#>)
-//
-        WYJLog(WYJFont(10.auto()))
+//        WYJLog(WYJFont(10.auto()))
+//        UILabel().yi.font(10.auto())
         
-        UILabel().yi.font(10.auto())
+        view.backgroundColor = .random()
         
-        WYJAuto.set {(value) -> Double in
-            let base = 1000
-            let screenWidth = Double(UIScreen.main.bounds.width)
-            let screenHeight = Double(UIScreen.main.bounds.height)
-            let width = min(screenWidth, screenHeight)
-            return value * (width / base)
-        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let vc = AnnouncementViewController()
-        vc.modalPresentationStyle = .custom
-        UIApplication.shared.keyWindow?.rootViewController?.present(vc, animated: true, completion: nil)
+//        let vc = AnnouncementViewController()
+//        vc.modalPresentationStyle = .custom
+//        UIApplication.shared.keyWindow?.rootViewController?.present(vc, animated: true, completion: nil)
     }
 }
 

@@ -343,10 +343,16 @@ extension WYJAlamofire {
     private func errorMethod(_ afError: AFError,_ errorB: ErrorBlock,_ data:Data?) {
         var dec : String?
         switch afError._code {
-        case 13: dec = "code = 13,请求超时"
         case -1009: dec = "网络异常,请检查网络后重试"
+        case -1001: dec = "请求超时"
+        case -1004: dec = "无法连接到服务器"
+        case 13: dec = "无法连接到服务器"
         default:
-            dec = data?.yi.toEncodingString()
+            if let da = data {
+                dec = da.yi.toEncodingString()
+            } else {
+                dec = afError.errorDescription
+            }
         }
         var dic = [String: Any]()
         dic["code"] = afError._code

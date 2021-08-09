@@ -181,12 +181,24 @@ public var WYJBottomAndTabBarHeight: CGFloat {
     return WYJBottomHeight + WYJTabBarHeight
 }
 ///大小
-public func WYJFont(_ font: CGFloat) -> UIFont {
+public func WYJAutoFont(_ font: CGFloat) -> UIFont {
     return UIFont.systemFont(ofSize: font * WYJProportion())
 }
 ///加粗
-public func WYJBoldFont(_ font: CGFloat) -> UIFont {
+public func WYJAutoBoldFont(_ font: CGFloat) -> UIFont {
     return UIFont.boldSystemFont(ofSize: font * WYJProportion())
+}
+///斜体
+public func WYJAutoItalicSystemFont(_ font: CGFloat) -> UIFont {
+    return UIFont.italicSystemFont(ofSize: font)
+}
+///大小
+public func WYJFont(_ font: CGFloat) -> UIFont {
+    return UIFont.systemFont(ofSize: font)
+}
+///加粗
+public func WYJBoldFont(_ font: CGFloat) -> UIFont {
+    return UIFont.boldSystemFont(ofSize: font)
 }
 ///斜体
 public func WYJItalicSystemFont(_ font: CGFloat) -> UIFont {

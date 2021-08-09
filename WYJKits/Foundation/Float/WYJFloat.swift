@@ -78,11 +78,11 @@ public extension WYJProtocol where T == Float {
     }
     
     ///分数(默认最小2位,最大3位)
-    func toDecimal(min minFraction: Int? = 2,max maxFraction: Int? = nil) -> String? {
+    func decimal(min minFraction: Int? = 2,max maxFraction: Int? = nil) -> String? {
         return localized(.decimal, minFraction: minFraction, maxFraction: maxFraction,minInteger: 1,maxInteger: nil)
     }
     ///百分数(默认最小2位,最大3位)
-    func toPercent(min minFraction: Int? = 2,max maxFraction: Int? = nil) -> String? {
+    func percent(min minFraction: Int? = 2,max maxFraction: Int? = nil) -> String? {
         return localized(.percent, minFraction: minFraction, maxFraction: maxFraction,minInteger: 1,maxInteger: nil)
     }
     
@@ -92,7 +92,7 @@ public extension WYJProtocol where T == Float {
     ///   - groupingSeparator: 分隔符号
     ///   - groupingSize: 分隔位数
     /// - Returns: 分割后的字符串
-    func toSeparator(_ style: NumberFormatter.Style,separator: String? = ",",length: Int? = 4) -> String? {
+    func separator(_ style: NumberFormatter.Style,separator: String? = ",",length: Int? = 4) -> String? {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = style
         numberFormatter.usesGroupingSeparator = true
@@ -107,11 +107,40 @@ public extension WYJProtocol where T == Float {
     ///   - prefix: 前缀
     ///   - suffix: 后缀
     /// - Returns: 增加后的字符串
-    func toPositive(_ style: NumberFormatter.Style,_ prefix: String? = nil,_ suffix: String? = nil) -> String? {
+    func positive(_ style: NumberFormatter.Style,_ prefix: String? = nil,_ suffix: String? = nil) -> String? {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = style
         numberFormatter.positivePrefix = prefix
         numberFormatter.positiveSuffix = suffix
         return numberFormatter.string(for: obj)
+    }
+}
+
+
+public extension WYJProtocol where T == CGFloat {
+    
+    /// 转 Int
+    func int() -> Int { return Int(obj) }
+    
+    /// 转 Int64
+    func int64() -> Int64 { return Int64(obj) }
+    
+    /// 转 Double
+    func double() -> Double { return Double(obj) }
+    
+    /// 转 String
+    func string() -> String { return String(Float(obj)) }
+    
+    /// 转 NSNumber
+    func number() -> NSNumber { return NSNumber.init(value: Float(obj)) }
+    
+    /// 转 Float
+    func float() -> Float { return Float(obj) }
+    /// 浮点数四舍五入,places
+    /// - Parameter places: 小数保留的位数
+    /// - Returns: 保留后的小数
+    func round(to places: Int) -> Float {
+        let divisor = pow(10.0, Float(places))
+        return (Float(obj) * divisor).rounded() / divisor
     }
 }

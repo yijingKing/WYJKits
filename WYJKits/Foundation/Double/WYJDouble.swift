@@ -80,11 +80,11 @@ public extension WYJProtocol where T == Double {
     }
     
     ///分数(默认最小2位,最大3位)
-    func toDecimal(min minFraction: Int? = 2,max maxFraction: Int? = nil) -> String? {
+    func decimal(min minFraction: Int? = 2,max maxFraction: Int? = nil) -> String? {
         return localized(.decimal, minFraction: minFraction, maxFraction: maxFraction,minInteger: 1,maxInteger: nil)
     }
     ///百分数(默认最小2位,最大3位)
-    func toPercent(min minFraction: Int? = 2,max maxFraction: Int? = nil) -> String? {
+    func percent(min minFraction: Int? = 2,max maxFraction: Int? = nil) -> String? {
         return localized(.percent, minFraction: minFraction, maxFraction: maxFraction,minInteger: 1,maxInteger: nil)
     }
     
@@ -94,7 +94,7 @@ public extension WYJProtocol where T == Double {
     ///   - groupingSeparator: 分隔符号
     ///   - groupingSize: 分隔位数
     /// - Returns: 分割后的字符串
-    func toSeparator(_ style: NumberFormatter.Style,separator: String? = ",",length: Int? = 4) -> String? {
+    func separator(_ style: NumberFormatter.Style,separator: String? = ",",length: Int? = 4) -> String? {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = style
         numberFormatter.usesGroupingSeparator = true
@@ -109,7 +109,7 @@ public extension WYJProtocol where T == Double {
     ///   - prefix: 前缀
     ///   - suffix: 后缀
     /// - Returns: 增加后的字符串
-    func toPositive(_ style: NumberFormatter.Style,prefix: String? = nil,suffix: String? = nil) -> String? {
+    func positive(_ style: NumberFormatter.Style,prefix: String? = nil,suffix: String? = nil) -> String? {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = style
         numberFormatter.positivePrefix = prefix

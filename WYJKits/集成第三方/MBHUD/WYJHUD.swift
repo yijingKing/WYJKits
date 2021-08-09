@@ -61,7 +61,7 @@ open class WYJHUD {
             if text.count / manager.maxCount < 1 {
                 manager.hud?.minShowTime = manager.minTime
             } else {
-                var time = Double(text.count) / manager.maxCount + 1
+                var time = text.count / manager.maxCount + 1.0
                 time = time > manager.maxTime ? manager.maxTime : time
                 manager.hud?.minShowTime = time
             }

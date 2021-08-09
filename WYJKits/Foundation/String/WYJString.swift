@@ -1,7 +1,7 @@
 /*******************************************************************************
 Copyright (K), 2020 - ~, ╰莪呮想好好宠Nǐつ
 
-Author:        ╰莪呮想好好宠Nǐつ 
+Author:        ╰莪呮想好好宠Nǐつ
 E-mail:        1091676312@qq.com
 GitHub:        https://github.com/MemoryKing
 ********************************************************************************/
@@ -186,11 +186,19 @@ public extension WYJProtocol where T == String {
     /// - Parameters:
     ///   - range: 范围
     ///   - with: 替换字符串
-    func replacingCharacters(_ range: NSRange,_ with: String) -> String {
+    func replacingCharacters(_ range: NSRange, with: String) -> String {
         guard !obj.isEmpty else { return "" }
-        
         let string = obj
         return (string as NSString).replacingCharacters(in: range, with: with)
+    }
+    /// 替换字符串
+    /// - Parameters:
+    ///   - of: 字符串
+    ///   - with: 替换字符串
+    func replacingCharacters(_ of: String, with: String) -> String {
+        guard !obj.isEmpty else { return "" }
+        let string = obj
+        return (string as NSString).replacingOccurrences(of: of, with: with)
     }
     ///删除第一个字符
     func deleteFirst() -> String {

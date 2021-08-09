@@ -32,6 +32,7 @@ public extension WYJCompatible {
     }
 }
 
+extension CGFloat: WYJCompatible {}
 extension CGPoint: WYJCompatible {}
 extension CGSize: WYJCompatible {}
 extension CGVector: WYJCompatible {}

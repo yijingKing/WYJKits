@@ -67,6 +67,7 @@
 		6324405C2589E2100065688B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6324402B2589E2100065688B /* Images.xcassets */; };
 		632440732589E3D10065688B /* WYJProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632440722589E3D10065688B /* WYJProtocol.swift */; };
 		63327F9E2591A0C8008C99B5 /* WYJKits.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 63327F9D2591A0C8008C99B5 /* WYJKits.podspec */; };
+		6338AAAD26C101E900243F59 /* WYJTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6338AAAC26C101E900243F59 /* WYJTabBarController.swift */; };
 		633C3B7526395A280059CBF6 /* WYJCardSlidingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633C3B7426395A280059CBF6 /* WYJCardSlidingView.swift */; };
 		63441845261EF9FB007EBC1C /* WYJCGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63441844261EF9FB007EBC1C /* WYJCGFloat.swift */; };
 		63567970263152540020DB58 /* HOX.m in Sources */ = {isa = PBXBuildFile; fileRef = 6356796F263152540020DB58 /* HOX.m */; };
@@ -165,6 +166,7 @@
 		6324402B2589E2100065688B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		632440722589E3D10065688B /* WYJProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJProtocol.swift; sourceTree = "<group>"; };
 		63327F9D2591A0C8008C99B5 /* WYJKits.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = WYJKits.podspec; path = ../../WYJKits.podspec; sourceTree = "<group>"; };
+		6338AAAC26C101E900243F59 /* WYJTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJTabBarController.swift; sourceTree = "<group>"; };
 		633C3B7426395A280059CBF6 /* WYJCardSlidingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJCardSlidingView.swift; sourceTree = "<group>"; };
 		63441844261EF9FB007EBC1C /* WYJCGFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJCGFloat.swift; sourceTree = "<group>"; };
 		6356796E263152540020DB58 /* HOX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HOX.h; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 				632440102589E2100065688B /* 集成第三方 */,
 				632440162589E2100065688B /* 功能 */,
 				632440292589E2100065688B /* Resource */,
+				6338AAAC26C101E900243F59 /* WYJTabBarController.swift */,
 			);
 			name = WYJKits;
 			path = ../../WYJKits;
@@ -1029,6 +1032,7 @@
 				632440322589E2100065688B /* WYJAlert.swift in Sources */,
 				63243FC22589E20A0065688B /* MyViewController.swift in Sources */,
 				63775757260B2030002C3E06 /* WYJRSA.swift in Sources */,
+				6338AAAD26C101E900243F59 /* WYJTabBarController.swift in Sources */,
 				632440462589E2100065688B /* WYJInt.swift in Sources */,
 				6324403C2589E2100065688B /* WYJTableViewDelegate.swift in Sources */,
 				6316B72225E0AB9C005C759C /* WYJResponder.swift in Sources */,

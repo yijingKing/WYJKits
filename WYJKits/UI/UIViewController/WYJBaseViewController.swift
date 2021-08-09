@@ -170,6 +170,7 @@ extension WYJBaseViewController {
             tab.estimatedRowHeight = 44
             tab.estimatedSectionFooterHeight = 0
             tab.estimatedSectionHeaderHeight = 0
+            tab.tableFooterView = UIView()
             tab.keyboardDismissMode = .onDrag
             view.addSubview(tab)
             var top: CGFloat

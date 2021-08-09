@@ -91,6 +91,13 @@ open class WYJAlert: UIView {
         }
     }
     
+    ///默认确认
+    public class func showConfirm(title: String = "",message: String = "",complete: @escaping (()->())) {
+        show(title: title, message: message, titles: ["确定"], type: .alert, handler: nil) { (alert, integer, string) -> (Void) in
+            complete()
+        }
+    }
+    
     ///打开相机相册
     public class func invokeCameraPhotoAlbum (_ blc: ((UIImage)->())?) {
         let system = WYJSystem()

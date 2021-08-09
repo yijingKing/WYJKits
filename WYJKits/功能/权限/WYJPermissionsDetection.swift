@@ -46,6 +46,8 @@ open class WYJPermissionsDetection {
             }
         } else if authStatus == AVAuthorizationStatus.restricted || authStatus == AVAuthorizationStatus.denied {
             action(false)
+        } else {
+            action(true)
         }
     }
     
@@ -65,6 +67,8 @@ open class WYJPermissionsDetection {
             })
         } else if authStatus == PHAuthorizationStatus.restricted || authStatus == PHAuthorizationStatus.denied {
             action(false)
+        } else {
+            action(true)
         }
     }
     
