@@ -29,10 +29,16 @@ public class WYJTabBarController: UITabBarController {
     private lazy var wTabbar: WYJTabbar = {
         return WYJTabbar().yi.then({
             $0.centerBtn.yi.clickAction {_ in
-                self.selectedIndex = 1
+                self.selectedIndex = self.selectedItem
             }
         })
     }()
+    private var selectedItem = 1
+    public var totalItemNumber: Int {
+        willSet {
+            wTabbar.number = newValue
+        }
+    }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,33 +48,38 @@ public class WYJTabBarController: UITabBarController {
     }
     
     ///添加中心凸起控制器
-    public func addCenterChildViewController(vc: UIViewController,title: String,image: UIImage) {
+    public func addCenterChild(vc: UIViewController,title: String,image: UIImage) {
         addCenterItem()
         vc.tabBarItem.yi.addItem(title: title)
         wTabbar.centerBtn.yi.image(image)
         vs.append(vc)
+        selectedItem = vs.count
         viewControllers = vs
         tabBar.tintColor = .black
     }
     ///添加单个控制器
-    public func addChildViewController(vc: UIViewController,title: String,image: UIImage,seleImage: UIImage) {
+    public func addChild(vc: UIViewController,title: String,
+                         image: UIImage,seleImage: UIImage) {
         vc.tabBarItem.yi.addItem(title: title, norImage: image, seleImage: seleImage)
         vs.append(vc)
         viewControllers = vs
         tabBar.tintColor = .black
     }
     ///添加所有控制器
-    public func addChildViewControllers(vcs:[UIViewController],titles:[String],images:[UIImage],seleImages:[UIImage],centerNum: Int? = nil) {
+    public func addChilds(vcs:[UIViewController],titles:[String],images:[UIImage],
+                          seleImages:[UIImage],centerNum: Int? = nil) {
         if let _ = centerNum {
             addCenterItem()
         }
         
         for (i,vc) in vcs.enumerated() {
             if i == centerNum {
+                selectedItem = i
                 vc.tabBarItem.yi.addItem(title: titles[i])
                 wTabbar.centerBtn.yi.image(images[i])
             } else {
-                vc.tabBarItem.yi.addItem(title: titles[i], norImage: images[i], seleImage: seleImages[i])
+                vc.tabBarItem.yi.addItem(title: titles[i], norImage: images[i],
+                                         seleImage: seleImages[i])
             }
             vs.append(vc)
         }
@@ -82,11 +93,15 @@ extension WYJTabBarController {
 }
 
 class WYJTabbar: UITabBar {
-    
+    var number = 3
     lazy var centerBtn: UIButton = {
         return UIButton().yi.then({
             let img = #imageLiteral(resourceName: "post_normal")
-            $0.frame = .init(x: (WYJScreenWidth - img.size.width) / 2, y: -img.size.height / 2, width: img.size.width, height: img.size.height)
+            $0.frame = .init(x: (WYJScreenWidth - img.size.width) / number,
+                             y: -img.size.height / number,
+                             width: img.size.width,
+                             height: img.size.height)
+            
             $0.yi.image(img)
             $0.adjustsImageWhenHighlighted = false
         })
@@ -105,7 +120,6 @@ class WYJTabbar: UITabBar {
                 return centerBtn
             }
         }
-        
         return v
     }
     
