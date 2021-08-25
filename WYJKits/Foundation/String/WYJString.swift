@@ -251,6 +251,17 @@ public extension WYJProtocol where T == String {
     
     /// 替换
     /// - Parameters:
+    ///   - of: 替换的字符
+    ///   - with: 替换后的字符
+    /// - Returns: 替换后的字符串
+    func replac(of: String,with: String) -> String? {
+        var str = obj
+        str = str.replacingOccurrences(of: of, with: with)
+        return str
+    }
+    
+    /// 替换
+    /// - Parameters:
     ///   - before: 保留前几位
     ///   - after: 保留后几位
     ///   - text:  替换的文本

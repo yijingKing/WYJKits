@@ -16,4 +16,5 @@ pod 'Alamofire',:inhibit_warnings => true
 pod 'IQKeyboardManagerSwift',:inhibit_warnings => true
 pod 'SwiftyRSA'
 pod 'SSKeychain'
+pod 'LLSegmentViewController'
 end

@@ -54,9 +54,9 @@ class ViewController: WYJBaseViewController,Protocal1  {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        let vc = AnnouncementViewController()
+        let vc = SimpDemoViewController()
 //        vc.modalPresentationStyle = .custom
-//        UIApplication.shared.keyWindow?.rootViewController?.present(vc, animated: true, completion: nil)
+        UIApplication.shared.keyWindow?.rootViewController?.present(vc, animated: true, completion: nil)
     }
 }
 

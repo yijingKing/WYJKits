@@ -34,7 +34,7 @@ public class WYJTabBarController: UITabBarController {
         })
     }()
     private var selectedItem = 1
-    public var totalItemNumber: Int {
+    public var totalItemNumber: Int = 0 {
         willSet {
             wTabbar.number = newValue
         }

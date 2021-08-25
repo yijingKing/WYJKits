@@ -9,8 +9,8 @@ GitHub:        https://github.com/MemoryKing
 import UIKit
 public enum WYJComponentsType: Int {
     case year = 0
-    case month = 1
-    case day = 2
+    case yearMonth = 1
+    case yearMonthDay = 2
 } 
 
 ///时间选择器
@@ -74,11 +74,11 @@ open class WYJDatePickerViewController: UIViewController {
         case .year:
             dateString = String(format: "%02ld",
                                 picker.selectedRow(inComponent: 0) + startTime)
-        case .month:
+        case .yearMonth:
             dateString = String(format: "%02ld-%02ld",
                                 picker.selectedRow(inComponent: 0) + startTime,
                                 picker.selectedRow(inComponent: 1) + 1)
-        case .day:
+        case .yearMonthDay:
             dateString = String(format: "%02ld-%02ld-%02ld",
                                 picker.selectedRow(inComponent: 0) + startTime,
                                 picker.selectedRow(inComponent: 1) + 1,
@@ -117,7 +117,7 @@ extension WYJDatePickerViewController: UIPickerViewDelegate,UIPickerViewDataSour
         switch type {
         case .year:
             return 1
-        case .month:
+        case .yearMonth:
             return 2
         default:
             break
@@ -158,7 +158,7 @@ extension WYJDatePickerViewController: UIPickerViewDelegate,UIPickerViewDataSour
         switch type {
         case .year:
             return UIScreen.main.bounds.width
-        case .month:
+        case .yearMonth:
             return UIScreen.main.bounds.width / 2
         default:
             break
@@ -180,11 +180,11 @@ extension WYJDatePickerViewController: UIPickerViewDelegate,UIPickerViewDataSour
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch type {
         case .year:break
-        case .month:
+        case .yearMonth:
             if component == 0 {
                 pickerView.reloadComponent(1)
             }
-        case .day:
+        case .yearMonthDay:
             if component == 1 {
                 pickerView.reloadComponent(2)
             }
