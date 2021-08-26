@@ -302,15 +302,12 @@ public extension WYJProtocol where T: NSAttributedString {
     /// - Returns: 图片
     private func loadImage(imageName: String) -> UIImage? {
         if imageName.hasPrefix("http://") || imageName.hasPrefix("https://") {
-            let imageURL = URL(string: imageName)
-            var imageData: Data? = nil
-            do {
-                imageData = try Data(contentsOf: imageURL!)
-                return UIImage(data: imageData!)!
-            } catch {
+            if let imageURL = URL(string: imageName), let imageData = try? Data(contentsOf: imageURL) {
+                return UIImage(data: imageData)
+            } else {
                 return nil
             }
         }
-        return UIImage(named: imageName)!
+        return UIImage(named: imageName)
     }
 }
