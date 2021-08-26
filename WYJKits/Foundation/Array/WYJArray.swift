@@ -42,6 +42,9 @@ public extension WYJProtocol where T == Array<Any> {
     func toJSON(_ options: JSONSerialization.WritingOptions = []) -> WYJJSON {
         return WYJJSON.init(toJSONString(options) ?? "")
     }
+    
+    
+    
 }
 
 public extension WYJProtocol where T == Array<String> {
