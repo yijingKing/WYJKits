@@ -46,27 +46,24 @@ public extension WYJProtocol where T == NSObject {
     }
     ///获取当前控制器
     func getTopViewController () -> UIViewController? {
-        var window = UIApplication.shared.keyWindow
-        if window?.windowLevel != UIWindow.Level.normal {
-            let windows = UIApplication.shared.windows
-            for windowTemp in windows {
-                if windowTemp.windowLevel == UIWindow.Level.normal {
-                    window = windowTemp
-                    break
-                }
-            }
+        guard let window = UIApplication.shared.windows.filter({$0.isKeyWindow}).first, let rootVC = window.rootViewController  else {
+            return nil
         }
-        let vc = window?.rootViewController
-        if let presentVC = vc?.presentedViewController {
-            return presentVC
-            
-        } else if let tabVC = vc as? UITabBarController,let selectVC = tabVC.selectedViewController {
-            return selectVC
-            
-        } else if let naiVC = vc as? UINavigationController {
-            return naiVC.visibleViewController
+        return Self.top(rootVC: rootVC)
+    }
+    private static func top(rootVC: UIViewController?) -> UIViewController? {
+        if let presentedVC = rootVC?.presentedViewController {
+            return top(rootVC: presentedVC)
         }
-        return nil
+        if let nav = rootVC as? UINavigationController,
+            let lastVC = nav.viewControllers.last {
+            return top(rootVC: lastVC)
+        }
+        if let tab = rootVC as? UITabBarController,
+            let selectedVC = tab.selectedViewController {
+            return top(rootVC: selectedVC)
+        }
+        return rootVC
     }
 }
 

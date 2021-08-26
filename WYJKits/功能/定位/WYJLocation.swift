@@ -94,7 +94,7 @@ public class WYJLocation: NSObject {
         }
         alertVC.addAction(okAction)
         alertVC.addAction(cancelAction)
-        NSObject.init().yi.getTopViewController()?.present(alertVC, animated: true, completion: nil)
+        NSObject().yi.getTopViewController()?.present(alertVC, animated: true, completion: nil)
     }
 }
  

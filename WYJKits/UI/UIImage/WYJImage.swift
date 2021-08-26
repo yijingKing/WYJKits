@@ -12,6 +12,7 @@ import UIKit
 import QuartzCore
 import CoreGraphics
 import Accelerate
+import Photos
 
 // MARK:--- 基本的扩展
 public extension WYJProtocol where T: UIImage {
@@ -25,6 +26,16 @@ public extension WYJProtocol where T: UIImage {
                 result?(false)
             }
         })
+        return self
+    }
+    ///保存到相册
+    @discardableResult
+    func savedPhotosAlbum(completion: @escaping ((Bool, Error?) -> Void)) -> WYJProtocol {
+        PHPhotoLibrary.shared().performChanges {
+            PHAssetChangeRequest.creationRequestForAsset(from: obj)
+        } completionHandler: { (isSuccess: Bool, error: Error?) in
+            completion(isSuccess, error)
+        }
         return self
     }
 }
@@ -483,6 +494,46 @@ public extension WYJProtocol where T: UIImage {
         return obj.resizableImage(withCapInsets: insets, resizingMode: resizingMode)
     }
     
+    // MARK: 图片的模糊效果（高斯模糊滤镜）
+    /// 图片的模糊效果（高斯模糊滤镜）
+    /// - Parameter fuzzyValue: 设置模糊半径值（越大越模糊）
+    /// - Returns: 返回模糊后的图片
+    func getGaussianBlurImage(fuzzyValue: CGFloat = 20) -> UIImage? {
+        // 生成的高斯模糊滤镜图片
+        return blurredPicture(fuzzyValue: fuzzyValue, filterName: "CIGaussianBlur")
+    }
+    
+    // MARK: 像素化后的图片
+    ///像素化后的图片
+    /// - Parameter fuzzyValue: 设置模糊半径值（越大越模糊）
+    /// - Returns: 返回像素化后的图片
+    func getPixellateImage(fuzzyValue: CGFloat = 20) -> UIImage? {
+        // 生成的高斯模糊滤镜图片
+        return blurredPicture(fuzzyValue: fuzzyValue, filterName: "CIPixellate")
+    }
+    
+    /// 图片模糊
+    /// - Parameters:
+    ///   - fuzzyValue: 设置模糊半径值（越大越模糊）
+    ///   - filterName: 模糊类型
+    /// - Returns: 返回模糊后的图片
+    private func blurredPicture(fuzzyValue: CGFloat, filterName: String) -> UIImage? {
+        guard let ciImage = CIImage(image: obj) else { return nil }
+        // 创建高斯模糊滤镜类
+        guard let blurFilter = CIFilter(name: filterName) else { return nil }
+        // 设置图片
+        blurFilter.setValue(ciImage, forKey: kCIInputImageKey)
+        // 设置模糊半径值（越大越模糊）
+        blurFilter.setValue(fuzzyValue, forKey: filterName == "CIPixellate" ? kCIInputScaleKey : kCIInputRadiusKey)
+        // 从滤镜中 取出图片
+        guard let outputImage = blurFilter.outputImage else { return nil }
+        // 创建上下文
+        let context = CIContext(options: nil)
+        // 根据滤镜中的图片 创建CGImage
+        guard let cgImage = context.createCGImage(outputImage, from: ciImage.extent) else { return nil }
+        // 生成的模糊图片
+        return UIImage(cgImage: cgImage)
+    }
 }
 
 public enum UIImageContentMode {
@@ -1025,7 +1076,868 @@ public extension UIImage {
     }
 }
 
+public extension WYJProtocol where T == UIImage {
+    
+    // MARK: 设置图片透明度
+    /// 设置图片透明度
+    /// alpha: 透明度
+    /// - Returns: newImage
+    func alpha(_ alpha: CGFloat) -> UIImage {
+        UIGraphicsBeginImageContext(obj.size)
+        let context = UIGraphicsGetCurrentContext()
+        let area = CGRect(x: 0, y: 0, width: obj.size.width, height: obj.size.height)
+        context?.scaleBy(x: 1, y: -1)
+        context?.translateBy(x: 0, y: -area.height)
+        context?.setBlendMode(.multiply)
+        context?.setAlpha(alpha)
+        context?.draw(obj.cgImage!, in: area)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage ?? obj
+    }
+}
 
+// MARK:- UIImage 压缩相关
+public extension WYJProtocol where T: UIImage {
+    
+    // MARK: 压缩图片
+    /// 压缩图片
+    /// - Parameter mode: 压缩模式
+    /// - Returns: 压缩后图片
+    func compress(mode: CompressionMode = .medium) -> UIImage? {
+        guard let data = resizeIO(resizeSize: mode.resize(obj.size))?.yi.compressDataSize(maxSize: mode.maxDataSize) else { return nil }
+        return UIImage(data: data)
+    }
+    
+    // MARK: 异步图片压缩
+    /// 异步图片压缩
+    /// - Parameters:
+    ///   - mode: 压缩模式
+    ///   - queue: 压缩队列
+    ///   - complete: 完成回调(压缩后图片, 调整后分辨率)
+    func asyncCompress(mode: CompressionMode = .medium, queue: DispatchQueue = DispatchQueue.global(), complete:@escaping (UIImage?, CGSize) -> Void) {
+        queue.async {
+            
+            DispatchQueue.main.async {
+                if let data = resizeIO(resizeSize: mode.resize(obj.size))?.yi.compressDataSize(maxSize: mode.maxDataSize) {
+                    complete(UIImage(data: data), mode.resize(obj.size))
+                } else {
+                    complete(nil, mode.resize(obj.size))
+                }
+                
+            }
+        }
+    }
+    
+    // MARK: 压缩图片质量
+    /// 压缩图片质量
+    /// - Parameter maxSize: 最大数据大小
+    /// - Returns: 压缩后图片
+    func comoress(maxSize: Int) -> UIImage? {
+        guard let data = compressDataSize(maxSize: maxSize) else { return nil }
+        return UIImage(data: data)
+    }
+    
+    // MARK: 压缩图片质量
+    /// 压缩图片质量
+    /// - Parameter maxSize: 最大数据大小
+    /// - Returns: 压缩后数据
+    func compressDataSize(maxSize: Int = 1024 * 1024 * 2) -> Data? {
+        let maxSize = maxSize
+        var quality: CGFloat = 0.8
+        var data = obj.jpegData(compressionQuality: quality)
+        var dataCount = data?.count ?? 0
+        
+        while (data?.count ?? 0) > maxSize {
+            if quality <= 0.6 {
+                break
+            }
+            quality  = quality - 0.05
+            data = obj.jpegData(compressionQuality: quality)
+            if (data?.count ?? 0) <= dataCount {
+                break
+            }
+            dataCount = data?.count ?? 0
+        }
+        return data
+    }
+    
+    // MARK: ImageIO 方式调整图片大小 性能很好
+    /// ImageIO 方式调整图片大小 性能很好
+    /// - Parameter resizeSize: 图片调整Size
+    /// - Returns: 调整后图片
+    func resizeIO(resizeSize: CGSize) -> UIImage? {
+        if obj.size == resizeSize {
+            return obj
+        }
+        guard let imageData = obj.pngData() else { return nil }
+        guard let imageSource = CGImageSourceCreateWithData(imageData as CFData, nil) else { return nil }
+        
+        let maxPixelSize = max(obj.size.width, obj.size.height)
+        let options = [kCGImageSourceCreateThumbnailWithTransform: true,
+                       kCGImageSourceCreateThumbnailFromImageIfAbsent: true,
+                       kCGImageSourceThumbnailMaxPixelSize: maxPixelSize]  as CFDictionary
+        
+        let resizedImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, options).flatMap{
+            UIImage(cgImage: $0)
+        }
+        
+        return resizedImage
+    }
+    
+    // MARK: CoreGraphics 方式调整图片大小 性能很好
+    /// CoreGraphics 方式调整图片大小 性能很好
+    /// - Parameter resizeSize: 图片调整Size
+    /// - Returns: 调整后图片
+    func resizeCG(resizeSize: CGSize) -> UIImage? {
+        if obj.size == resizeSize {
+            return obj
+        }
+        guard  let cgImage = obj.cgImage else { return nil }
+        guard  let colorSpace = cgImage.colorSpace else { return nil }
+        guard let context = CGContext(data: nil,
+                                      width: Int(resizeSize.width),
+                                      height: Int(resizeSize.height),
+                                      bitsPerComponent: cgImage.bitsPerComponent,
+                                      bytesPerRow: cgImage.bytesPerRow,
+                                      space: colorSpace,
+                                      bitmapInfo: cgImage.bitmapInfo.rawValue) else { return nil }
+        context.interpolationQuality = .high
+        context.draw(cgImage, in: CGRect(origin: .zero, size: resizeSize))
+        let resizedImage = context.makeImage().flatMap {
+            UIImage(cgImage: $0)
+        }
+        return resizedImage
+    }
+}
+
+// MARK: 压缩模式
+public enum CompressionMode {
+    /// 分辨率规则
+    private static let resolutionRule: (min: CGFloat, max: CGFloat, low: CGFloat, default: CGFloat, high: CGFloat) = (10, 4096, 512, 1024, 2048)
+    /// 数据大小规则
+    private static let  dataSizeRule: (min: Int, max: Int, low: Int, default: Int, high: Int) = (1024 * 10, 1024 * 1024 * 20, 1024 * 512, 1024 * 1024 * 2, 1024 * 1024 * 10)
+    // 低质量
+    case low
+    // 中等质量 默认
+    case medium
+    // 高质量
+    case high
+    // 自定义(最大分辨率, 最大输出数据大小)
+    case other(CGFloat, Int)
+    
+    fileprivate var maxDataSize: Int {
+        switch self {
+        case .low:
+            return CompressionMode.dataSizeRule.low
+        case .medium:
+            return CompressionMode.dataSizeRule.default
+        case .high:
+            return CompressionMode.dataSizeRule.high
+        case .other(_, let dataSize):
+            if dataSize < CompressionMode.dataSizeRule.min {
+                return CompressionMode.dataSizeRule.default
+            }
+            if dataSize > CompressionMode.dataSizeRule.max {
+                return CompressionMode.dataSizeRule.max
+            }
+            return dataSize
+        }
+    }
+    
+    fileprivate func resize(_ size: CGSize) -> CGSize {
+        if size.width < CompressionMode.resolutionRule.min || size.height < CompressionMode.resolutionRule.min {
+            return size
+        }
+        let maxResolution = maxSize
+        let aspectRatio = max(size.width, size.height) / maxResolution
+        if aspectRatio <= 1.0 {
+            return size
+        } else {
+            let resizeWidth = size.width / aspectRatio
+            let resizeHeighth = size.height / aspectRatio
+            if resizeHeighth < CompressionMode.resolutionRule.min || resizeWidth < CompressionMode.resolutionRule.min {
+                return size
+            } else {
+                return CGSize.init(width: resizeWidth, height: resizeHeighth)
+            }
+        }
+    }
+    
+    fileprivate var maxSize: CGFloat {
+        switch self {
+        case .low:
+            return CompressionMode.resolutionRule.low
+        case .medium:
+            return CompressionMode.resolutionRule.default
+        case .high:
+            return CompressionMode.resolutionRule.high
+        case .other(let size, _):
+            if size < CompressionMode.resolutionRule.min {
+                return CompressionMode.resolutionRule.default
+            }
+            if size > CompressionMode.resolutionRule.max {
+                return CompressionMode.resolutionRule.max
+            }
+            return size
+        }
+    }
+}
+
+// MARK:- gif 加载
+public enum WYJLogDataType: String {
+    case gif    = "gif"
+    case png    = "png"
+    case jpeg   = "jpeg"
+    case tiff   = "tiff"
+    case defaultType
+}
+public extension WYJProtocol where T: UIImage {
+    
+    // MARK: 验证资源的格式，返回资源格式（png/gif/jpeg...）
+    /// 验证资源的格式，返回资源格式（png/gif/jpeg...）
+    /// - Parameter data: 资源
+    /// - Returns: 返回资源格式（png/gif/jpeg...）
+    static func checkImageWYJLogDataType(data: Data?) -> WYJLogDataType {
+        guard data != nil else {
+            return .defaultType
+        }
+        let c = data![0]
+        switch (c) {
+        case 0xFF:
+            return .jpeg
+        case 0x89:
+            return .png
+        case 0x47:
+            return .gif
+        case 0x49, 0x4D:
+            return .tiff
+        default:
+            return .defaultType
+        }
+    }
+    
+    // MARK: 加载 data 数据的 gif 图片
+    /// 加载 data 数据的 gif 图片
+    /// - Parameter data: data 数据
+    static func gif(data: Data) -> UIImage? {
+        // Create source from data
+        guard let source = CGImageSourceCreateWithData(data as CFData, nil) else {
+            WYJLog("SwiftGif: Source for the image does not exist")
+            return nil
+        }
+        return animatedImageWithSource(source)
+    }
+    
+    // MARK: 加载网络 url 的 gif 图片
+    /// 加载网络 url 的 gif 图片
+    /// - Parameter url: gif图片的网络地址
+    static func gif(url: String) -> UIImage? {
+        // Validate URL
+        guard let bundleURL = URL(string: url) else {
+            WYJLog("SwiftGif: This image named \"\(url)\" does not exist")
+            return nil
+        }
+        // Validate data
+        guard let imageData = try? Data(contentsOf: bundleURL) else {
+            WYJLog("SwiftGif: Cannot turn image named \"\(url)\" into NSData")
+            return nil
+        }
+        
+        return gif(data: imageData)
+    }
+    
+    // MARK: 加载本地的gif图片
+    /// 加载本地的gif图片
+    /// - Parameter name:图片的名字
+    static func gif(name: String) -> UIImage? {
+        // Check for existance of gif
+        guard let bundleURL = Bundle.main
+                .url(forResource: name, withExtension: "gif") else {
+            WYJLog("SwiftGif: This image named \"\(name)\" does not exist")
+            return nil
+        }
+        // Validate data
+        guard let imageData = try? Data(contentsOf: bundleURL) else {
+            WYJLog("SwiftGif: Cannot turn image named \"\(name)\" into NSData")
+            return nil
+        }
+        
+        return gif(data: imageData)
+    }
+    
+    // MARK: 加载 asset 里面的gif图片
+    /// 加载 asset 里面的gif图片
+    /// - Parameter asset: asset 里面的图片名字
+    @available(iOS 9.0, *)
+    static func gif(asset: String) -> UIImage? {
+        // Create source from assets catalog
+        guard let dataAsset = NSDataAsset(name: asset) else {
+            WYJLog("SwiftGif: Cannot turn image named \"\(asset)\" into NSDataAsset")
+            return nil
+        }
+        return gif(data: dataAsset.data)
+    }
+    
+    // MARK: 获取 asset 里面的gif图片的信息：包含分解后的图片和gif时间
+    /// 获取 asset 里面的gif图片的信息：包含分解后的图片和gif时间
+    /// - Parameter asset: asset 里面的图片名字
+    /// - Returns: 分解后的图片和gif时间
+    static func gifImages(asset: String) -> (gifImages: [UIImage]?, duration: TimeInterval?) {
+        // Create source from assets catalog
+        guard let dataAsset = NSDataAsset(name: asset) else {
+            WYJLog("SwiftGif: Cannot turn image named \"\(asset)\" into NSDataAsset")
+            return (nil, nil)
+        }
+        // Create source from data
+        guard let source = CGImageSourceCreateWithData(dataAsset.data as CFData, nil) else {
+            WYJLog("SwiftGif: Source for the image does not exist")
+            return (nil, nil)
+        }
+        return animatedImageSources(source)
+    }
+    
+    // MARK: 获取 加载本地的 的gif图片的信息：包含分解后的图片和gif时间
+    /// 获取 加载本地的 的gif图片的信息：包含分解后的图片和gif时间
+    /// - Parameter name:图片的名字
+    /// - Returns: 分解后的图片和gif时间
+    static func gifImages(name: String) -> (gifImages: [UIImage]?, duration: TimeInterval?) {
+        // Check for existance of gif
+        guard let bundleURL = Bundle.main
+                .url(forResource: name, withExtension: "gif") else {
+            WYJLog("SwiftGif: This image named \"\(name)\" does not exist")
+            return (nil, nil)
+        }
+        // Validate data
+        guard let imageData = try? Data(contentsOf: bundleURL) else {
+            WYJLog("SwiftGif: Cannot turn image named \"\(name)\" into NSData")
+            return (nil, nil)
+        }
+        // Create source from data
+        guard let source = CGImageSourceCreateWithData(imageData as CFData, nil) else {
+            WYJLog("SwiftGif: Source for the image does not exist")
+            return (nil, nil)
+        }
+        return animatedImageSources(source)
+    }
+    
+    // MARK: 获取 网络 url 的 gif 图片的信息：包含分解后的图片和gif时间
+    /// 获取 网络 url 的 gif 图片的信息：包含分解后的图片和gif时间
+    /// - Parameter url: gif图片的网络地址
+    /// - Returns: 分解后的图片和gif时间
+    static func gifImages(url: String) -> (gifImages: [UIImage]?, duration: TimeInterval?) {
+        // Validate URL
+        guard let bundleURL = URL(string: url) else {
+            WYJLog("SwiftGif: This image named \"\(url)\" does not exist")
+            return (nil, nil)
+        }
+        // Validate data
+        guard let imageData = try? Data(contentsOf: bundleURL) else {
+            WYJLog("SwiftGif: Cannot turn image named \"\(url)\" into NSData")
+            return (nil, nil)
+        }
+        // Create source from data
+        guard let source = CGImageSourceCreateWithData(imageData as CFData, nil) else {
+            WYJLog("SwiftGif: Source for the image does not exist")
+            return (nil, nil)
+        }
+        return animatedImageSources(source)
+    }
+    
+    // MARK: 获取gif图片转化为动画的Image
+    private static func animatedImageWithSource(_ source: CGImageSource) -> UIImage? {
+        let info = animatedImageSources(source)
+        guard let frames = info.gifImages, let duration = info.duration else {
+            return nil
+        }
+        let animation = UIImage.animatedImage(with: frames, duration: duration)
+        return animation
+    }
+    
+    // MARK: 获取gif图片的信息
+    /// 获取gif图片的信息
+    /// - Parameter source: CGImageSource 资源
+    /// - Returns: gif信息
+    private static func animatedImageSources(_ source: CGImageSource) -> (gifImages: [UIImage]?, duration: TimeInterval?) {
+        let count = CGImageSourceGetCount(source)
+        var images = [CGImage]()
+        var delays = [Int]()
+        // Fill arrays
+        for index in 0..<count {
+            // Add image
+            if let image = CGImageSourceCreateImageAtIndex(source, index, nil) {
+                images.append(image)
+            }
+            // At it's delay in cs
+            let delaySeconds = delayForImageAtIndex(Int(index), source: source)
+            // Seconds to ms
+            delays.append(Int(delaySeconds * 1000.0))
+        }
+        
+        // Calculate full duration
+        let duration: Int = {
+            var sum = 0
+            for val: Int in delays {
+                sum += val
+            }
+            return sum
+        }()
+        // Get frames
+        let gcd = gcdForArray(delays)
+        var frames = [UIImage]()
+        var frame: UIImage
+        var frameCount: Int
+        for index in 0..<count {
+            frame = UIImage(cgImage: images[Int(index)])
+            frameCount = Int(delays[Int(index)] / gcd)
+            for _ in 0..<frameCount {
+                frames.append(frame)
+            }
+        }
+        return (frames, Double(duration) / 1000.0)
+    }
+    
+    private static func delayForImageAtIndex(_ index: Int, source: CGImageSource!) -> Double {
+        var delay = 0.1
+        // Get dictionaries
+        let cfProperties = CGImageSourceCopyPropertiesAtIndex(source, index, nil)
+        let gifPropertiesPointer = UnsafeMutablePointer<UnsafeRawPointer?>.allocate(capacity: 0)
+        defer {
+            gifPropertiesPointer.deallocate()
+        }
+        let unsafePointer = Unmanaged.passUnretained(kCGImagePropertyGIFDictionary).toOpaque()
+        if CFDictionaryGetValueIfPresent(cfProperties, unsafePointer, gifPropertiesPointer) == false {
+            return delay
+        }
+        let gifProperties: CFDictionary = unsafeBitCast(gifPropertiesPointer.pointee, to: CFDictionary.self)
+        // Get delay time
+        var delayObject: AnyObject = unsafeBitCast(
+            CFDictionaryGetValue(gifProperties, Unmanaged.passUnretained(kCGImagePropertyGIFUnclampedDelayTime).toOpaque()),
+            to: AnyObject.self)
+        if delayObject.doubleValue == 0 {
+            delayObject = unsafeBitCast(CFDictionaryGetValue(gifProperties, Unmanaged.passUnretained(kCGImagePropertyGIFDelayTime).toOpaque()), to: AnyObject.self)
+        }
+        if let delayObject = delayObject as? Double, delayObject > 0 {
+            delay = delayObject
+        } else {
+            // Make sure they're not too fast
+            delay = 0.1
+        }
+        return delay
+    }
+    
+    private static func gcdForArray(_ array: [Int]) -> Int {
+        if array.isEmpty {
+            return 1
+        }
+        var gcd = array[0]
+        for val in array {
+            gcd = gcdForPair(val, gcd)
+        }
+        return gcd
+    }
+    
+    private static func gcdForPair(_ lhs: Int?, _ rhs: Int?) -> Int {
+        var lhs = lhs
+        var rhs = rhs
+        // Check if one of them is nil
+        if rhs == nil || lhs == nil {
+            if rhs != nil {
+                return rhs!
+            } else if lhs != nil {
+                return lhs!
+            } else {
+                return 0
+            }
+        }
+        // Swap for modulo
+        if lhs! < rhs! {
+            let ctp = lhs
+            lhs = rhs
+            rhs = ctp
+        }
+        // Get greatest common divisor
+        var rest: Int
+        while true {
+            rest = lhs! % rhs!
+            if rest == 0 {
+                return rhs!
+            } else {
+                lhs = rhs
+                rhs = rest
+            }
+        }
+    }
+}
+
+// MARK:- 图片旋转的一些操作
+public extension WYJProtocol where T: UIImage {
+    
+    // MARK: 图片旋转 (角度)
+    /// 图片旋转 (角度)
+    /// - Parameter degree: 角度 0 -- 360
+    /// - Returns: 旋转后的图片
+    func imageRotated(degree: CGFloat) -> UIImage? {
+        let radians = Double(degree) / 180 * Double.pi
+        return imageRotated(radians: CGFloat(radians))
+    }
+    
+    // MARK: 图片旋转 (弧度)
+    /// 图片旋转 (弧度)
+    /// - Parameter radians: 弧度 0 -- 2π
+    /// - Returns: 旋转后的图片
+    func imageRotated(radians: CGFloat) -> UIImage? {
+        guard let weakCGImage = obj.cgImage else {
+            return nil
+        }
+        let rotateViewBox = UIView(frame: CGRect(origin: CGPoint.zero, size: obj.size))
+        let transform: CGAffineTransform = CGAffineTransform(rotationAngle: radians)
+        rotateViewBox.transform = transform
+        UIGraphicsBeginImageContext(rotateViewBox.frame.size)
+        guard let context = UIGraphicsGetCurrentContext() else {
+            UIGraphicsEndImageContext()
+            return nil
+        }
+        context.translateBy(x: rotateViewBox.frame.width / 2, y: rotateViewBox.frame.height / 2)
+        context.rotate(by: radians)
+        context.scaleBy(x: 1, y: -1)
+        let rect = CGRect(x: -obj.size.width / 2, y: -obj.size.height / 2, width: obj.size.width, height: obj.size.height)
+        context.draw(weakCGImage, in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+    
+    // MARK: 水平翻转
+    /// 水平翻转
+    /// - Returns: 返回水平翻转的图片
+    func flipHorizontal() -> UIImage? {
+        return self.rotate(orientation: .upMirrored)
+    }
+    
+    // MARK: 垂直翻转
+    /// 垂直翻转
+    /// - Returns: 返回垂直翻转的图片
+    func flipVertical() -> UIImage? {
+        return self.rotate(orientation: .downMirrored)
+    }
+    
+    // MARK: 向下翻转
+    /// 向下翻转
+    /// - Returns: 向下翻转后的图片
+    func flipDown() -> UIImage? {
+        return self.rotate(orientation: .down)
+    }
+    
+    // MARK: 向左翻转
+    /// 向左翻转
+    /// - Returns: 向左翻转后的图片
+    func flipLeft() -> UIImage? {
+        return self.rotate(orientation: .left)
+    }
+    
+    // MARK: 镜像向左翻转
+    /// 镜像向左翻转
+    /// - Returns: 镜像向左翻转后的图片
+    func flipLeftMirrored() -> UIImage? {
+        return self.rotate(orientation: .leftMirrored)
+    }
+    
+    // MARK: 向右翻转
+    /// 向右翻转
+    /// - Returns: 向右翻转后的图片
+    func flipRight() -> UIImage? {
+        return self.rotate(orientation: .right)
+    }
+    
+    // MARK: 镜像向右翻转
+    /// 镜像向右翻转
+    /// - Returns: 镜像向右翻转后的图片
+    func flipRightMirrored() -> UIImage? {
+        return self.rotate(orientation: .rightMirrored)
+    }
+    
+    // MARK: 图片平铺区域
+    /// 图片平铺区域
+    /// - Parameter size: 平铺区域的大小
+    /// - Returns: 平铺后的图片
+    func imageTile(size: CGSize) -> UIImage? {
+        let tempView = UIView(frame: CGRect(origin: CGPoint.zero, size: size))
+        tempView.backgroundColor = UIColor(patternImage: obj)
+        UIGraphicsBeginImageContext(size)
+        guard let context = UIGraphicsGetCurrentContext() else {
+            UIGraphicsEndImageContext()
+            return nil
+        }
+        tempView.layer.render(in: context)
+        let bgImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return bgImage
+    }
+    
+    // MARK: 图片翻转(base)
+    /// 图片翻转(base)
+    /// - Parameter orientation: 翻转类型
+    /// - Returns: 翻转后的图片
+    private func rotate(orientation: UIImage.Orientation) -> UIImage? {
+        guard let imageRef = obj.cgImage else {
+            return nil
+        }
+        let rect = CGRect(x: 0, y: 0, width: imageRef.width, height: imageRef.height)
+        var bounds = rect
+        var transform: CGAffineTransform = CGAffineTransform.identity
+        
+        switch orientation {
+        case .up:
+            return obj
+        case .upMirrored:
+            // 图片左平移width个像素
+            transform = CGAffineTransform(translationX: rect.size.width, y: 0)
+            // 缩放
+            transform = transform.scaledBy(x: -1, y: 1)
+        case .down:
+            transform = CGAffineTransform(translationX: rect.size.width, y: rect.size.height)
+            transform = transform.rotated(by: CGFloat(Double.pi))
+        case .downMirrored:
+            transform = CGAffineTransform(translationX: 0, y: rect.size.height)
+            transform = transform.scaledBy(x: 1, y: -1)
+        case .left:
+            swapWidthAndHeight(rect: &bounds)
+            transform = CGAffineTransform(translationX:0 , y: rect.size.width)
+            transform = transform.rotated(by: CGFloat(Double.pi * 1.5))
+        case .leftMirrored:
+            swapWidthAndHeight(rect: &bounds)
+            transform = CGAffineTransform(translationX:rect.size.height , y: rect.size.width)
+            transform = transform.scaledBy(x: -1, y: 1)
+            transform = transform.rotated(by: CGFloat(Double.pi * 1.5))
+        case .right:
+            swapWidthAndHeight(rect: &bounds)
+            transform = CGAffineTransform(translationX:rect.size.height , y: 0)
+            transform = transform.rotated(by: CGFloat(Double.pi / 2))
+        case .rightMirrored:
+            swapWidthAndHeight(rect: &bounds)
+            transform = transform.scaledBy(x: -1, y: 1)
+            transform = transform.rotated(by: CGFloat(Double.pi / 2))
+        default:
+            return nil
+        }
+        
+        UIGraphicsBeginImageContext(bounds.size)
+        guard let context = UIGraphicsGetCurrentContext() else {
+            UIGraphicsEndImageContext()
+            return nil
+        }
+        //图片绘制时进行图片修正
+        switch orientation {
+        case .left:
+            fallthrough
+        case .leftMirrored:
+            fallthrough
+        case .right:
+            fallthrough
+        case .rightMirrored:
+            context.scaleBy(x: -1.0, y: 1.0)
+            context.translateBy(x: -bounds.size.width, y: 0.0)
+        default:
+            context.scaleBy(x: 1.0, y: -1.0)
+            context.translateBy(x: 0.0, y: -rect.size.height)
+        }
+        context.concatenate(transform)
+        context.draw(imageRef, in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+    
+    /// 交换宽高
+    /// - Parameter rect: image 的 frame
+    private func swapWidthAndHeight(rect: inout CGRect) {
+        let swap = rect.size.width
+        rect.size.width = rect.size.height
+        rect.size.height = swap
+    }
+}
+
+// MARK:- 给图片添加滤镜效果（棕褐色老照片滤镜，黑白滤镜）
+/**
+ Core Image 是一个强大的滤镜处理框架。它除了可以直接给图片添加各种内置滤镜，还能精确地修改鲜艳程度, 色泽, 曝光等，下面通过两个样例演示如何给 UIImage 添加滤镜
+ */
+public extension WYJProtocol where T: UIImage {
+    /// 滤镜类型
+    enum WYJImageFilterType: String {
+        /// 棕褐色复古滤镜（老照片效果），有点复古老照片发黄的效果）
+        case CISepiaTone = "CISepiaTone"
+        /// 黑白效果滤镜
+        case CIPhotoEffectNoir = "CIPhotoEffectNoir"
+    }
+    
+    // MARK: 8.1、图片加滤镜
+    /// 图片加滤镜
+    /// - Parameters:
+    ///   - filterType: 滤镜类型
+    ///   - alpha: 透明度
+    /// - Returns: 添加滤镜后的图片
+    func filter(filterType: WYJImageFilterType, alpha: CGFloat?) -> UIImage? {
+        guard let imageData = obj.pngData() else {
+            return nil
+        }
+        let inputImage = CoreImage.CIImage(data: imageData)
+        let context = CIContext(options: nil)
+        guard let filter = CIFilter(name: filterType.rawValue) else {
+            return nil
+        }
+        filter.setValue(inputImage, forKey: kCIInputImageKey)
+        if alpha != nil {
+            filter.setValue(alpha, forKey: "inputIntensity")
+        }
+        guard let outputImage = filter.outputImage, let outImage = context.createCGImage(outputImage, from: outputImage.extent) else {
+            return nil
+        }
+        return UIImage(cgImage: outImage)
+    }
+    
+    // MARK: 全图马赛克
+    /// 全图马赛克
+    /// - Parameter value: 值越大马赛克就越大(使用默认)
+    /// - Returns: 全图马赛克的图片
+    func pixAll(value: Int? = nil) -> UIImage? {
+        guard let filter = CIFilter(name: "CIPixellate") else {
+            return nil
+        }
+        let context = CIContext(options: nil)
+        let inputImage = CIImage(image: obj)
+        filter.setValue(inputImage, forKey: kCIInputImageKey)
+        if value != nil {
+            // 值越大马赛克就越大(使用默认)
+            filter.setValue(value, forKey: kCIInputScaleKey)
+        }
+        let fullPixellatedImage = filter.outputImage
+        let cgImage = context.createCGImage(fullPixellatedImage!, from: fullPixellatedImage!.extent)
+        return UIImage(cgImage: cgImage!)
+    }
+    
+    // MARK: 检测人脸的frame
+    // 检测人脸的frame
+    func detectFace() -> [CGRect]? {
+        guard let inputImage = CIImage(image: obj) else {
+            return nil
+        }
+        let context = CIContext(options: nil)
+        // 人脸检测器
+        // CIDetectorAccuracyHigh: 检测的精度高,但速度更慢些
+        let detector = CIDetector(ofType: CIDetectorTypeFace,
+                                  context: context,
+                                  options: [CIDetectorAccuracy: CIDetectorAccuracyHigh])
+        var faceFeatures: [CIFaceFeature]!
+        // 人脸检测需要图片方向(有元数据的话使用元数据,没有就调用featuresInImage)
+        if let orientation = inputImage.properties[kCGImagePropertyOrientation as String] {
+            faceFeatures = (detector!.features(in: inputImage, options: [CIDetectorImageOrientation: orientation]) as! [CIFaceFeature])
+        } else {
+            faceFeatures = (detector!.features(in: inputImage) as! [CIFaceFeature])
+        }
+        let inputImageSize = inputImage.extent.size
+        var transform = CGAffineTransform.identity
+        transform = transform.scaledBy(x: 1, y: -1)
+        transform = transform.translatedBy(x: 0, y: -inputImageSize.height)
+        
+        // 人脸位置的frame
+        var rects: [CGRect] = []
+        // 遍历所有的面部，并框出
+        for faceFeature in faceFeatures {
+            let faceViewBounds = faceFeature.bounds.applying(transform)
+            rects.append(faceViewBounds)
+        }
+        return rects
+    }
+    
+    // MARK: 检测人脸并打马赛克
+    /// 检测人脸并打马赛克
+    /// - Returns: 打马赛克后的人脸
+    func detectAndPixFace() -> UIImage? {
+        guard let inputImage = CIImage(image: obj) else {
+            return nil
+        }
+        let context = CIContext(options: nil)
+        
+        // 用CIPixellate滤镜对原图先做个完全马赛克
+        let filter = CIFilter(name: "CIPixellate")!
+        filter.setValue(inputImage, forKey: kCIInputImageKey)
+        let inputScale = max(inputImage.extent.size.width, inputImage.extent.size.height) / 80
+        filter.setValue(inputScale, forKey: kCIInputScaleKey)
+        let fullPixellatedImage = filter.outputImage
+        // 检测人脸，并保存在faceFeatures中
+        guard let detector = CIDetector(ofType: CIDetectorTypeFace,
+                                       context: context,
+                                       options: nil) else {
+            return nil
+        }
+        let faceFeatures = detector.features(in: inputImage)
+        // 初始化蒙版图，并开始遍历检测到的所有人脸
+        var maskImage: CIImage!
+        for faceFeature in faceFeatures {
+            // 基于人脸的位置，为每一张脸都单独创建一个蒙版，所以要先计算出脸的中心点，对应为x、y轴坐标，
+            // 再基于脸的宽度或高度给一个半径，最后用这些计算结果初始化一个CIRadialGradient滤镜
+            let centerX = faceFeature.bounds.origin.x + faceFeature.bounds.size.width / 2
+            let centerY = faceFeature.bounds.origin.y + faceFeature.bounds.size.height / 2
+            let radius = min(faceFeature.bounds.size.width, faceFeature.bounds.size.height)
+            guard let radialGradient = CIFilter(name: "CIRadialGradient",
+                                                parameters: [
+                                                  "inputRadius0" : radius,
+                                                  "inputRadius1" : radius + 1,
+                                                   "inputColor0" : CIColor(red: 0, green: 1, blue: 0, alpha: 1),
+                                                   "inputColor1" : CIColor(red: 0, green: 0, blue: 0, alpha: 0),
+                                               kCIInputCenterKey : CIVector(x: centerX, y: centerY)
+                                                ]) else {
+                return nil
+            }
+            // 由于CIRadialGradient滤镜创建的是一张无限大小的图，所以在使用之前先对它进行裁剪
+            let radialGradientOutputImage = radialGradient.outputImage!.cropped(to: inputImage.extent)
+            if maskImage == nil {
+                maskImage = radialGradientOutputImage
+            } else {
+                maskImage = CIFilter(name: "CISourceOverCompositing",
+                                     parameters: [
+                                        kCIInputImageKey : radialGradientOutputImage,
+                                        kCIInputBackgroundImageKey : maskImage as Any
+                                     ])!.outputImage
+            }
+        }
+        // 用CIBlendWithMask滤镜把马赛克图、原图、蒙版图混合起来
+        let blendFilter = CIFilter(name: "CIBlendWithMask")!
+        blendFilter.setValue(fullPixellatedImage, forKey: kCIInputImageKey)
+        blendFilter.setValue(inputImage, forKey: kCIInputBackgroundImageKey)
+        blendFilter.setValue(maskImage, forKey: kCIInputMaskImageKey)
+        // 输出，在界面上显示
+        guard let blendOutputImage = blendFilter.outputImage, let blendCGImage = context.createCGImage(blendOutputImage, from: blendOutputImage.extent) else {
+            return nil
+        }
+        return UIImage(cgImage: blendCGImage)
+    }
+}
+
+// MARK:- 动态图片的使用
+public extension WYJProtocol where T: UIImage {
+
+    // MARK: 深色图片和浅色图片切换 （深色模式适配）
+    /// 深色图片和浅色图片切换 （深色模式适配）
+    /// - Parameters:
+    ///   - light: 浅色图片
+    ///   - dark: 深色图片
+    /// - Returns: 最终图片
+    static func image(light: UIImage?, dark: UIImage?) -> UIImage? {
+        if #available(iOS 13.0, *) {
+            guard let weakLight = light, let weakDark = dark, let config = weakLight.configuration else { return light }
+            let lightImage = weakLight.withConfiguration(config.withTraitCollection(UITraitCollection.init(userInterfaceStyle: UIUserInterfaceStyle.light)))
+            lightImage.imageAsset?.register(weakDark, with: config.withTraitCollection(UITraitCollection(userInterfaceStyle: UIUserInterfaceStyle.dark)))
+            return lightImage.imageAsset?.image(with: UITraitCollection.current) ?? light
+        } else {
+            return light
+        }
+    }
+}
+
+
+//MARK: --- runtime
 public extension UIImage {
     private struct WYJRuntimeKey {
         static let saveBlockKey = UnsafeRawPointer.init(bitPattern: "saveBlock".hashValue)

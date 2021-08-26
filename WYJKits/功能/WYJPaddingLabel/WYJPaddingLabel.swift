@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+///带内边距的label
 public class WYJPaddingLabel : UILabel {
     
     private var padding = UIEdgeInsets.zero
