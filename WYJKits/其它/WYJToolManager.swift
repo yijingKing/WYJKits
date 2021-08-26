@@ -55,7 +55,7 @@ public func WYJLog<T>(_ message: T, fileName: String = #file, methodName: String
     dformatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
     //要把路径最后的字符串截取出来
     let lastName = ((fileName as NSString).pathComponents.last) ?? ""
-    print("\(dformatter.string(from: now)) [\(lastName)][第\(lineNumber)行][函数名:\(methodName)] --->\n🤔🤔🤔\(message)🤔🤔🤔\n")
+    print("---begin---\(dformatter.string(from: now)) [name:\(lastName)][row:\(lineNumber)][func:\(methodName)] --->\n🤔🤔🤔\(message)🤔🤔🤔\n---end---")
     
     #endif
 }

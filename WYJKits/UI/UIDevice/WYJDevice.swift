@@ -383,15 +383,15 @@ public extension WYJProtocol where T: UIDevice {
     }
 }
 
-// MARK:- 三、有关设备运营商的信息
+// MARK:- 有关设备运营商的信息
 public extension WYJProtocol where T: UIDevice {
     
-    // MARK: 3.1、sim卡信息
+    // MARK: sim卡信息
     static func simCardInfos() -> [CTCarrier]? {
         return getCarriers()
     }
     
-    // MARK: 3.2、数据业务对应的通信技术
+    // MARK: 数据业务对应的通信技术
     /// 数据业务对应的通信技术
     /// - Returns: 通信技术
     static func currentRadioAccessTechnologys() -> [String]? {
@@ -413,7 +413,7 @@ public extension WYJProtocol where T: UIDevice {
         }
     }
     
-    // MARK: 3.3、设备网络制式
+    // MARK: 设备网络制式
     /// 设备网络制式
     /// - Returns: 网络
     static func networkTypes() -> [String]? {
@@ -424,7 +424,7 @@ public extension WYJProtocol where T: UIDevice {
         return currentRadioTechs.compactMap { getNetworkType(currentRadioTech: $0) }
     }
     
-    // MARK: 3.4、运营商名字
+    // MARK: 运营商名字
     /// 运营商名字
     /// - Returns: 运营商名字
     static func carrierNames() -> [String]? {
@@ -435,7 +435,7 @@ public extension WYJProtocol where T: UIDevice {
         return carriers.map{ $0.carrierName!}
     }
     
-    // MARK: 3.5、移动国家码(MCC)
+    // MARK: 移动国家码(MCC)
     /// 移动国家码(MCC)
     /// - Returns: 移动国家码(MCC)
     static func mobileCountryCodes() -> [String]? {
@@ -446,7 +446,7 @@ public extension WYJProtocol where T: UIDevice {
         return carriers.map{ $0.mobileCountryCode!}
     }
     
-    // MARK: 3.6、移动网络码(MNC)
+    // MARK: 移动网络码(MNC)
     /// 移动网络码(MNC)
     /// - Returns: 移动网络码(MNC)
     static func mobileNetworkCodes() -> [String]? {
@@ -457,7 +457,7 @@ public extension WYJProtocol where T: UIDevice {
         return carriers.map{ $0.mobileNetworkCode!}
     }
     
-    // MARK: 3.7、ISO国家代码
+    // MARK: ISO国家代码
     /// ISO国家代码
     /// - Returns: ISO国家代码
     static func isoCountryCodes() -> [String]? {
@@ -468,7 +468,7 @@ public extension WYJProtocol where T: UIDevice {
         return carriers.map{ $0.isoCountryCode!}
     }
     
-    // MARK: 3.8、是否允许VoIP
+    // MARK: 是否允许VoIP
     /// 是否允许VoIP
     /// - Returns: 是否允许VoIP
     static func isAllowsVOIPs() -> [Bool]? {

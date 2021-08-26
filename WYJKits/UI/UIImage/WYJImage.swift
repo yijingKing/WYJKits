@@ -478,6 +478,11 @@ public extension WYJProtocol where T: UIImage {
         
         return resetSizeImage(reSize)
     }
+    ///点九拉伸     Stretch 拉伸模式   Tile 平铺模式
+    func resizableImage(insets: UIEdgeInsets,resizingMode: UIImage.ResizingMode) -> UIImage {
+        return obj.resizableImage(withCapInsets: insets, resizingMode: resizingMode)
+    }
+    
 }
 
 public enum UIImageContentMode {
