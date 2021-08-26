@@ -89,26 +89,25 @@ extension AssociatedCompatible {
 }
 
 extension NSObject: AssociatedCompatible { }
-
-extension AssociatedWrapper where Base: NSObject {
+public extension AssociatedWrapper where Base: NSObject {
     
-    public enum Policy {
+    enum Policy {
         case nonatomic
         case atomic
     }
     
     /// 获取关联值
-    public func get<T>(_ key: UnsafeRawPointer) -> T? {
+    func get<T>(_ key: UnsafeRawPointer) -> T? {
         objc_getAssociatedObject(base, key) as? T
     }
     
     /// 设置关联值 OBJC_ASSOCIATION_ASSIGN
-    public func set(assign key: UnsafeRawPointer, _ value: Any) {
+    func set(assign key: UnsafeRawPointer, _ value: Any) {
         objc_setAssociatedObject(base, key, value, .OBJC_ASSOCIATION_ASSIGN)
     }
     
     /// 设置关联值 OBJC_ASSOCIATION_RETAIN_NONATOMIC / OBJC_ASSOCIATION_RETAIN
-    public func set(retain key: UnsafeRawPointer, _ value: Any?, _ policy: Policy = .nonatomic) {
+    func set(retain key: UnsafeRawPointer, _ value: Any?, _ policy: Policy = .nonatomic) {
         switch policy {
         case .nonatomic:
             objc_setAssociatedObject(base, key, value, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
@@ -118,7 +117,7 @@ extension AssociatedWrapper where Base: NSObject {
     }
     
     /// 设置关联值 OBJC_ASSOCIATION_COPY_NONATOMIC / OBJC_ASSOCIATION_COPY
-    public func set(copy key: UnsafeRawPointer, _ value: Any?, _ policy: Policy = .nonatomic) {
+    func set(copy key: UnsafeRawPointer, _ value: Any?, _ policy: Policy = .nonatomic) {
         switch policy {
         case .nonatomic:
             objc_setAssociatedObject(base, key, value, .OBJC_ASSOCIATION_COPY_NONATOMIC)

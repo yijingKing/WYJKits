@@ -78,6 +78,7 @@
 		63D60C1925AC21A100E9587D /* WYJTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D60C1825AC21A100E9587D /* WYJTableView.swift */; };
 		63D60C2125AC22E600E9587D /* WYJCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D60C2025AC22E600E9587D /* WYJCollectionView.swift */; };
 		F701A93926D7459A00691054 /* WYJCLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F701A93826D7459A00691054 /* WYJCLLocation.swift */; };
+		F701A93C26D76DDE00691054 /* WYJTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F701A93B26D76DDE00691054 /* WYJTimer.swift */; };
 		F71626F626D5E0950065B51D /* SimpDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71626F526D5E0950065B51D /* SimpDemoViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -188,6 +189,7 @@
 		CCA3522B4CE838870EAB8F61 /* Pods-IYXKitDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IYXKitDemo.debug.xcconfig"; path = "Target Support Files/Pods-IYXKitDemo/Pods-IYXKitDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		E70C75C4B2811F67EF626856 /* Pods-YJSwiftKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YJSwiftKit.release.xcconfig"; path = "Target Support Files/Pods-YJSwiftKit/Pods-YJSwiftKit.release.xcconfig"; sourceTree = "<group>"; };
 		F701A93826D7459A00691054 /* WYJCLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJCLLocation.swift; sourceTree = "<group>"; };
+		F701A93B26D76DDE00691054 /* WYJTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJTimer.swift; sourceTree = "<group>"; };
 		F71626F526D5E0950065B51D /* SimpDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpDemoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -463,6 +465,7 @@
 		63243FF32589E2100065688B /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				F701A93A26D76DCF00691054 /* WYJTimer */,
 				F701A93726D7459500691054 /* CLLocation */,
 				6383324026A671830098320C /* Keychain */,
 				63243FF42589E2100065688B /* then */,
@@ -810,6 +813,14 @@
 			path = CLLocation;
 			sourceTree = "<group>";
 		};
+		F701A93A26D76DCF00691054 /* WYJTimer */ = {
+			isa = PBXGroup;
+			children = (
+				F701A93B26D76DDE00691054 /* WYJTimer.swift */,
+			);
+			path = WYJTimer;
+			sourceTree = "<group>";
+		};
 		F71626F726D5F3180065B51D /* tabbar */ = {
 			isa = PBXGroup;
 			children = (
@@ -1021,6 +1032,7 @@
 				6324402C2589E2100065688B /* WYJImage.swift in Sources */,
 				632440532589E2100065688B /* WYJPageViewController.swift in Sources */,
 				63441845261EF9FB007EBC1C /* WYJCGFloat.swift in Sources */,
+				F701A93C26D76DDE00691054 /* WYJTimer.swift in Sources */,
 				632381BF26A913C400FFD6B1 /* WYJAuto.swift in Sources */,
 				632440392589E2100065688B /* WYJBaseViewController.swift in Sources */,
 				632440582589E2100065688B /* WYJLocation.swift in Sources */,
