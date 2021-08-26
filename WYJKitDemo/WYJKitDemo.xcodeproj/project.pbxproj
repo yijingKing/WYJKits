@@ -80,6 +80,7 @@
 		F701A93926D7459A00691054 /* WYJCLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F701A93826D7459A00691054 /* WYJCLLocation.swift */; };
 		F701A93C26D76DDE00691054 /* WYJTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F701A93B26D76DDE00691054 /* WYJTimer.swift */; };
 		F701A93F26D774AE00691054 /* WYJDrawSignatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F701A93E26D774AE00691054 /* WYJDrawSignatureView.swift */; };
+		F701A94226D775ED00691054 /* WYJPaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F701A94126D775ED00691054 /* WYJPaddingLabel.swift */; };
 		F71626F626D5E0950065B51D /* SimpDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71626F526D5E0950065B51D /* SimpDemoViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -192,6 +193,7 @@
 		F701A93826D7459A00691054 /* WYJCLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJCLLocation.swift; sourceTree = "<group>"; };
 		F701A93B26D76DDE00691054 /* WYJTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJTimer.swift; sourceTree = "<group>"; };
 		F701A93E26D774AE00691054 /* WYJDrawSignatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJDrawSignatureView.swift; sourceTree = "<group>"; };
+		F701A94126D775ED00691054 /* WYJPaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJPaddingLabel.swift; sourceTree = "<group>"; };
 		F71626F526D5E0950065B51D /* SimpDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpDemoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -626,6 +628,7 @@
 		632440162589E2100065688B /* 功能 */ = {
 			isa = PBXGroup;
 			children = (
+				F701A94026D775D900691054 /* WYJPaddingLabel */,
 				F701A93D26D774A400691054 /* WYJDrawSignatureView */,
 				F71626F726D5F3180065B51D /* tabbar */,
 				632381C026A95F3000FFD6B1 /* 适配 */,
@@ -830,6 +833,14 @@
 				F701A93E26D774AE00691054 /* WYJDrawSignatureView.swift */,
 			);
 			path = WYJDrawSignatureView;
+			sourceTree = "<group>";
+		};
+		F701A94026D775D900691054 /* WYJPaddingLabel */ = {
+			isa = PBXGroup;
+			children = (
+				F701A94126D775ED00691054 /* WYJPaddingLabel.swift */,
+			);
+			path = WYJPaddingLabel;
 			sourceTree = "<group>";
 		};
 		F71626F726D5F3180065B51D /* tabbar */ = {
@@ -1054,6 +1065,7 @@
 				632440412589E2100065688B /* WYJDispatchQueue.swift in Sources */,
 				632440342589E2100065688B /* WYJDatePickerViewController.swift in Sources */,
 				6324404C2589E2100065688B /* WYJAttributedString.swift in Sources */,
+				F701A94226D775ED00691054 /* WYJPaddingLabel.swift in Sources */,
 				6324403B2589E2100065688B /* WYJBaseNavigationController.swift in Sources */,
 				632440372589E2100065688B /* WYJDevice.swift in Sources */,
 				6324404D2589E2100065688B /* WYJObject.swift in Sources */,
