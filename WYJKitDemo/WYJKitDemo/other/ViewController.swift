@@ -43,7 +43,6 @@ class ViewController: WYJBaseViewController,Protocal1  {
 
         view.backgroundColor = .red
         name = "123"
-        
         wqewe1()
 //        SSKeychain.setPassword(<#T##password: String!##String!#>, forService: <#T##String!#>, account: <#T##String!#>)
 //        WYJLog(WYJFont(10.auto()))

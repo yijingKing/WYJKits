@@ -10,6 +10,7 @@ GitHub:        https://github.com/MemoryKing
 import Foundation
 
 public extension WYJProtocol where T == Array<Any> {
+    
     /// 转data
     func toData(_ options: JSONSerialization.WritingOptions = []) -> Data? {
         guard JSONSerialization.isValidJSONObject(obj) else {
@@ -23,6 +24,7 @@ public extension WYJProtocol where T == Array<Any> {
         return data
     }
     
+    ///转json
     func toJSONString(_ options: JSONSerialization.WritingOptions = []) -> String? {
         guard JSONSerialization.isValidJSONObject(obj) else {
             WYJLog("dic转json失败")
@@ -36,11 +38,37 @@ public extension WYJProtocol where T == Array<Any> {
         return JSONString as String? ?? nil
     }
     
+    ///转json
     func toJSON(_ options: JSONSerialization.WritingOptions = []) -> WYJJSON {
         return WYJJSON.init(toJSONString(options) ?? "")
     }
-    
 }
+
+public extension WYJProtocol where T == Array<String> {
+    ///转字符串
+    func toString(separator: String = "") -> String {
+        return obj.toStrinig(separator: separator)
+    }
+}
+
+public extension Array {
+    mutating func append(_ elements: [Element]) {
+        for element in elements {
+            append(element)
+        }
+    }
+    func indexValue(safe index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
+}
+
+public extension Array where Self.Element == String {
+    ///转字符串
+    func toStrinig(separator: String = "") -> String {
+        return joined(separator: separator)
+    }
+}
+
 //MARK: --- 类型转换
 public extension Array where Element == UInt8 {
     init(reserveCapacity: Int) {
@@ -142,4 +170,6 @@ public extension Array where Element : Equatable {
         }
         return result
     }
+    
+    
 }

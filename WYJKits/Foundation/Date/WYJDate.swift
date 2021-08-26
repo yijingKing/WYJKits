@@ -63,9 +63,191 @@ public enum WYJDateFormatter: String {
     ///年月日时分秒毫秒
     case dateModeYMDHMSSS   = "yyyy-MM-dd HH:mm:ss SSS"
 }
+// MARK: 时间条的显示格式
+public enum WYJTimeBarType {
+    // 默认格式，如 9秒：09，66秒：01：06，
+    case normal
+    case second
+    case minute
+    case hour
+}
+/// 时间戳的类型
+public enum WYJTimestampType: Int {
+    /// 秒
+    case second
+    /// 毫秒
+    case millisecond
+}
+
 
 public class DateFormattersManager {
     public static var dateFormatters: SynchronizedDictionary = SynchronizedDictionary<String, DateFormatter>()
+}
+
+public extension WYJProtocol where T == Date {
+    /// 获取当前的时间 Date
+    static var currentDate : Date {
+        return T()
+    }
+    /// 获取当前 秒级 时间戳 - 10 位
+    static var secondStamp : String {
+        let timeInterval: TimeInterval = T().timeIntervalSince1970
+        return "\(Int(timeInterval))"
+    }
+    
+    /// 获取当前 毫秒级 时间戳 - 13 位
+    static var milliStamp : String {
+        let timeInterval: TimeInterval = T().timeIntervalSince1970
+        let millisecond = CLongLong(Darwin.round(timeInterval*1000))
+        return "\(millisecond)"
+    }
+    
+    /// 时间戳(支持 10 位 和 13 位) 转 Date
+    /// - Parameter timestamp: 时间戳
+    /// - Returns: 返回 Date
+    static func timestampToFormatterDate(timestamp: String) -> Date {
+        guard timestamp.count == 10 ||  timestamp.count == 13 else {
+            #if DEBUG
+            fatalError("时间戳位数不是 10 也不是 13")
+            #else
+            return Date()
+            #endif
+        }
+        guard let timestampInt = timestamp.yi.toInt() else {
+            #if DEBUG
+            fatalError("时间戳位有问题")
+            #else
+            return Date()
+            #endif
+        }
+        let timestampValue = timestamp.count == 10 ? timestampInt : timestampInt / 1000
+        // 时间戳转为Date
+        let date = Date(timeIntervalSince1970: TimeInterval(timestampValue))
+        return date
+    }
+    
+    /// 带格式的时间转 时间戳，支持返回 13位 和 10位的时间戳，时间字符串和时间格式必须保持一致
+    /// - Parameters:
+    ///   - timeString: 时间字符串，如：2020-10-26 16:52:41
+    ///   - formatter: 时间格式，如：yyyy-MM-dd HH:mm:ss
+    ///   - timestampType: 返回的时间戳类型，默认是秒 10 为的时间戳字符串
+    /// - Returns: 返回转化后的时间戳
+    static func formatterTimeStringToTimestamp(timesString: String, formatter: String, timestampType: WYJTimestampType = .second) -> String {
+        let dateFormatter = DateFormatter.init()
+        dateFormatter.dateFormat = formatter
+        guard let date = dateFormatter.date(from: timesString) else {
+            #if DEBUG
+            fatalError("时间有问题")
+            #else
+            return ""
+            #endif
+        }
+        if timestampType == .second {
+            return "\(Int(date.timeIntervalSince1970))"
+        }
+        return "\(Int((date.timeIntervalSince1970) * 1000))"
+    }
+    
+    /// 秒转换成播放时间条的格式
+    /// - Parameters:
+    ///   - secounds: 秒数
+    ///   - type: 格式类型
+    /// - Returns: 返回时间条
+    static func getFormatPlayTime(seconds: Int, type: WYJTimeBarType = .normal) -> String {
+        if seconds <= 0{
+            return "00:00"
+        }
+        // 秒
+        let second = seconds % 60
+        if type == .second {
+            return String(format: "%02d", seconds)
+        }
+        // 分钟
+        var minute = Int(seconds / 60)
+        if type == .minute {
+            return String(format: "%02d:%02d", minute, second)
+        }
+        // 小时
+        var hour = 0
+        if minute >= 60 {
+            hour = Int(minute / 60)
+            minute = minute - hour * 60
+        }
+        if type == .hour {
+            return String(format: "%02d:%02d:%02d", hour, minute, second)
+        }
+        // normal 类型
+        if hour > 0 {
+            return String(format: "%02d:%02d:%02d", hour, minute, second)
+        }
+        if minute > 0 {
+            return String(format: "%02d:%02d", minute, second)
+        }
+        return String(format: "%02d", second)
+    }
+    
+    /// 取得与当前时间的间隔差
+    /// - Returns: 时间差
+    func callTimeAfterNow() -> String {
+        let timeInterval = Date().timeIntervalSince(obj)
+        if timeInterval < 0 {
+            return "刚刚"
+        }
+        let interval = fabs(timeInterval)
+        let i60 = interval / 60
+        let i3600 = interval / 3600
+        let i86400 = interval / 86400
+        let i2592000 = interval / 2592000
+        let i31104000 = interval / 31104000
+        
+        var time:String!
+        if i3600 < 1 {
+            let s = NSNumber(value: i60 as Double).intValue
+            if s == 0 {
+                time = "刚刚"
+            } else {
+                time = "\(s)分钟前"
+            }
+        } else if i86400 < 1 {
+            let s = NSNumber(value: i3600 as Double).intValue
+            time = "\(s)小时前"
+        } else if i2592000 < 1 {
+            let s = NSNumber(value: i86400 as Double).intValue
+            time = "\(s)天前"
+        } else if i31104000 < 1 {
+            let s = NSNumber(value: i2592000 as Double).intValue
+            time = "\(s)个月前"
+        } else {
+            let s = NSNumber(value: i31104000 as Double).intValue
+            time = "\(s)年前"
+        }
+        return time
+    }
+    
+    /// 获取某一年某一月的天数
+    /// - Parameters:
+    ///   - year: 年份
+    ///   - month: 月份
+    /// - Returns: 返回天数
+    static func daysCount(year: Int, month: Int) -> Int {
+        switch month {
+        case 1, 3, 5, 7, 8, 10, 12:
+            return 31
+        case 4, 6, 9, 11:
+            return 30
+        case 2:
+            let isLeapYear = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)
+            return isLeapYear ? 29 : 28
+        default:
+            fatalError("非法的月份:\(month)")
+        }
+    }
+    
+    /// 获取当前月的天数
+    /// - Returns: 返回天数
+    static func currentMonthDays() -> Int {
+        return daysCount(year: Date.yi.currentDate.yi.year(), month: Date.yi.currentDate.yi.month())
+    }
 }
 
 //MARK: --- 转换
@@ -278,17 +460,17 @@ public extension WYJProtocol where T == Date {
     //MARK: --- era
     ///  era
     func era() -> Int {
-        return Calendar.current.component(Calendar.Component.era, from: obj)
+        return Calendar.current.component(.era, from: obj)
     }
     //MARK: --- 年
     ///  年
     func year() -> Int {
-        return Calendar.current.component(Calendar.Component.year, from: obj)
+        return Calendar.current.component(.year, from: obj)
     }
     //MARK: --- 月
     ///  月
     func month() -> Int {
-        return Calendar.current.component(Calendar.Component.month, from: obj)
+        return Calendar.current.component(.month, from: obj)
     }
     //MARK: --- 工作日
     ///  工作日
@@ -298,33 +480,33 @@ public extension WYJProtocol where T == Date {
     }
     //MARK: --- 月
     ///  月
-    func monthString() -> String {
+    var monthString:  String {
         let dateFormatter = obj.getDateFormatter(for: .dateModeM)
         return dateFormatter.string(from: obj)
     }
     //MARK: --- 天
     ///  天
-    func day() -> Int {
+    var day: Int {
         return Calendar.current.component(.day, from: obj)
     }
     //MARK: --- 时
     ///  时
-    func hour() -> Int {
+    var hour: Int {
         return Calendar.current.component(.hour, from: obj)
     }
     //MARK: --- 分钟
     ///  分钟
-    func minute() -> Int {
+    var minute: Int {
         return Calendar.current.component(.minute, from: obj)
     }
     //MARK: --- 秒
     ///  秒
-    func second() -> Int {
+    var second: Int {
         return Calendar.current.component(.second, from: obj)
     }
     //MARK: --- 纳秒
     ///  纳秒
-    func nanosecond() -> Int {
+    var nanosecond: Int {
         return Calendar.current.component(.nanosecond, from: obj)
     }
 }

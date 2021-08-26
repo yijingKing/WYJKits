@@ -15,7 +15,6 @@ public struct WYJProtocol<T> {
     init(_ obj: T) {
         self.obj = obj
     }
-    
 }
 
 public protocol WYJCompatible {
