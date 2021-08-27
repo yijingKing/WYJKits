@@ -64,7 +64,7 @@ public extension WYJProtocol where T: UIViewController {
         if let nav = obj.navigationController {
             if nav.children.count > 1 {
                 navLeftImageItem(img) {
-                    goBack()
+                    back()
                 }
             }
         }
@@ -237,7 +237,7 @@ public extension WYJProtocol where T: UIViewController {
     }
     ///返回
     @discardableResult
-    func goBack(_ ani: Bool = true) -> WYJProtocol {
+    func back(_ ani: Bool = true) -> WYJProtocol {
         if let nav = obj.navigationController {
             if nav.viewControllers.count > 1 {
                 nav.popViewController(animated: ani)
@@ -251,7 +251,7 @@ public extension WYJProtocol where T: UIViewController {
 
     ///返回某视图
     @discardableResult
-    func goBackToVC(_ num: Int? = nil,_ ani: Bool? = nil) -> WYJProtocol {
+    func backToVC(_ num: Int? = nil,_ ani: Bool? = nil) -> WYJProtocol {
         if let nav = obj.navigationController {
             let vc = nav.viewControllers[num ?? 0]
             nav.popToViewController(vc, animated: ani ?? true)

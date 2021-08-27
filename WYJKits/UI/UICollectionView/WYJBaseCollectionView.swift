@@ -171,7 +171,7 @@ open class WYJBaseCollectionView: UICollectionView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func empty_button(title:String , _ bl: (() -> Void)?) {
+    func empty_button(title: String,_ bl: (() -> Void)?) {
         empty_title = nil
         empty_btn_title = title
         emptyClickBlock = bl

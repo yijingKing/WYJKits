@@ -60,7 +60,7 @@ extension WYJTableViewDelegate : UITableViewDelegate,UITableViewDataSource {
             return nums
         }
         
-        return tableView.numberOfSections == 0 ? 1 : tableView.numberOfSections
+        return tableView.numberOfSections
     }
     
     public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -85,7 +85,7 @@ extension WYJTableViewDelegate : UITableViewDelegate,UITableViewDataSource {
         if let nr = numberRows {
             return nr
         }
-        return 1
+        return 0
     }
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

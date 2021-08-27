@@ -40,11 +40,11 @@ public extension WYJProtocol where T: UITextField {
     func distanceSides(_ leftWidth:CGFloat,
                           _ rightWidth:CGFloat? = nil) -> WYJProtocol {
         //左侧view
-        let leftV = UIView(frame: CGRect(x: 0, y: 0, width: leftWidth, height: 5))
+        let leftV = UIView(frame: CGRect(x: 0, y: 0, width: leftWidth, height: 5.auto()))
         obj.leftViewMode = .always
         obj.leftView = leftV
         //右侧view
-        let rightV = UIView(frame: CGRect(x: 0, y: 0, width: rightWidth!, height: 5))
+        let rightV = UIView(frame: CGRect(x: 0, y: 0, width: rightWidth!, height: 5.auto()))
         obj.rightViewMode = .always
         obj.rightView = rightV
         return self
@@ -65,8 +65,8 @@ public extension WYJProtocol where T: UITextField {
         button.yi.title(title)
         button.yi.color(color ?? obj.textColor)
         button.yi.font(font ?? obj.font)
-        let leftV = UIView(frame: CGRect(x: 0, y: 0, width: titleWidth, height: 30))
-        button.frame = CGRect(x: 0, y: 0, width: titleWidth , height: 30)
+        let leftV = UIView(frame: CGRect(x: 0, y: 0, width: titleWidth, height: 30.auto()))
+        button.frame = CGRect(x: 0, y: 0, width: titleWidth , height: 30.auto())
         leftV.addSubview(button)
         obj.leftViewMode = .always
         obj.leftView = leftV
@@ -109,13 +109,14 @@ public extension WYJProtocol where T: UITextField {
         button.yi.color(color ?? obj.textColor)
         button.yi.font(font ?? obj.font)
         button.yi.addTarget(.touchUpInside, block)
-        let rightView = UIView(frame: CGRect(x: 0, y: 0, width: titleWidth, height: 30))
-        button.frame = CGRect(x: 0, y: 0, width: titleWidth, height: 30)
+        let rightView = UIView(frame: CGRect(x: 0, y: 0, width: titleWidth, height: 30.auto()))
+        button.frame = CGRect(x: 0, y: 0, width: titleWidth, height: 30.auto())
         rightView.addSubview(button)
         obj.rightViewMode = .always
         obj.rightView = rightView
         return self
     }
+    
     @discardableResult
     func rightCountDown(_ title: String,
                        _ titleWidth: CGFloat,
@@ -127,13 +128,10 @@ public extension WYJProtocol where T: UITextField {
         button.yi.color(color ?? obj.textColor)
         button.yi.font(font ?? obj.font)
         button.addTapGesture { tap in
-            WYJLog("wqewqewq")
             block?(button)
-            
-            
         }
-        let rightView = UIView(frame: CGRect(x: 0, y: 0, width: titleWidth, height: 30))
-        button.frame = CGRect(x: 0, y: 0, width: titleWidth, height: 30)
+        let rightView = UIView(frame: CGRect(x: 0, y: 0, width: titleWidth, height: 30.auto()))
+        button.frame = CGRect(x: 0, y: 0, width: titleWidth, height: 30.auto())
         rightView.addSubview(button)
         obj.rightViewMode = .always
         obj.rightView = rightView

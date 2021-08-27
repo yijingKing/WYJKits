@@ -248,7 +248,7 @@ extension WYJBaseViewController : UIScrollViewDelegate {
              
             //获取是否有默认调整的内边距
             let defaultEdgeTop:CGFloat = navigationController?.navigationBar != nil
-                && automaticallyAdjustsScrollViewInsets ? 64 : 0
+                && automaticallyAdjustsScrollViewInsets ? WYJStatusAndNavHeight : 0
              
             //上边距相关
             var edgeTop = defaultEdgeTop
