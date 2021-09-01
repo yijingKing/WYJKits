@@ -43,17 +43,17 @@ class ViewController: WYJBaseViewController,Protocal1  {
 
         view.backgroundColor = .red
         name = "123"
-        wqewe1()
+//        wqewe1()
 //        SSKeychain.setPassword(<#T##password: String!##String!#>, forService: <#T##String!#>, account: <#T##String!#>)
 //        WYJLog(WYJFont(10.auto()))
 //        UILabel().yi.font(10.auto())
         
-        view.backgroundColor = .random()
-        
+//        view.backgroundColor = .random()
+        mainTableView?.yi.numberRows(3)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let vc = SimpDemoViewController()
+        let vc = MessagesViewController()
 //        vc.modalPresentationStyle = .custom
         UIApplication.shared.keyWindow?.rootViewController?.present(vc, animated: true, completion: nil)
     }

@@ -18,6 +18,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         hotReload()
         WYJKeyboard.open()
         window?.rootViewController = WYJBaseNavigationController.init(rootViewController: ViewController())
+//        let detailViewController = WYJBaseNavigationController()
+//        let splitViewController = UISplitViewController()
+//        splitViewController.viewControllers = [detailViewController]
+//        splitViewController.preferredDisplayMode = .allVisible
+//
+//        window = UIWindow(frame: UIScreen.main.bounds)
+//        window?.rootViewController = splitViewController
+//        window?.makeKeyAndVisible()
         return true
     }
 

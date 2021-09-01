@@ -131,7 +131,7 @@ open class WYJCameraController: WYJBaseViewController {
     }
     
     @objc private func cancleButtonAction(_ btn: UIButton) {
-        yi.goBack()
+        yi.back()
     }
     
     //MARK: --- UI布局
@@ -301,7 +301,7 @@ open class WYJCameraController: WYJBaseViewController {
             // (726.0, 462.0)
             print(newImg.size)
             cameraDidFinishShoot?(newImg)
-            yi.goBack()
+            yi.back()
         }
     }
     

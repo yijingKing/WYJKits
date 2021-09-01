@@ -13,7 +13,10 @@ open class WYJBaseNavigationController: UINavigationController,UIGestureRecogniz
     open override func viewDidLoad() {
         super.viewDidLoad()
         interactivePopGestureRecognizer?.delegate = self
+
     }
+    
+    
     open override var childForStatusBarStyle: UIViewController? {
         return topViewController
     }

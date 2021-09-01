@@ -40,7 +40,7 @@ open class WYJSystem: NSObject {
     }
     
     ///打开相册
-    public func invokeSystemPhoto() -> Void {
+    public func invokeSystemPhoto(_ completion: ((UIImage)->())? = nil) -> Void {
         WYJPermissionsDetection.isOpenAlbumService { [weak self](b) in
             if b {
                 let imagePickerController = UIImagePickerController()
@@ -53,6 +53,7 @@ open class WYJSystem: NSObject {
                     UIScrollView.appearance().contentInsetAdjustmentBehavior = .automatic
                 }
                 UIApplication.shared.keyWindow?.rootViewController?.present(imagePickerController, animated: true, completion: nil)
+                self?.photoBlock = completion
             } else {
                 WYJPermissionsDetection.OpenPermissionsSetting()
                 WYJLog("无权限打开相册")
@@ -61,9 +62,8 @@ open class WYJSystem: NSObject {
         
     }
     ///打开相机
-    public func invokeSystemCamera() -> Void {
+    public func invokeSystemCamera(_ completion: ((UIImage)->())? = nil) -> Void {
         WYJPermissionsDetection.isOpenCaptureDeviceService { [weak self](b) in
-            
             if b {
                 let imagePickerController = UIImagePickerController()
                 imagePickerController.sourceType = .camera
@@ -76,6 +76,7 @@ open class WYJSystem: NSObject {
                     UIScrollView.appearance().contentInsetAdjustmentBehavior = .automatic
                 }
                 UIApplication.shared.keyWindow?.rootViewController?.present(imagePickerController, animated: true, completion: nil)
+                self?.photoBlock = completion
             } else {
                 WYJPermissionsDetection.OpenPermissionsSetting()
                 WYJLog("无权限打开相机")

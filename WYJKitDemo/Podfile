@@ -17,4 +17,5 @@ pod 'IQKeyboardManagerSwift',:inhibit_warnings => true
 pod 'SwiftyRSA'
 pod 'SSKeychain'
 pod 'LLSegmentViewController'
+pod 'JSQMessagesViewController'
 end
