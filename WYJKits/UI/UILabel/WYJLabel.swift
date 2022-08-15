@@ -95,17 +95,15 @@ public extension UILabel {
         label.frame = frame
         return label
     }
-    static func `init`(frame: CGRect,text: String,textColor: UIColor? = nil,font: UIFont? = nil) -> UILabel {
-        let label = UILabel()
-        label.frame = frame
-        label.text = text
+    convenience init(text: String,textColor: UIColor? = nil,font: UIFont? = nil){
+        self.init(frame: CGRect.zero)
+        self.text = text
         if let color = textColor {
-            label.textColor = color
+            self.textColor = color
         }
         if let fo = font {
-            label.font = fo
+            self.font = fo
         }
-        return label
     }
     
     @objc func longPressCopyEvent(){

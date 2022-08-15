@@ -1,58 +1,47 @@
 PODS:
-  - Alamofire (5.4.0)
+  - Alamofire (5.6.1)
   - DZNEmptyDataSet (1.8.1)
-  - IQKeyboardManagerSwift (6.5.6)
-  - JSQMessagesViewController (7.3.5):
-    - JSQSystemSoundPlayer (~> 2.0.1)
-  - JSQSystemSoundPlayer (2.0.1)
-  - LLSegmentViewController (1.1.13)
+  - IQKeyboardManagerSwift (6.5.10)
   - MBProgressHUD (1.2.0)
-  - MJRefresh (3.5.0)
-  - SnapKit (5.0.1)
-  - SSKeychain (1.4.1)
-  - SwiftyRSA (1.5.0):
-    - SwiftyRSA/ObjC (= 1.5.0)
-  - SwiftyRSA/ObjC (1.5.0)
+  - MJRefresh (3.7.5)
+  - Moya (15.0.0):
+    - Moya/Core (= 15.0.0)
+  - Moya/Core (15.0.0):
+    - Alamofire (~> 5.0)
+  - RxSwift (6.5.0)
+  - SnapKit (5.6.0)
 
 DEPENDENCIES:
   - Alamofire
   - DZNEmptyDataSet
   - IQKeyboardManagerSwift
-  - JSQMessagesViewController
-  - LLSegmentViewController
   - MBProgressHUD
   - MJRefresh
+  - Moya
+  - RxSwift
   - SnapKit
-  - SSKeychain
-  - SwiftyRSA
 
 SPEC REPOS:
   trunk:
     - Alamofire
     - DZNEmptyDataSet
     - IQKeyboardManagerSwift
-    - JSQMessagesViewController
-    - JSQSystemSoundPlayer
-    - LLSegmentViewController
     - MBProgressHUD
     - MJRefresh
+    - Moya
+    - RxSwift
     - SnapKit
-    - SSKeychain
-    - SwiftyRSA
 
 SPEC CHECKSUMS:
-  Alamofire: 3b6a534a3df22db367e4dedeeca73d1ddfcf0e2f
+  Alamofire: 87bd8c952f9a4454320fce00d9cc3de57bcadaf5
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
-  IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
-  JSQMessagesViewController: 6587f56aedbcb150a8ba1d968e1ef58b1bc758b7
-  JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
-  LLSegmentViewController: 155fc9546ba350d348c5e5069c8c7e35a2a67f3d
+  IQKeyboardManagerSwift: 52962c76ab33532f15ad9f3ff4e5715eda5335bb
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
-  MJRefresh: 6afc955813966afb08305477dd7a0d9ad5e79a16
-  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
-  SSKeychain: 55cc80f66f5c73da827e3077f02e43528897db41
-  SwiftyRSA: 6e528fb1b1a87d5111c48081083b141d6d65f1cf
+  MJRefresh: fdf5e979eb406a0341468932d1dfc8b7f9fce961
+  Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
+  RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
 
-PODFILE CHECKSUM: d57eaae292b102f3cdbb780844e546769ba48df2
+PODFILE CHECKSUM: 05475caa106bd56d29dcb736933d576afee04336
 
-COCOAPODS: 1.10.2
+COCOAPODS: 1.11.3

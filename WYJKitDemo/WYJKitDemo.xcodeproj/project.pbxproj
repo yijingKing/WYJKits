@@ -12,7 +12,6 @@
 		6316B72225E0AB9C005C759C /* WYJResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6316B72125E0AB9C005C759C /* WYJResponder.swift */; };
 		632381BF26A913C400FFD6B1 /* WYJAuto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632381BE26A913C400FFD6B1 /* WYJAuto.swift */; };
 		63243FC12589E20A0065688B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63243FB22589E20A0065688B /* Assets.xcassets */; };
-		63243FC22589E20A0065688B /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63243FB32589E20A0065688B /* MyViewController.swift */; };
 		63243FC32589E20A0065688B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63243FB42589E20A0065688B /* LaunchScreen.storyboard */; };
 		63243FC42589E20A0065688B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63243FB62589E20A0065688B /* Main.storyboard */; };
 		63243FC72589E20A0065688B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63243FBB2589E20A0065688B /* AppDelegate.swift */; };
@@ -73,18 +72,16 @@
 		63567970263152540020DB58 /* HOX.m in Sources */ = {isa = PBXBuildFile; fileRef = 6356796F263152540020DB58 /* HOX.m */; };
 		635CA05625B9217000BC49CB /* WYJUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635CA05525B9217000BC49CB /* WYJUserDefaults.swift */; };
 		6362BBA4269EB83F00BDDF3A /* WYJKeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6362BBA3269EB83F00BDDF3A /* WYJKeychainManager.swift */; };
-		63775757260B2030002C3E06 /* WYJRSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63775756260B2030002C3E06 /* WYJRSA.swift */; };
 		63802B8825F60AF2005D773F /* WYJKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63802B8725F60AF2005D773F /* WYJKeyboard.swift */; };
 		63D60C1925AC21A100E9587D /* WYJTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D60C1825AC21A100E9587D /* WYJTableView.swift */; };
 		63D60C2125AC22E600E9587D /* WYJCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D60C2025AC22E600E9587D /* WYJCollectionView.swift */; };
+		7F98EE5228853A3500858F9B /* NetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F98EE5128853A3500858F9B /* NetworkingManager.swift */; };
 		F701A93926D7459A00691054 /* WYJCLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F701A93826D7459A00691054 /* WYJCLLocation.swift */; };
 		F701A93C26D76DDE00691054 /* WYJTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F701A93B26D76DDE00691054 /* WYJTimer.swift */; };
 		F701A93F26D774AE00691054 /* WYJDrawSignatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F701A93E26D774AE00691054 /* WYJDrawSignatureView.swift */; };
 		F701A94226D775ED00691054 /* WYJPaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F701A94126D775ED00691054 /* WYJPaddingLabel.swift */; };
 		F701A94426D7813400691054 /* WYJTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F701A94326D7813400691054 /* WYJTableViewCell.swift */; };
 		F701A94626D781DB00691054 /* WYJBaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F701A94526D781DB00691054 /* WYJBaseTableViewCell.swift */; };
-		F71626F626D5E0950065B51D /* SimpDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71626F526D5E0950065B51D /* SimpDemoViewController.swift */; };
-		F7853D7A26D8DA880022BEF7 /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7853D7926D8DA880022BEF7 /* MessagesViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,7 +114,6 @@
 		6316B72125E0AB9C005C759C /* WYJResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJResponder.swift; sourceTree = "<group>"; };
 		632381BE26A913C400FFD6B1 /* WYJAuto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WYJAuto.swift; sourceTree = "<group>"; };
 		63243FB22589E20A0065688B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		63243FB32589E20A0065688B /* MyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
 		63243FB52589E20A0065688B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		63243FB72589E20A0065688B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		63243FBB2589E20A0065688B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -181,12 +177,12 @@
 		6356796F263152540020DB58 /* HOX.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HOX.m; sourceTree = "<group>"; };
 		635CA05525B9217000BC49CB /* WYJUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJUserDefaults.swift; sourceTree = "<group>"; };
 		6362BBA3269EB83F00BDDF3A /* WYJKeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJKeychainManager.swift; sourceTree = "<group>"; };
-		63775756260B2030002C3E06 /* WYJRSA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJRSA.swift; sourceTree = "<group>"; };
 		63802B8725F60AF2005D773F /* WYJKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJKeyboard.swift; sourceTree = "<group>"; };
 		63D60C1825AC21A100E9587D /* WYJTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJTableView.swift; sourceTree = "<group>"; };
 		63D60C2025AC22E600E9587D /* WYJCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJCollectionView.swift; sourceTree = "<group>"; };
 		78398B3861ED16B1DF9D9A4E /* Pods-IYXKitDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IYXKitDemo.release.xcconfig"; path = "Target Support Files/Pods-IYXKitDemo/Pods-IYXKitDemo.release.xcconfig"; sourceTree = "<group>"; };
 		7ACAC79A9D010EFE705542C6 /* Pods-WYJKitDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WYJKitDemo.debug.xcconfig"; path = "Target Support Files/Pods-WYJKitDemo/Pods-WYJKitDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		7F98EE5128853A3500858F9B /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
 		AA48D6AEB9A67077249D2F96 /* Pods-QYKitDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QYKitDemo.debug.xcconfig"; path = "Target Support Files/Pods-QYKitDemo/Pods-QYKitDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		BD5365B016AE7E3E115D7980 /* Pods-QYKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QYKit.debug.xcconfig"; path = "Target Support Files/Pods-QYKit/Pods-QYKit.debug.xcconfig"; sourceTree = "<group>"; };
 		C0D9F2ACF6F1074AC025C4CF /* Pods-YXKitDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YXKitDemo.debug.xcconfig"; path = "Target Support Files/Pods-YXKitDemo/Pods-YXKitDemo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -199,8 +195,6 @@
 		F701A94126D775ED00691054 /* WYJPaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJPaddingLabel.swift; sourceTree = "<group>"; };
 		F701A94326D7813400691054 /* WYJTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJTableViewCell.swift; sourceTree = "<group>"; };
 		F701A94526D781DB00691054 /* WYJBaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYJBaseTableViewCell.swift; sourceTree = "<group>"; };
-		F71626F526D5E0950065B51D /* SimpDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpDemoViewController.swift; sourceTree = "<group>"; };
-		F7853D7926D8DA880022BEF7 /* MessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -291,13 +285,10 @@
 			isa = PBXGroup;
 			children = (
 				63243FB22589E20A0065688B /* Assets.xcassets */,
-				63243FB32589E20A0065688B /* MyViewController.swift */,
 				63243FB42589E20A0065688B /* LaunchScreen.storyboard */,
 				63243FB62589E20A0065688B /* Main.storyboard */,
 				63243FBB2589E20A0065688B /* AppDelegate.swift */,
 				6316B71925E0AA74005C759C /* ViewController.swift */,
-				F7853D7926D8DA880022BEF7 /* MessagesViewController.swift */,
-				F71626F526D5E0950065B51D /* SimpDemoViewController.swift */,
 			);
 			path = other;
 			sourceTree = "<group>";
@@ -586,7 +577,6 @@
 			children = (
 				6324400A2589E2100065688B /* WYJString.swift */,
 				6324400B2589E2100065688B /* WYJAttributedString.swift */,
-				63775756260B2030002C3E06 /* WYJRSA.swift */,
 			);
 			path = String;
 			sourceTree = "<group>";
@@ -622,6 +612,7 @@
 			isa = PBXGroup;
 			children = (
 				632440132589E2100065688B /* WYJAlamofire.swift */,
+				7F98EE5128853A3500858F9B /* NetworkingManager.swift */,
 			);
 			path = Alamofire;
 			sourceTree = "<group>";
@@ -871,8 +862,8 @@
 				04901FBA249CA25F0086A508 /* Sources */,
 				04901FBB249CA25F0086A508 /* Frameworks */,
 				04901FBC249CA25F0086A508 /* Resources */,
-				5EB32D307ABC477F31662559 /* [CP] Embed Pods Frameworks */,
 				6390EE2825B8248F00F694B5 /* ShellScript */,
+				CC985D6E88CF485ED0EC824C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -993,23 +984,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5EB32D307ABC477F31662559 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-WYJKitDemo/Pods-WYJKitDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-WYJKitDemo/Pods-WYJKitDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WYJKitDemo/Pods-WYJKitDemo-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		6390EE2825B8248F00F694B5 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
@@ -1050,6 +1024,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		CC985D6E88CF485ED0EC824C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WYJKitDemo/Pods-WYJKitDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WYJKitDemo/Pods-WYJKitDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WYJKitDemo/Pods-WYJKitDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1080,7 +1071,6 @@
 				632440372589E2100065688B /* WYJDevice.swift in Sources */,
 				6324404D2589E2100065688B /* WYJObject.swift in Sources */,
 				6324404F2589E2100065688B /* WYJJSON.swift in Sources */,
-				F7853D7A26D8DA880022BEF7 /* MessagesViewController.swift in Sources */,
 				632440492589E2100065688B /* WYJDouble.swift in Sources */,
 				6324403D2589E2100065688B /* WYJBaseTableView.swift in Sources */,
 				6324402E2589E2100065688B /* WYJGradientLabel.swift in Sources */,
@@ -1100,9 +1090,7 @@
 				632440382589E2100065688B /* WYJBaseCollectionView.swift in Sources */,
 				632440402589E2100065688B /* WYJThen.swift in Sources */,
 				632440322589E2100065688B /* WYJAlert.swift in Sources */,
-				F71626F626D5E0950065B51D /* SimpDemoViewController.swift in Sources */,
-				63243FC22589E20A0065688B /* MyViewController.swift in Sources */,
-				63775757260B2030002C3E06 /* WYJRSA.swift in Sources */,
+				7F98EE5228853A3500858F9B /* NetworkingManager.swift in Sources */,
 				6338AAAD26C101E900243F59 /* WYJTabBarController.swift in Sources */,
 				632440462589E2100065688B /* WYJInt.swift in Sources */,
 				6324403C2589E2100065688B /* WYJTableViewDelegate.swift in Sources */,

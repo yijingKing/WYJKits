@@ -143,6 +143,7 @@ public extension WYJProtocol where T: UIButton {
               let imageHeight = obj.imageView?.image?.size.height else {
             return self
         }
+        
         guard let titleWidth = obj.titleLabel?.text?.yi.getWidth(obj.titleLabel?.font ?? UIFont.systemFont(ofSize: 17)) else {
             return self
         }
